@@ -3606,3 +3606,51 @@ document.addEventListener("keydown", function (event) {
         cancelarEdicaoSubitem();
     }
 });
+
+
+// ==========================
+// TEMA CLARO / ESCURO
+// ==========================
+
+const TASKFLOW_TEMA_KEY = "taskflow_tema_interface";
+
+function aplicarTemaInterface(tema) {
+    const temaNormalizado = tema === "dark" ? "dark" : "light";
+
+    document.body.classList.toggle("theme-dark", temaNormalizado === "dark");
+
+    const icone = document.getElementById("iconeTemaInterface");
+    const texto = document.getElementById("textoTemaInterface");
+
+    if (icone) {
+        icone.innerText = temaNormalizado === "dark" ? "☀️" : "🌙";
+    }
+
+    if (texto) {
+        texto.innerText = temaNormalizado === "dark" ? "Claro" : "Escuro";
+    }
+
+    try {
+        localStorage.setItem(TASKFLOW_TEMA_KEY, temaNormalizado);
+    } catch (error) {
+        console.warn("Não foi possível salvar o tema.", error);
+    }
+}
+
+function alternarTemaInterface() {
+    const temaAtual = document.body.classList.contains("theme-dark") ? "dark" : "light";
+    aplicarTemaInterface(temaAtual === "dark" ? "light" : "dark");
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    let temaSalvo = "light";
+
+    try {
+        temaSalvo = localStorage.getItem(TASKFLOW_TEMA_KEY) || "light";
+    } catch (error) {
+        temaSalvo = "light";
+    }
+
+    aplicarTemaInterface(temaSalvo);
+});
+
