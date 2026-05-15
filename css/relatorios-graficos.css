@@ -1,0 +1,300 @@
+/* ========================= */
+/* RELATÓRIOS, GRÁFICOS E TIMELINE HORIZONTAL */
+/* ========================= */
+
+.project-detail-top {
+    align-items: center;
+}
+
+.project-insights-card {
+    overflow: hidden;
+}
+
+.project-health-grid {
+    display: grid;
+    grid-template-columns: minmax(240px, 0.8fr) repeat(3, minmax(220px, 1fr));
+    gap: 16px;
+}
+
+.project-health-card,
+.chart-card {
+    border: 1px solid rgba(0, 122, 255, 0.12);
+    background: rgba(255, 255, 255, 0.74);
+    border-radius: 22px;
+    padding: 18px;
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
+}
+
+.project-health-card span,
+.chart-card h3 {
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.project-health-card strong {
+    display: block;
+    font-size: 30px;
+    margin: 8px 0 4px;
+    letter-spacing: -0.05em;
+}
+
+.project-health-card small {
+    color: var(--muted);
+    font-weight: 700;
+}
+
+.project-health-card em {
+    display: block;
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 12px;
+    font-style: normal;
+}
+
+.project-health-card.health-good strong {
+    color: #34c759;
+}
+
+.project-health-card.health-warning strong {
+    color: #ff9500;
+}
+
+.project-health-card.health-critical strong {
+    color: #ff3b30;
+}
+
+.health-progress {
+    width: 100%;
+    height: 9px;
+    border-radius: 999px;
+    overflow: hidden;
+    background: rgba(120, 120, 128, 0.16);
+    margin-top: 14px;
+}
+
+.health-progress div {
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #007aff, #34c759);
+}
+
+.bar-chart,
+.finance-bars {
+    display: grid;
+    gap: 12px;
+    margin-top: 14px;
+}
+
+.bar-row,
+.finance-row {
+    display: grid;
+    gap: 7px;
+}
+
+.bar-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--text);
+}
+
+.bar-label span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.bar-label strong {
+    color: var(--muted);
+}
+
+.bar-track {
+    width: 100%;
+    height: 10px;
+    border-radius: 999px;
+    background: rgba(120, 120, 128, 0.14);
+    overflow: hidden;
+}
+
+.bar-fill {
+    height: 100%;
+    border-radius: inherit;
+    min-width: 4px;
+}
+
+.bar-pendente {
+    background: #8e8e93;
+}
+
+.bar-andamento {
+    background: #ff9500;
+}
+
+.bar-concluida {
+    background: #34c759;
+}
+
+.bar-cancelada {
+    background: #ff3b30;
+}
+
+.bar-estimado {
+    background: #007aff;
+}
+
+.bar-real {
+    background: #5856d6;
+}
+
+.bar-responsavel {
+    background: linear-gradient(90deg, #007aff, #5ac8fa);
+}
+
+.finance-diff {
+    margin-top: 14px;
+    padding: 10px 12px;
+    border-radius: 14px;
+    background: rgba(120, 120, 128, 0.12);
+    font-size: 13px;
+    font-weight: 900;
+    color: var(--text);
+}
+
+.finance-diff.negativo {
+    background: rgba(255, 59, 48, 0.12);
+    color: #c1271c;
+}
+
+.finance-diff.positivo {
+    background: rgba(52, 199, 89, 0.12);
+    color: #1f8a3b;
+}
+
+.timeline-horizontal-card {
+    overflow: hidden;
+}
+
+.timeline-horizontal {
+    overflow-x: auto;
+    padding: 12px 4px 6px;
+}
+
+.timeline-horizontal-track {
+    display: flex;
+    align-items: stretch;
+    gap: 18px;
+    min-width: max-content;
+    padding: 18px 0 10px;
+    position: relative;
+}
+
+.timeline-horizontal-track::before {
+    content: "";
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    top: 32px;
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, rgba(0, 122, 255, 0.4), rgba(52, 199, 89, 0.4));
+}
+
+.timeline-horizontal-item {
+    width: 230px;
+    position: relative;
+    padding-top: 34px;
+}
+
+.timeline-dot {
+    position: absolute;
+    left: 10px;
+    top: 8px;
+    z-index: 2;
+    width: 22px;
+    height: 22px;
+    border: 4px solid #fff;
+    border-radius: 50%;
+    background: #007aff;
+    box-shadow: 0 8px 18px rgba(0, 122, 255, 0.25);
+}
+
+.timeline-card {
+    position: relative;
+    border: 1px solid rgba(0, 122, 255, 0.12);
+    background: rgba(255, 255, 255, 0.82);
+    border-radius: 18px;
+    padding: 14px;
+    min-height: 138px;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+}
+
+.timeline-card span {
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 900;
+}
+
+.timeline-card strong {
+    display: block;
+    margin-top: 7px;
+    color: var(--primary);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.timeline-card p {
+    margin-top: 7px;
+    font-weight: 900;
+    color: var(--text);
+    line-height: 1.35;
+}
+
+.timeline-card small {
+    display: block;
+    margin-top: 7px;
+    color: var(--muted);
+    line-height: 1.45;
+}
+
+.timeline-horizontal-item.event-done .timeline-dot {
+    background: #34c759;
+}
+
+.timeline-horizontal-item.event-edit .timeline-dot {
+    background: #ff9500;
+}
+
+.timeline-horizontal-item.event-danger .timeline-dot {
+    background: #ff3b30;
+}
+
+.timeline-horizontal-item.event-comment .timeline-dot {
+    background: #5856d6;
+}
+
+.timeline-horizontal-item.event-subitem .timeline-dot {
+    background: #5ac8fa;
+}
+
+@media (max-width: 1200px) {
+    .project-health-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 760px) {
+    .project-health-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .timeline-horizontal-item {
+        width: 210px;
+    }
+}
