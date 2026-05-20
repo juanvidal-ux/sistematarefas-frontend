@@ -17,6 +17,7 @@ window.onload = async () => {
         if (isAdmin()) {
             await carregarUsuariosAdmin();
             await carregarProjetosAdmin();
+            await carregarModelosCards();
         }
 
         if (isSuperAdmin()) {

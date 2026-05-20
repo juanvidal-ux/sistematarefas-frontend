@@ -42,6 +42,7 @@ function mostrarPagina(pagina) {
 
     setElementoVisivel("dashboardHomePanel", pagina === "DASHBOARD");
     setElementoVisivel("projetosPanel", pagina === "PROJETOS" && isAdmin());
+    setElementoVisivel("modelosCardsPanel", pagina === "MODELOS_CARDS" && isAdmin());
     setElementoVisivel("projetoDetalhePanel", pagina === "PROJETO_DETALHE" && isAdmin());
     setElementoVisivel("adminPanel", pagina === "ADMIN" && isAdmin());
     setElementoVisivel("superAdminPanel", pagina === "SUPER_ADMIN" && isSuperAdmin());
@@ -81,6 +82,7 @@ async function recarregarTudo() {
     if (isAdmin()) {
         await carregarUsuariosAdmin();
         await carregarProjetosAdmin();
+        await carregarModelosCards();
     }
 
     if (isSuperAdmin()) {

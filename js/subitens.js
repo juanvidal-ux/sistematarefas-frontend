@@ -202,6 +202,8 @@ function renderizarSubitens() {
                         ` : ""}
 
                     </div>
+                ${typeof montarChecklistSubitemHtml === "function" ? montarChecklistSubitemHtml(subitem) : ""}
+
 
                     <div class="subitem-actions">
 
@@ -482,4 +484,149 @@ async function excluirSubitem(itemId) {
     } catch (error) {
         mostrarToast(error.message, "erro");
     }
+}
+
+
+// ==========================
+// RENDERIZAÇÃO APRIMORADA DOS SUBITENS COM CHECKLIST
+// ==========================
+
+function atualizarProgressoVisualSubitens() {
+    const progressText = document.getElementById("subitemProgressText");
+    const progressBar = document.getElementById("subitemProgressBar");
+    const tabCount = document.getElementById("tabSubitensCount");
+
+    const total = subitensTarefaSelecionada?.length || 0;
+    const concluidos = (subitensTarefaSelecionada || []).filter(item => item.status === "CONCLUIDO").length;
+    const percentual = total === 0 ? 0 : Math.round((concluidos / total) * 100);
+
+    if (progressText) {
+        progressText.innerText = `${concluidos} de ${total} concluídos — ${percentual}%`;
+    }
+
+    if (progressBar) {
+        progressBar.style.width = `${percentual}%`;
+    }
+
+    if (tabCount) {
+        tabCount.innerText = total;
+    }
+}
+
+function renderizarSubitens() {
+    const container = document.getElementById("subitensContainer");
+
+    if (!container) {
+        return;
+    }
+
+    atualizarProgressoVisualSubitens();
+
+    container.innerHTML = "";
+
+    if (!subitensTarefaSelecionada || subitensTarefaSelecionada.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state-card">
+                <strong>Nenhum subitem cadastrado</strong>
+                <span>Use o formulário acima para dividir esta tarefa em entregas menores.</span>
+            </div>
+        `;
+        return;
+    }
+
+    subitensTarefaSelecionada.forEach(subitem => {
+        const statusClasse = String(subitem.status || "PENDENTE").toLowerCase();
+        const responsavel = subitem.responsavelNome || subitem.responsavel || "Responsável principal";
+        const custoEstimado = Number(subitem.custoEstimado || 0);
+        const custoReal = Number(subitem.custoReal || 0);
+        const diferenca = custoReal - custoEstimado;
+
+        container.innerHTML += `
+            <article class="subitem-card status-${statusClasse}">
+                <div class="subitem-card-top">
+                    <div>
+                        <h4>${escapeHtml(subitem.titulo || "Subitem")}</h4>
+                        <p>${escapeHtml(subitem.descricao || "Sem descrição informada.")}</p>
+                    </div>
+
+                    <span class="subitem-status ${subitem.status || "PENDENTE"}">
+                        ${formatarTexto(subitem.status || "PENDENTE")}
+                    </span>
+                </div>
+
+                <div class="subitem-meta-grid">
+                    <div>
+                        <span>Responsável</span>
+                        <strong>${escapeHtml(responsavel)}</strong>
+                    </div>
+
+                    <div>
+                        <span>Dias úteis</span>
+                        <strong>${subitem.diasUteisPrevistos || "-"}</strong>
+                    </div>
+
+                    <div>
+                        <span>Prazo</span>
+                        <strong>${subitem.prazo ? formatarData(subitem.prazo) : "-"}</strong>
+                    </div>
+
+                    <div>
+                        <span>Conclusão</span>
+                        <strong>${subitem.dataConclusao ? formatarDataHora(subitem.dataConclusao) : "-"}</strong>
+                    </div>
+                </div>
+
+                <div class="subitem-cost-grid">
+                    <div>
+                        <span>Estimado</span>
+                        <strong>${formatarMoeda(custoEstimado)}</strong>
+                    </div>
+                    <div>
+                        <span>Real</span>
+                        <strong>${formatarMoeda(custoReal)}</strong>
+                    </div>
+                    <div class="${diferenca > 0 ? "cost-negative" : diferenca < 0 ? "cost-positive" : ""}">
+                        <span>Diferença</span>
+                        <strong>${formatarMoeda(diferenca)}</strong>
+                    </div>
+                </div>
+
+                ${typeof montarChecklistSubitemHtml === "function" ? montarChecklistSubitemHtml(subitem) : ""}
+
+                <div class="subitem-actions">
+                    <button class="btn-small neutral" onclick="editarSubitem(${subitem.id})">
+                        Editar
+                    </button>
+
+                    ${subitem.status !== "PENDENTE" ? `
+                        <button class="btn-small neutral" onclick="alterarStatusSubitem(${subitem.id}, 'PENDENTE')">
+                            Pendente
+                        </button>
+                    ` : ""}
+
+                    ${subitem.status !== "EM_ANDAMENTO" ? `
+                        <button class="btn-small warning" onclick="alterarStatusSubitem(${subitem.id}, 'EM_ANDAMENTO')">
+                            Iniciar
+                        </button>
+                    ` : ""}
+
+                    ${subitem.status !== "CONCLUIDO" ? `
+                        <button class="btn-small success" onclick="alterarStatusSubitem(${subitem.id}, 'CONCLUIDO')">
+                            Concluir
+                        </button>
+                    ` : ""}
+
+                    ${subitem.status !== "CANCELADO" ? `
+                        <button class="btn-small danger" onclick="alterarStatusSubitem(${subitem.id}, 'CANCELADO')">
+                            Cancelar
+                        </button>
+                    ` : ""}
+
+                    <button class="btn-small danger" onclick="excluirSubitem(${subitem.id})">
+                        Excluir
+                    </button>
+                </div>
+            </article>
+        `;
+    });
 }

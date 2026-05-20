@@ -1,0 +1,113 @@
+/* REV15 - tema claro/escuro corporativo */
+:root {
+    color-scheme: light;
+    --bg: #f4f5f7;
+    --card: #ffffff;
+    --surface: #ffffff;
+    --surface-2: #f1f5f9;
+    --text: #172b4d;
+    --muted: #6b778c;
+    --border: #dfe1e6;
+    --primary: #0052cc;
+    --primary-dark: #0747a6;
+    --success: #36b37e;
+    --danger: #de350b;
+    --warning: #ffab00;
+    --shadow: 0 8px 24px rgba(9, 30, 66, 0.12);
+}
+
+body[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #0f172a;
+    --card: #1e293b;
+    --surface: #1e293b;
+    --surface-2: #334155;
+    --text: #f8fafc;
+    --muted: #94a3b8;
+    --border: #475569;
+    --primary: #3b82f6;
+    --primary-dark: #60a5fa;
+    --success: #22c55e;
+    --danger: #ef4444;
+    --warning: #fbbf24;
+    --shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+    background: var(--bg);
+    color: var(--text);
+}
+
+body[data-theme="dark"] .topbar,
+body[data-theme="dark"] .admin-card,
+body[data-theme="dark"] .metric-card,
+body[data-theme="dark"] .create-panel,
+body[data-theme="dark"] .board-toolbar,
+body[data-theme="dark"] .modal-content,
+body[data-theme="dark"] .task-card,
+body[data-theme="dark"] .project-card,
+body[data-theme="dark"] .chart-card,
+body[data-theme="dark"] .modelo-card,
+body[data-theme="dark"] .notifications-panel {
+    background: var(--card) !important;
+    color: var(--text);
+    border-color: var(--border);
+}
+
+body[data-theme="dark"] .kanban-column,
+body[data-theme="dark"] .project-kanban-mini,
+body[data-theme="dark"] .empty-column,
+body[data-theme="dark"] .admin-empty {
+    background: #172033 !important;
+    color: var(--muted);
+    border-color: var(--border);
+}
+
+body[data-theme="dark"] input,
+body[data-theme="dark"] textarea,
+body[data-theme="dark"] select {
+    background: #111827 !important;
+    color: var(--text) !important;
+    border-color: var(--border) !important;
+}
+
+body[data-theme="dark"] input::placeholder,
+body[data-theme="dark"] textarea::placeholder {
+    color: #64748b;
+}
+
+body[data-theme="dark"] .column-header h3,
+body[data-theme="dark"] .task-title,
+body[data-theme="dark"] h1,
+body[data-theme="dark"] h2,
+body[data-theme="dark"] h3,
+body[data-theme="dark"] strong {
+    color: var(--text);
+}
+
+body[data-theme="dark"] p,
+body[data-theme="dark"] small,
+body[data-theme="dark"] .task-desc,
+body[data-theme="dark"] .muted {
+    color: var(--muted) !important;
+}
+
+body[data-theme="dark"] .column-header span,
+body[data-theme="dark"] .owner-pill,
+body[data-theme="dark"] .project-pill,
+body[data-theme="dark"] .btn-secondary {
+    background: #334155 !important;
+    color: #e2e8f0 !important;
+    border-color: #475569 !important;
+}
+
+body[data-theme="dark"] .sidebar {
+    background: #0b1220;
+    border-right: 1px solid #1e293b;
+}
+
+body[data-theme="dark"] .task-card:hover {
+    box-shadow: 0 14px 30px rgba(0,0,0,.45);
+}
+
+body[data-theme="dark"] .modal-overlay,
+body[data-theme="dark"] .mobile-overlay {
+    background: rgba(2, 6, 23, 0.72);
+}

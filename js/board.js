@@ -58,6 +58,7 @@ function renderizarBoard() {
     const texto = document.getElementById("filtroTexto")?.value.toLowerCase() || "";
     const statusFiltro = document.getElementById("filtroStatus")?.value || "";
     const prioridadeFiltro = document.getElementById("filtroPrioridade")?.value || "";
+    const responsavelFiltro = document.getElementById("filtroResponsavelBoard")?.value || "";
     const prazoFiltro = document.getElementById("filtroPrazo")?.value || "";
     const ordenacao = document.getElementById("ordenacaoBoard")?.value || "RECENTES";
 
@@ -81,9 +82,13 @@ function renderizarBoard() {
             !prioridadeFiltro ||
             tarefa.prioridade === prioridadeFiltro;
 
+        const bateResponsavel =
+            !responsavelFiltro ||
+            (tarefa.responsavel || "Usuário") === responsavelFiltro;
+
         const batePrazo = filtrarPorPrazo(tarefa, prazoFiltro);
 
-        return bateTexto && bateStatus && batePrioridade && batePrazo;
+        return bateTexto && bateStatus && batePrioridade && bateResponsavel && batePrazo;
     });
 
     tarefasFiltradas = ordenarTarefas(tarefasFiltradas, ordenacao);
@@ -102,6 +107,32 @@ function renderizarBoard() {
     document.getElementById("countAndamento").innerText = andamento.length;
     document.getElementById("countConcluida").innerText = concluidas.length;
     document.getElementById("countCancelada").innerText = canceladas.length;
+
+    atualizarFiltroResponsaveisBoard(tarefasFiltradas);
+
+    if (typeof atualizarNotificacoesInternas === "function") {
+        atualizarNotificacoesInternas(todasTarefas);
+    }
+}
+
+function atualizarFiltroResponsaveisBoard(tarefas) {
+    const select = document.getElementById("filtroResponsavelBoard");
+
+    if (!select) {
+        return;
+    }
+
+    const valorAtual = select.value;
+    const responsaveis = [...new Set((todasTarefas || []).map(t => t.responsavel || "Usuário"))]
+        .filter(Boolean)
+        .sort((a, b) => a.localeCompare(b));
+
+    select.innerHTML = `<option value="">Todos os responsáveis</option>` +
+        responsaveis.map(nome => `<option value="${escapeHtml(nome)}">${escapeHtml(nome)}</option>`).join("");
+
+    if (responsaveis.includes(valorAtual)) {
+        select.value = valorAtual;
+    }
 }
 
 function renderizarColuna(idColuna, tarefas) {
@@ -173,7 +204,7 @@ function criarCardTarefa(tarefa) {
 
                     ${botaoMover(tarefa, "CANCELADA", "Cancelar")}
 
-                    <button class="btn-delete" onclick="excluirTarefa(${tarefa.id})">
+                    <button class="btn-delete admin-action" onclick="excluirTarefa(${tarefa.id})">
                         Excluir
                     </button>
 

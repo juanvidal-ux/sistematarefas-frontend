@@ -783,3 +783,27 @@ function montarExcelXmlProjeto(pacote) {
     ${excelSheet("Linha do tempo", linhasHistorico)}
 </Workbook>`;
 }
+
+
+// ==========================
+// EXPORTAÇÕES COM CHECKLIST ESTRUTURADA
+// ==========================
+
+function montarLinhasChecklistProjeto(pacote) {
+    return (pacote.detalhesTarefas || []).flatMap(({ tarefa, subitens }) =>
+        (subitens || []).flatMap(subitem =>
+            (obterChecklistDoSubitem(subitem) || []).map(item => [
+                tarefa.id,
+                tarefa.titulo || "",
+                subitem.id,
+                subitem.titulo || "",
+                item.id,
+                item.descricao || "",
+                item.concluido ? "Concluído" : "Pendente",
+                item.dataConclusao ? formatarDataHora(item.dataConclusao) : "",
+                item.usuarioConclusaoNome || item.usuarioConclusao || ""
+            ])
+        )
+    );
+}
+

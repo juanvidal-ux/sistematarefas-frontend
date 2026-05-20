@@ -1,0 +1,314 @@
+
+/* =========================================================
+   REV17 - Chat de comentários + Gantt usando backend atual
+   Não exige endpoints novos.
+   ========================================================= */
+
+.comments-section {
+    background: var(--surface, #fff);
+}
+
+.comments-header {
+    align-items: center;
+}
+
+.comment-form {
+    background: var(--rev17-chat-surface, #f8fafc);
+    border: 1px solid rgba(148, 163, 184, .28);
+    border-radius: 18px;
+    padding: 14px;
+    margin-bottom: 18px;
+}
+
+.comment-form textarea,
+#comentarioMensagem {
+    width: 100%;
+    resize: vertical;
+    min-height: 76px;
+    border-radius: 16px;
+    border: 1px solid rgba(148, 163, 184, .35);
+    background: var(--input-bg, #fff);
+    color: var(--text-primary, #0f172a);
+    padding: 14px;
+    outline: none;
+}
+
+.comment-form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.comment-form-hint {
+    font-size: 12px;
+    color: var(--text-muted, #64748b);
+}
+
+.comments-list.chat-mode {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-height: 460px;
+    overflow-y: auto;
+    padding: 12px;
+    background: linear-gradient(180deg, rgba(37,99,235,.04), rgba(15,23,42,.02));
+    border-radius: 18px;
+    border: 1px solid rgba(148, 163, 184, .22);
+}
+
+.chat-message {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    max-width: 88%;
+}
+
+.chat-message.mine {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+}
+
+.chat-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #2563eb;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    flex: 0 0 auto;
+    box-shadow: 0 10px 22px rgba(37,99,235,.22);
+}
+
+.chat-message.mine .chat-avatar {
+    background: #16a34a;
+    box-shadow: 0 10px 22px rgba(22,163,74,.22);
+}
+
+.chat-bubble {
+    background: var(--card-bg, #ffffff);
+    color: var(--text-primary, #0f172a);
+    border: 1px solid rgba(148, 163, 184, .25);
+    border-radius: 18px 18px 18px 6px;
+    padding: 12px 14px;
+    box-shadow: 0 12px 28px rgba(15,23,42,.08);
+}
+
+.chat-message.mine .chat-bubble {
+    border-radius: 18px 18px 6px 18px;
+    background: rgba(37, 99, 235, .10);
+    border-color: rgba(37, 99, 235, .25);
+}
+
+.chat-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.chat-meta strong {
+    font-size: 14px;
+}
+
+.chat-meta small {
+    color: var(--text-muted, #64748b);
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+.chat-text {
+    line-height: 1.45;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.chat-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8px;
+}
+
+.chat-actions button {
+    font-size: 12px;
+    padding: 6px 10px;
+}
+
+.chat-empty {
+    padding: 28px;
+    text-align: center;
+    border: 1px dashed rgba(148, 163, 184, .5);
+    border-radius: 18px;
+    color: var(--text-muted, #64748b);
+    background: rgba(148, 163, 184, .08);
+}
+
+/* Gantt */
+.gantt-rev17-card {
+    margin-top: 18px;
+}
+
+.gantt-rev17-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+}
+
+.gantt-rev17-toolbar select,
+.gantt-rev17-toolbar input {
+    border-radius: 12px;
+    border: 1px solid rgba(148, 163, 184, .35);
+    background: var(--input-bg, #fff);
+    color: var(--text-primary, #0f172a);
+    padding: 10px 12px;
+}
+
+.gantt-rev17 {
+    overflow-x: auto;
+    padding: 4px 0 10px;
+}
+
+.gantt-rev17-header,
+.gantt-rev17-row {
+    display: grid;
+    grid-template-columns: 260px minmax(620px, 1fr);
+    gap: 14px;
+    align-items: center;
+}
+
+.gantt-rev17-header {
+    color: var(--text-muted, #64748b);
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.gantt-rev17-row {
+    margin: 12px 0;
+}
+
+.gantt-rev17-info {
+    background: var(--card-bg, #fff);
+    border: 1px solid rgba(148, 163, 184, .22);
+    border-radius: 14px;
+    padding: 10px 12px;
+}
+
+.gantt-rev17-info strong {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 3px;
+}
+
+.gantt-rev17-info small {
+    color: var(--text-muted, #64748b);
+}
+
+.gantt-rev17-track {
+    height: 38px;
+    background: rgba(148, 163, 184, .16);
+    border: 1px solid rgba(148, 163, 184, .20);
+    border-radius: 999px;
+    position: relative;
+    min-width: 620px;
+    overflow: hidden;
+}
+
+.gantt-rev17-bar {
+    position: absolute;
+    top: 5px;
+    height: 26px;
+    border-radius: 999px;
+    min-width: 18px;
+    background: #2563eb;
+    box-shadow: 0 8px 18px rgba(37,99,235,.22);
+}
+
+.gantt-status-PENDENTE { background: #f59e0b; }
+.gantt-status-EM_ANDAMENTO { background: #2563eb; }
+.gantt-status-CONCLUIDA { background: #16a34a; }
+.gantt-status-ATRASADA { background: #dc2626; }
+.gantt-status-CANCELADA { background: #64748b; }
+
+.gantt-rev17-scale {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    color: var(--text-muted, #64748b);
+    font-size: 11px;
+    min-width: 620px;
+}
+
+.gantt-rev17-scale span {
+    border-left: 1px dashed rgba(148,163,184,.35);
+    padding-left: 6px;
+}
+
+.gantt-rev17-summary {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 12px 0 16px;
+}
+
+.gantt-chip {
+    border-radius: 999px;
+    padding: 7px 11px;
+    background: rgba(37,99,235,.10);
+    color: var(--text-primary, #0f172a);
+    font-size: 12px;
+    border: 1px solid rgba(37,99,235,.18);
+}
+
+body[data-theme="dark"] .comment-form,
+[data-theme="dark"] .comment-form {
+    background: #1e293b;
+}
+
+body[data-theme="dark"] .comments-list.chat-mode,
+[data-theme="dark"] .comments-list.chat-mode {
+    background: linear-gradient(180deg, rgba(59,130,246,.08), rgba(15,23,42,.20));
+    border-color: #475569;
+}
+
+body[data-theme="dark"] .chat-bubble,
+[data-theme="dark"] .chat-bubble,
+body[data-theme="dark"] .gantt-rev17-info,
+[data-theme="dark"] .gantt-rev17-info {
+    background: #1e293b;
+    color: #f8fafc;
+    border-color: #475569;
+}
+
+body[data-theme="dark"] .chat-message.mine .chat-bubble,
+[data-theme="dark"] .chat-message.mine .chat-bubble {
+    background: rgba(59,130,246,.18);
+}
+
+body[data-theme="dark"] .gantt-rev17-track,
+[data-theme="dark"] .gantt-rev17-track {
+    background: #0f172a;
+    border-color: #475569;
+}
+
+body[data-theme="dark"] .gantt-chip,
+[data-theme="dark"] .gantt-chip {
+    color: #f8fafc;
+    background: rgba(59,130,246,.18);
+}
+
+@media (max-width: 760px) {
+    .chat-message,
+    .chat-message.mine {
+        max-width: 100%;
+    }
+
+    .gantt-rev17-header,
+    .gantt-rev17-row {
+        grid-template-columns: 1fr;
+    }
+}

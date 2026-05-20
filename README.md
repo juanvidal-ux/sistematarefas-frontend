@@ -77,3 +77,30 @@ css/relatorios-graficos.css
 6. Tela de projeto organizada por abas.
 7. Busca interna no detalhe do projeto.
 8. Modo apresentação do projeto.
+
+
+## Atualização: Checklist estruturada dos subitens
+
+Arquivos adicionados/alterados:
+
+```text
+js/checklist.js
+css/checklist.css
+js/subitens.js
+js/exportacoes.js
+index.html
+```
+
+Funcionalidades:
+
+```text
+- Checklist dentro de cada subitem
+- Adicionar item de checklist
+- Marcar/desmarcar item como concluído
+- Editar item da checklist
+- Excluir item da checklist
+- Progresso visual da checklist
+- Sugestão para concluir subitem quando a checklist estiver 100%
+- Aba Checklist no Excel do projeto
+- Seção Checklist no PDF do projeto
+```

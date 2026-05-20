@@ -1,0 +1,311 @@
+/* ========================= */
+/* CHECKLIST ESTRUTURADA DOS SUBITENS */
+/* ========================= */
+
+.checklist-mini {
+    margin-top: 10px;
+    padding: 10px 12px;
+    border-radius: 14px;
+    background: rgba(0, 122, 255, 0.08);
+    border: 1px solid rgba(0, 122, 255, 0.14);
+}
+
+.checklist-mini.empty {
+    background: rgba(120, 120, 128, 0.10);
+    border-color: rgba(120, 120, 128, 0.16);
+}
+
+.checklist-mini-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.checklist-mini span,
+.checklist-mini small {
+    color: var(--muted);
+}
+
+.checklist-mini-bar {
+    height: 8px;
+    border-radius: 999px;
+    overflow: hidden;
+    background: rgba(120, 120, 128, 0.18);
+    margin: 8px 0 6px;
+}
+
+.checklist-mini-bar i {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #007aff, #34c759);
+}
+
+.checklist-box {
+    margin-top: 14px;
+    border: 1px solid rgba(0, 122, 255, 0.12);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.74);
+    overflow: hidden;
+}
+
+.checklist-toggle {
+    width: 100%;
+    border: none;
+    background: transparent;
+    color: var(--text);
+    padding: 13px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    cursor: pointer;
+    font-weight: 900;
+}
+
+.checklist-toggle span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.checklist-toggle strong {
+    color: var(--primary);
+}
+
+.checklist-progress {
+    height: 8px;
+    background: rgba(120, 120, 128, 0.14);
+    overflow: hidden;
+}
+
+.checklist-progress i {
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, #007aff, #34c759);
+}
+
+.checklist-content {
+    padding: 14px;
+    display: grid;
+    gap: 12px;
+}
+
+.checklist-add-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    align-items: center;
+}
+
+.checklist-items {
+    display: grid;
+    gap: 8px;
+}
+
+.checklist-empty {
+    border: 1px dashed rgba(120, 120, 128, 0.28);
+    border-radius: 14px;
+    padding: 14px;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 800;
+    text-align: center;
+}
+
+.checklist-item {
+    display: grid;
+    grid-template-columns: 30px 1fr auto;
+    gap: 10px;
+    align-items: center;
+    padding: 10px;
+    border-radius: 14px;
+    background: rgba(120, 120, 128, 0.08);
+    border: 1px solid rgba(120, 120, 128, 0.10);
+}
+
+.checklist-item.done {
+    background: rgba(52, 199, 89, 0.10);
+    border-color: rgba(52, 199, 89, 0.18);
+}
+
+.checklist-item.done span {
+    color: var(--muted);
+    text-decoration: line-through;
+}
+
+.checklist-item.editing {
+    grid-template-columns: 1fr auto auto;
+}
+
+.checklist-check {
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+    border: 2px solid rgba(0, 122, 255, 0.45);
+    background: #fff;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 900;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.checklist-item.done .checklist-check {
+    background: #34c759;
+    border-color: #34c759;
+}
+
+.checklist-actions {
+    display: flex;
+    gap: 6px;
+}
+
+.btn-icon-small {
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 9px;
+    background: rgba(0, 122, 255, 0.12);
+    color: var(--primary);
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.btn-icon-small.danger {
+    background: rgba(255, 59, 48, 0.12);
+    color: #ff3b30;
+}
+
+.checklist-complete-suggestion {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 14px;
+    background: rgba(52, 199, 89, 0.12);
+    color: #1f8a3b;
+    font-size: 13px;
+    font-weight: 900;
+}
+
+.subitem-card {
+    border: 1px solid rgba(0, 122, 255, 0.12);
+    border-radius: 20px;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.78);
+    box-shadow: 0 12px 26px rgba(15, 23, 42, 0.06);
+}
+
+.subitem-card + .subitem-card {
+    margin-top: 14px;
+}
+
+.subitem-card-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    align-items: flex-start;
+}
+
+.subitem-card-top h4 {
+    font-size: 16px;
+    margin-bottom: 6px;
+}
+
+.subitem-card-top p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.subitem-status {
+    white-space: nowrap;
+    border-radius: 999px;
+    padding: 7px 10px;
+    font-size: 11px;
+    font-weight: 900;
+    background: rgba(120, 120, 128, 0.14);
+}
+
+.subitem-status.CONCLUIDO {
+    background: rgba(52, 199, 89, 0.12);
+    color: #1f8a3b;
+}
+
+.subitem-status.EM_ANDAMENTO {
+    background: rgba(255, 149, 0, 0.14);
+    color: #9a5a00;
+}
+
+.subitem-status.CANCELADO {
+    background: rgba(255, 59, 48, 0.12);
+    color: #c1271c;
+}
+
+.subitem-meta-grid,
+.subitem-cost-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(120px, 1fr));
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.subitem-cost-grid {
+    grid-template-columns: repeat(3, minmax(120px, 1fr));
+}
+
+.subitem-meta-grid div,
+.subitem-cost-grid div {
+    background: rgba(120, 120, 128, 0.08);
+    border-radius: 14px;
+    padding: 10px;
+}
+
+.subitem-meta-grid span,
+.subitem-cost-grid span {
+    display: block;
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.subitem-meta-grid strong,
+.subitem-cost-grid strong {
+    display: block;
+    margin-top: 5px;
+    font-size: 13px;
+}
+
+.cost-negative strong {
+    color: #ff3b30;
+}
+
+.cost-positive strong {
+    color: #34c759;
+}
+
+.subitem-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+@media (max-width: 760px) {
+    .checklist-add-row,
+    .checklist-item,
+    .checklist-item.editing {
+        grid-template-columns: 1fr;
+    }
+
+    .subitem-meta-grid,
+    .subitem-cost-grid {
+        grid-template-columns: 1fr;
+    }
+}

@@ -6,11 +6,15 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>TaskFlow | Gestão de Tarefas</title>
+    <title>VidalSystem | Gestão de Tarefas</title>
 
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/login.css" />
     <link rel="stylesheet" href="css/forms-buttons.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/theme-dark.css" />
+    <link rel="stylesheet" href="css/mobile-rev15.css" />
+    <link rel="stylesheet" href="css/notificacoes.css" />
     <link rel="stylesheet" href="css/layout.css" />
     <link rel="stylesheet" href="css/projetos.css" />
     <link rel="stylesheet" href="css/board-kanban.css" />
@@ -18,11 +22,13 @@
     <link rel="stylesheet" href="css/responsive.css" />
     <link rel="stylesheet" href="css/extras.css" />
     <link rel="stylesheet" href="css/subitens.css" />
+    <link rel="stylesheet" href="css/checklist.css" />
     <link rel="stylesheet" href="css/enhancements.css" />
     <link rel="stylesheet" href="css/ios-theme.css" />
     <link rel="stylesheet" href="css/responsive-ios.css" />
     <link rel="stylesheet" href="css/relatorios-graficos.css" />
     <link rel="stylesheet" href="css/projeto-tabs-exportacoes.css" />
+    <link rel="stylesheet" href="css/modelos-cards.css" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
 
@@ -30,6 +36,7 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="css/chat-gantt-rev17.css">
 </head>
 
 <body>
@@ -43,9 +50,9 @@
 
             <div class="login-brand">
 
-                <span class="brand-badge">TF</span>
+                <span class="brand-badge">VC</span>
 
-                <h1>TaskFlow</h1>
+                <h1>VidalSystem</h1>
 
                 <p>
                     Plataforma moderna para controle de projetos, tarefas,
@@ -103,6 +110,9 @@
     <!-- APP -->
     <section id="dashboardSection" class="app hidden">
 
+        <button id="btnMobileMenu" class="mobile-menu-btn" onclick="alternarMenuMobile()">☰</button>
+        <div id="mobileOverlay" class="mobile-overlay hidden" onclick="fecharMenuMobile()"></div>
+
         <!-- SIDEBAR -->
         <aside class="sidebar">
 
@@ -137,6 +147,11 @@
                     Projetos
                 </button>
 
+                <button class="menu-item admin-only hidden" data-page="MODELOS_CARDS" onclick="abrirModelosCards()">
+                    <span>📋</span>
+                    Modelos de Cards
+                </button>
+
                 <button class="menu-item" data-page="MINHAS" onclick="abrirMinhasTarefas()">
                     <span>✓</span>
                     Minhas tarefas
@@ -152,12 +167,21 @@
                     Super Admin
                 </button>
 
+                <button class="menu-item" onclick="alternarTemaSistema()">
+                    <span id="iconeTemaSistema">🌙</span>
+                    Tema
+                </button>
+
+                <button class="menu-item" onclick="alternarPainelNotificacoes()">
+                    <span>🔔</span>
+                    Notificações <strong id="badgeNotificacoes" class="notif-badge hidden">0</strong>
+                </button>
+
                 <button class="menu-item" onclick="abrirModalSenha()">
                     <span>🔐</span>
                     Alterar senha
                 </button>
-
-            </nav>
+</nav>
 
             <div class="sidebar-footer">
 
@@ -203,6 +227,19 @@
                 </div>
 
             </header>
+
+            <aside id="painelNotificacoes" class="notifications-panel hidden">
+                <div class="notifications-header">
+                    <div>
+                        <strong>Notificações</strong>
+                        <small>Alertas gerados com base nas tarefas carregadas.</small>
+                    </div>
+                    <button class="modal-close" onclick="fecharPainelNotificacoes()">×</button>
+                </div>
+                <div id="listaNotificacoes" class="notifications-list">
+                    <div class="admin-empty">Nenhuma notificação no momento.</div>
+                </div>
+            </aside>
 
             <!-- MÉTRICAS -->
             <section class="metrics">
@@ -668,6 +705,75 @@
 
             </section>
 
+
+            <!-- MODELOS DE CARDS -->
+            <section id="modelosCardsPanel" class="admin-panel admin-only hidden">
+
+                <div class="admin-card">
+
+                    <div class="admin-card-header">
+
+                        <div>
+                            <h2>Modelos de Cards</h2>
+
+                            <p>
+                                Crie cards padrões com descrição, prioridade e checklist para reutilizar em qualquer projeto.
+                            </p>
+                        </div>
+
+                        <div class="project-header-actions">
+                            <button class="btn-secondary" onclick="carregarModelosCards()">
+                                Atualizar modelos
+                            </button>
+
+                            <button class="btn-primary" onclick="abrirModalModeloCard()">
+                                + Novo modelo
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <div class="modelos-toolbar search-toolbar">
+                        <div class="form-group">
+                            <label>Buscar modelo</label>
+                            <input type="text" id="filtroModeloCard" placeholder="Digite para filtrar por título ou descrição" />
+                        </div>
+
+                        <div class="form-group">
+                            <label>Status</label>
+                            <select id="filtroModeloCardAtivo">
+                                <option value="TODOS">Todos</option>
+                                <option value="ATIVOS">Ativos</option>
+                                <option value="INATIVOS">Inativos</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Prioridade</label>
+                            <select id="filtroModeloCardPrioridade">
+                                <option value="TODAS">Todas</option>
+                                <option value="BAIXA">Baixa</option>
+                                <option value="MEDIA">Média</option>
+                                <option value="ALTA">Alta</option>
+                                <option value="CRITICA">Crítica</option>
+                            </select>
+                        </div>
+
+                        <button class="btn-secondary" type="button" onclick="limparFiltrosModelosCards()">
+                            Limpar filtros
+                        </button>
+                    </div>
+
+                    <div id="modelosCardsContainer" class="modelos-cards-grid">
+                        <div class="admin-empty">
+                            Nenhum modelo carregado.
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+
             <!-- DETALHE DO PROJETO -->
             <section id="projetoDetalhePanel" class="admin-panel admin-only hidden">
 
@@ -864,6 +970,37 @@
 
                 </div>
 
+
+                <div class="admin-card gantt-rev17-card">
+                    <div class="admin-card-header">
+                        <div>
+                            <h2>Timeline / Gantt do projeto</h2>
+                            <p>Visão de prazo das tarefas usando os dados já existentes do projeto.</p>
+                        </div>
+
+                        <div class="gantt-rev17-toolbar">
+                            <input id="ganttBuscaRev17" type="text" placeholder="Buscar tarefa..." oninput="renderizarGanttProjetoRev17(false)">
+
+                            <select id="ganttFiltroStatusRev17" onchange="renderizarGanttProjetoRev17(false)">
+                                <option value="TODOS">Todos os status</option>
+                                <option value="PENDENTE">Pendente</option>
+                                <option value="EM_ANDAMENTO">Em andamento</option>
+                                <option value="CONCLUIDA">Concluída</option>
+                                <option value="ATRASADA">Atrasada</option>
+                                <option value="CANCELADA">Cancelada</option>
+                            </select>
+
+                            <button class="btn-secondary" onclick="renderizarGanttProjetoRev17(true)">
+                                Atualizar Gantt
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="ganttProjetoRev17" class="gantt-rev17">
+                        <div class="admin-empty">Abra um projeto para carregar o Gantt.</div>
+                    </div>
+                </div>
+
                 <div class="admin-card timeline-horizontal-card">
                     <div class="admin-card-header">
                         <div>
@@ -1057,6 +1194,10 @@
 
                             <option value="CANCELADA">Cancelada</option>
 
+                        </select>
+
+                        <select id="filtroResponsavelBoard" onchange="renderizarBoard()">
+                            <option value="">Todos os responsáveis</option>
                         </select>
 
                         <select id="filtroPrioridade" onchange="renderizarBoard()">
@@ -1632,6 +1773,139 @@
 
     </div>
 
+
+    <!-- MODAL MODELO DE CARD -->
+    <div id="modalModeloCard" class="modal hidden">
+        <div class="modal-overlay" onclick="fecharModalModeloCard()"></div>
+
+        <div class="modal-content modal-modelo-card">
+
+            <div class="modal-header">
+                <div>
+                    <span class="modal-status" id="modalModeloCardStatus">Novo modelo</span>
+                    <h2 id="modalModeloCardTitulo">Modelo de Card</h2>
+                </div>
+
+                <button class="modal-close" onclick="fecharModalModeloCard()">×</button>
+            </div>
+
+            <div class="modal-body">
+
+                <input type="hidden" id="modeloCardId" />
+
+                <div class="form-group">
+                    <label>Título do modelo</label>
+                    <input type="text" id="modeloCardTituloInput" placeholder="Ex.: Instalação de equipamento" />
+                </div>
+
+                <div class="form-group">
+                    <label>Descrição padrão</label>
+                    <textarea id="modeloCardDescricaoInput" rows="4" placeholder="Descreva o card padrão"></textarea>
+                </div>
+
+                <div class="form-row">
+
+                    <div class="form-group">
+                        <label>Prioridade</label>
+                        <select id="modeloCardPrioridadeInput">
+                            <option value="BAIXA">Baixa</option>
+                            <option value="MEDIA" selected>Média</option>
+                            <option value="ALTA">Alta</option>
+                            <option value="CRITICA">Crítica</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Status inicial</label>
+                        <select id="modeloCardStatusInput">
+                            <option value="PENDENTE" selected>Pendente</option>
+                            <option value="EM_ANDAMENTO">Em andamento</option>
+                            <option value="CONCLUIDA">Concluída</option>
+                            <option value="ATRASADA">Atrasada</option>
+                            <option value="CANCELADA">Cancelada</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label>Observações padrão</label>
+                    <textarea id="modeloCardObservacoesInput" rows="3" placeholder="Observações que serão copiadas para a tarefa"></textarea>
+                </div>
+
+                <div class="checklist-editor">
+                    <div class="checklist-editor-header">
+                        <div>
+                            <strong>Checklist padrão</strong>
+                            <small>Itens que serão copiados quando o modelo for aplicado.</small>
+                        </div>
+
+                        <button class="btn-secondary" type="button" onclick="adicionarItemChecklistModeloCard()">
+                            + Item
+                        </button>
+                    </div>
+
+                    <div id="modeloCardChecklistContainer" class="checklist-editor-list"></div>
+                </div>
+
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn-cancel-edit" onclick="fecharModalModeloCard()">Cancelar</button>
+                <button class="btn-primary" onclick="salvarModeloCard()">Salvar modelo</button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- MODAL APLICAR MODELO -->
+    <div id="modalAplicarModeloCard" class="modal hidden">
+        <div class="modal-overlay" onclick="fecharModalAplicarModeloCard()"></div>
+
+        <div class="modal-content modal-modelo-card">
+
+            <div class="modal-header">
+                <div>
+                    <span class="modal-status">Aplicar modelo</span>
+                    <h2 id="modalAplicarModeloCardTitulo">Usar modelo em projeto</h2>
+                </div>
+
+                <button class="modal-close" onclick="fecharModalAplicarModeloCard()">×</button>
+            </div>
+
+            <div class="modal-body">
+
+                <input type="hidden" id="aplicarModeloCardId" />
+
+                <div class="form-group">
+                    <label>Projeto</label>
+                    <select id="aplicarModeloProjetoId"></select>
+                </div>
+
+                <div class="form-group">
+                    <label>Responsável</label>
+                    <select id="aplicarModeloUsuarioId"></select>
+                </div>
+
+                <div class="form-group">
+                    <label>Prazo</label>
+                    <input type="date" id="aplicarModeloPrazo" />
+                </div>
+
+                <p class="muted">
+                    O sistema vai criar uma tarefa real usando as informações do modelo selecionado.
+                </p>
+
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn-cancel-edit" onclick="fecharModalAplicarModeloCard()">Cancelar</button>
+                <button class="btn-primary" onclick="aplicarModeloCard()">Criar tarefa</button>
+            </div>
+
+        </div>
+    </div>
+
     <!-- MODAL CONFIRMAÇÃO -->
     <div id="modalConfirmacao" class="modal hidden">
         <div class="modal-overlay" onclick="responderConfirmacao(false)"></div>
@@ -1654,6 +1928,7 @@
     </div>
 
     <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
     <script src="js/state.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/navigation.js"></script>
@@ -1662,6 +1937,7 @@
     <script src="js/usuarios.js"></script>
     <script src="js/projetos.js"></script>
     <script src="js/subitens.js"></script>
+    <script src="js/checklist.js"></script>
     <script src="js/interacoes.js"></script>
     <script src="js/dashboard-ui.js"></script>
     <script src="js/senha.js"></script>
@@ -1669,7 +1945,13 @@
     <script src="js/exportacoes.js"></script>
     <script src="js/timeline-horizontal.js"></script>
     <script src="js/graficos.js"></script>
+    <script src="js/chat-gantt-rev17.js"></script>
     <script src="js/projeto-tabs.js"></script>
+    <script src="js/modelos-cards.js"></script>
+    <script src="js/tema.js"></script>
+    <script src="js/notificacoes.js"></script>
+    <script src="js/permissoes-visuais.js"></script>
+    <script src="js/mobile.js"></script>
     <script src="js/main.js"></script>
 
 

@@ -121,5 +121,7 @@ document.addEventListener("keydown", function (event) {
         fecharModalSenha();
         fecharModalUsuario();
         cancelarEdicaoSubitem();
+        fecharModalModeloCard();
+        fecharModalAplicarModeloCard();
     }
 });

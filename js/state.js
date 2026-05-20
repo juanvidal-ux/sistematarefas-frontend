@@ -24,3 +24,7 @@ let historicoTarefaSelecionada = [];
 let modoCartao = localStorage.getItem("taskflow_modo_cartao") || "DETALHADO";
 let abaModalAtiva = "DETALHES";
 let resolverConfirmacao = null;
+
+let modelosCardsAdmin = [];
+let modeloCardEdicaoId = null;
+let modeloCardChecklistTemporario = [];

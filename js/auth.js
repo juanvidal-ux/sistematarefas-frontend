@@ -35,6 +35,7 @@ async function login() {
         const data = await response.json();
 
         localStorage.setItem("token", data.token);
+        document.getElementById("senha").value = "";
 
         usuarioLogado = obterUsuarioDoToken();
 
@@ -72,6 +73,22 @@ function logout() {
     adminsSuper = [];
     projetosAdmin = [];
     todasTarefas = [];
+
+    const emailInput = document.getElementById("email");
+    const senhaInput = document.getElementById("senha");
+    const mensagem = document.getElementById("loginMensagem");
+
+    if (emailInput) {
+        emailInput.value = "";
+    }
+
+    if (senhaInput) {
+        senhaInput.value = "";
+    }
+
+    if (mensagem) {
+        mensagem.innerText = "";
+    }
 
     loginSection.classList.remove("hidden");
     dashboardSection.classList.add("hidden");
@@ -157,6 +174,10 @@ function aplicarPermissoesInterface() {
             elemento.classList.add("hidden");
         }
     });
+
+    if (typeof aplicarPermissoesVisuaisExtras === "function") {
+        aplicarPermissoesVisuaisExtras();
+    }
 
     mostrarPagina(paginaAtual || "BOARD");
 }

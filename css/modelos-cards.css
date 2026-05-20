@@ -1,0 +1,245 @@
+/* ==========================
+   MODELOS DE CARDS
+   ========================== */
+
+.modelos-toolbar {
+    margin-bottom: 18px;
+}
+
+.modelos-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+}
+
+.modelo-card {
+    border: 1px solid rgba(148, 163, 184, 0.28);
+    border-radius: 18px;
+    padding: 18px;
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 14px 40px rgba(15, 23, 42, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.modelo-card.inativo {
+    opacity: 0.68;
+}
+
+.modelo-card-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.modelo-card-header h3 {
+    margin: 6px 0 0;
+    font-size: 1rem;
+}
+
+.modelo-card-status {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-size: 0.74rem;
+    font-weight: 700;
+}
+
+.modelo-card-status.ativo {
+    color: #0f766e;
+    background: rgba(20, 184, 166, 0.12);
+}
+
+.modelo-card-status.inativo {
+    color: #64748b;
+    background: rgba(100, 116, 139, 0.14);
+}
+
+.modelo-card-descricao {
+    color: #475569;
+    line-height: 1.5;
+    margin: 0;
+    min-height: 44px;
+}
+
+.modelo-card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 0.82rem;
+    color: #64748b;
+}
+
+.modelo-card-checklist-preview {
+    margin: 0;
+    padding-left: 18px;
+    color: #334155;
+    font-size: 0.86rem;
+}
+
+.modelo-card-checklist-preview li {
+    margin-bottom: 4px;
+}
+
+.modelo-card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: auto;
+}
+
+.modal-modelo-card {
+    max-width: 760px;
+}
+
+.checklist-editor {
+    border: 1px solid rgba(148, 163, 184, 0.28);
+    border-radius: 16px;
+    padding: 14px;
+    background: rgba(248, 250, 252, 0.8);
+}
+
+.checklist-editor-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.checklist-editor-header small {
+    display: block;
+    color: #64748b;
+    margin-top: 3px;
+}
+
+.checklist-editor-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.checklist-editor-item {
+    display: grid;
+    grid-template-columns: 30px 1fr auto;
+    gap: 8px;
+    align-items: center;
+}
+
+.checklist-editor-item span {
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    background: #e2e8f0;
+    color: #334155;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.checklist-editor-item input {
+    width: 100%;
+}
+
+.btn-excluir {
+    background: #fff;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+
+    padding: 10px 18px;
+
+    border-radius: 14px;
+
+    cursor: pointer;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    transition: 0.2s;
+}
+
+.btn-excluir:hover {
+    background: #dc2626;
+    color: white;
+    transform: translateY(-1px);
+}
+
+.priority-badge {
+    white-space: nowrap;
+}
+
+
+/* Melhorias Rev12 */
+.modelos-toolbar {
+    margin-bottom: 22px;
+}
+
+.modelos-empty {
+    grid-column: 1 / -1;
+}
+
+.modelo-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.modelo-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 4px;
+    background: linear-gradient(90deg, rgba(10, 132, 255, 0.75), rgba(52, 199, 89, 0.55));
+}
+
+.modelo-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 48px rgba(15, 23, 42, 0.11);
+}
+
+.modelo-card-checklist-details {
+    background: rgba(248, 250, 252, 0.72);
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    border-radius: 14px;
+    padding: 10px 12px;
+}
+
+.modelo-card-checklist-details summary {
+    cursor: pointer;
+    font-size: 0.83rem;
+    font-weight: 800;
+    color: #475569;
+    margin-bottom: 8px;
+}
+
+.modelo-card-actions .btn-primary,
+.modelo-card-actions .btn-secondary,
+.modelo-card-actions .btn-danger {
+    padding: 10px 14px;
+    font-size: 0.86rem;
+}
+
+.checklist-editor-item .btn-small {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    display: grid;
+    place-items: center;
+}
+
+@media (max-width: 560px) {
+    .modelos-cards-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .modelo-card-header {
+        flex-direction: column;
+    }
+
+    .checklist-editor-item {
+        grid-template-columns: 30px 1fr 34px;
+    }
+}
