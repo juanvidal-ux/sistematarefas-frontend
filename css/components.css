@@ -1,0 +1,135 @@
+/* ==========================
+   COMPONENTES GLOBAIS
+   ========================== */
+
+.btn-primary,
+.btn-secondary,
+.btn-danger,
+.btn-success,
+.btn-warning,
+.btn-ghost,
+.btn-delete,
+.btn-edit,
+.btn-save,
+.btn-cancel-edit,
+.btn-small,
+.task-actions button,
+.modal-actions button {
+    border: none;
+    cursor: pointer;
+    border-radius: 999px;
+    font-weight: 760;
+    letter-spacing: -0.01em;
+    transition: transform 0.16s ease, filter 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+}
+
+.btn-danger,
+.btn-delete {
+    background: rgba(255, 59, 48, 0.12);
+    color: #d70015;
+    padding: 13px 18px;
+}
+
+.btn-danger:hover,
+.btn-delete:hover {
+    background: rgba(255, 59, 48, 0.18);
+    transform: translateY(-1px);
+}
+
+.btn-success,
+.btn-save {
+    background: rgba(52, 199, 89, 0.14);
+    color: #248a3d;
+    padding: 13px 18px;
+}
+
+.btn-warning {
+    background: rgba(255, 149, 0, 0.14);
+    color: #b45309;
+    padding: 13px 18px;
+}
+
+.btn-ghost {
+    background: transparent;
+    color: #42526e;
+    padding: 13px 18px;
+}
+
+.btn-small,
+.btn-small.danger,
+.btn-small.success {
+    padding: 8px 11px;
+    font-size: 0.82rem;
+}
+
+.is-loading {
+    position: relative;
+    pointer-events: none;
+    opacity: 0.72;
+}
+
+.is-loading::after {
+    content: "";
+    width: 14px;
+    height: 14px;
+    border-radius: 999px;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    display: inline-block;
+    margin-left: 8px;
+    vertical-align: -2px;
+    animation: girar 0.75s linear infinite;
+}
+
+@keyframes girar {
+    to { transform: rotate(360deg); }
+}
+
+.empty-state {
+    border: 1px dashed rgba(148, 163, 184, 0.55);
+    border-radius: 18px;
+    padding: 24px;
+    background: rgba(248, 250, 252, 0.78);
+    color: #64748b;
+    text-align: center;
+}
+
+.empty-state strong {
+    display: block;
+    color: #334155;
+    margin-bottom: 6px;
+}
+
+.search-toolbar {
+    display: grid;
+    grid-template-columns: minmax(220px, 1.5fr) minmax(160px, 0.7fr) minmax(160px, 0.7fr) auto;
+    gap: 12px;
+    align-items: end;
+}
+
+@media (max-width: 780px) {
+    .search-toolbar {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-content {
+        width: calc(100vw - 24px);
+        max-height: calc(100vh - 24px);
+        overflow: auto;
+    }
+
+    .modal-actions,
+    .modelo-card-actions,
+    .project-header-actions,
+    .top-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .modal-actions button,
+    .modelo-card-actions button,
+    .project-header-actions button,
+    .top-actions button {
+        width: 100%;
+    }
+}

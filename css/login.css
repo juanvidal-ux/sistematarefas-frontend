@@ -1,0 +1,310 @@
+/* =========================
+   LOGIN
+========================= */
+
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+
+    background:
+        radial-gradient(circle at 20% 20%, rgba(0, 82, 204, 0.45), transparent 35%),
+        radial-gradient(circle at 80% 80%, rgba(0, 184, 217, 0.25), transparent 35%),
+        linear-gradient(135deg, #172b4d 0%, #0747a6 45%, #006c8f 100%);
+}
+
+/* CONTAINER PRINCIPAL */
+
+.login-shell {
+    width: min(980px, 94%);
+    display: grid;
+    grid-template-columns: 1.25fr 380px;
+    gap: 28px;
+    align-items: center;
+}
+
+/* =========================
+   BLOCO DA MARCA
+========================= */
+
+.login-brand {
+    color: #ffffff;
+    padding: 34px 36px;
+    border-radius: 24px;
+    background: rgba(0, 82, 204, 0.30);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.22);
+    backdrop-filter: blur(12px);
+    animation: fadeInLeft 0.6s ease;
+}
+
+.brand-badge {
+    width: 48px;
+    height: 48px;
+    border-radius: 13px;
+    background: linear-gradient(135deg, #4cceff, #00b8d9);
+    color: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 16px;
+    margin-bottom: 18px;
+    box-shadow: 0 12px 28px rgba(0, 184, 217, 0.35);
+}
+
+.brand-badge.small {
+    width: 40px;
+    height: 40px;
+    margin: 0;
+    border-radius: 12px;
+    font-size: 14px;
+}
+
+.login-brand h1 {
+    color: #ffffff;
+    font-size: clamp(42px, 5vw, 58px);
+    line-height: 1;
+    margin-bottom: 14px;
+    letter-spacing: -2px;
+    font-weight: 900;
+}
+
+.login-brand p {
+    color: rgba(255, 255, 255, 0.84);
+    max-width: 520px;
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 0;
+}
+
+.login-benefits {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 22px;
+}
+
+.login-benefits span {
+    color: #172b4d;
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    padding: 8px 13px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 800;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.10);
+}
+
+/* =========================
+   CARD DE LOGIN
+========================= */
+
+.login-card {
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: 22px;
+    padding: 30px 26px;
+    box-shadow: 0 26px 65px rgba(0, 0, 0, 0.28);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(16px);
+    animation: fadeInRight 0.6s ease;
+}
+
+.login-card h2 {
+    color: #172b4d;
+    font-size: 24px;
+    margin-bottom: 6px;
+    font-weight: 900;
+    letter-spacing: -0.6px;
+}
+
+.login-card p {
+    color: #6b778c;
+    font-size: 13px;
+    margin-bottom: 18px;
+}
+
+/* =========================
+   FORMULÁRIO
+========================= */
+
+.login-card form {
+    width: 100%;
+}
+
+.login-card label {
+    display: block;
+    color: #172b4d;
+    font-size: 12px;
+    font-weight: 800;
+    margin-bottom: 6px;
+}
+
+.login-card input {
+    width: 100%;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid #dfe1e6;
+    background: #ffffff;
+    padding: 0 12px;
+    font-size: 13px;
+    color: #172b4d;
+    outline: none;
+    transition: 0.2s ease;
+}
+
+.login-card input:focus {
+    border-color: #0052cc;
+    box-shadow: 0 0 0 4px rgba(0, 82, 204, 0.12);
+}
+
+.login-card input::placeholder {
+    color: #97a0af;
+}
+
+.login-card .form-group {
+    margin-bottom: 14px;
+}
+
+/* =========================
+   BOTÃO
+========================= */
+
+.login-card button {
+    width: 100%;
+    height: 44px;
+    border: none;
+    border-radius: 12px;
+    margin-top: 4px;
+    background: linear-gradient(135deg, #2563eb, #00a3bf);
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow: 0 14px 28px rgba(37, 99, 235, 0.30);
+    transition: 0.2s ease;
+}
+
+.login-card button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 36px rgba(37, 99, 235, 0.42);
+}
+
+.login-card button:active {
+    transform: translateY(0);
+}
+
+/* =========================
+   MENSAGEM DE ERRO
+========================= */
+
+.login-message {
+    margin-top: 14px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: rgba(222, 53, 11, 0.10);
+    color: #bf2600;
+    border: 1px solid rgba(222, 53, 11, 0.20);
+    font-size: 13px;
+    font-weight: 800;
+    text-align: center;
+}
+
+.login-message:empty {
+    display: none;
+}
+
+/* =========================
+   RESPONSIVO
+========================= */
+
+@media (max-width: 900px) {
+    .login-shell {
+        grid-template-columns: 1fr;
+        max-width: 460px;
+    }
+
+    .login-brand {
+        text-align: center;
+        padding: 28px 24px;
+    }
+
+    .brand-badge {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .login-benefits {
+        justify-content: center;
+    }
+
+    .login-card {
+        width: 100%;
+    }
+}
+
+@media (max-width: 520px) {
+    .login-page {
+        padding: 24px 14px;
+        align-items: flex-start;
+    }
+
+    .login-brand {
+        padding: 26px 22px;
+        border-radius: 22px;
+    }
+
+    .login-brand h1 {
+        font-size: 38px;
+        letter-spacing: -1.4px;
+    }
+
+    .login-brand p {
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    .login-benefits span {
+        font-size: 11px;
+        padding: 7px 11px;
+    }
+
+    .login-card {
+        padding: 26px 22px;
+        border-radius: 22px;
+    }
+
+    .login-card h2 {
+        font-size: 22px;
+    }
+}
+
+/* =========================
+   ANIMAÇÕES
+========================= */
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-18px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(18px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}

@@ -1,0 +1,91 @@
+/* =========================================================
+   UX FIX V3 - Correção do Kanban
+   Objetivo: manter o visual moderno da V2 sem sobrepor títulos
+   das colunas por cima dos cards.
+   ========================================================= */
+
+/* Remove o comportamento sticky que vinha da V1 e causava sobreposição */
+.column-header,
+.kanban-column .column-header {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    z-index: 1 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    margin: 0 0 14px 0 !important;
+}
+
+/* Garante que o conteúdo da coluna começa abaixo do cabeçalho */
+.column-body,
+.kanban-column .column-body {
+    position: relative !important;
+    z-index: 0 !important;
+    padding-top: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 14px !important;
+}
+
+/* Ajusta a coluna para não cortar cards nem cabeçalho */
+.kanban-column {
+    overflow: visible !important;
+    align-self: start !important;
+}
+
+/* Mantém o card dentro do fluxo normal da coluna */
+.task-card {
+    position: relative !important;
+    z-index: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+}
+
+.task-card:hover {
+    z-index: 2 !important;
+}
+
+/* Evita que cards fiquem escondidos atrás do cabeçalho em qualquer tema */
+body[data-theme="dark"] .column-header,
+body.dark-theme .column-header,
+body.theme-dark .column-header,
+body.dark .column-header {
+    position: relative !important;
+    top: auto !important;
+}
+
+/* Deixa o Kanban mais estável visualmente */
+.kanban {
+    align-items: start !important;
+    scroll-padding-top: 16px !important;
+}
+
+/* Remove o selo temporário da V2 no topo */
+body.ux-v2-loaded .topbar::after {
+    content: none !important;
+    display: none !important;
+}
+
+/* Pequeno refinamento nos cabeçalhos das colunas */
+.column-header h3 {
+    white-space: nowrap !important;
+}
+
+.column-header span {
+    flex-shrink: 0 !important;
+}
+
+/* Em telas menores, mantém as colunas organizadas sem sobreposição */
+@media (max-width: 900px) {
+    .column-header,
+    .kanban-column .column-header {
+        position: relative !important;
+        top: auto !important;
+        z-index: 1 !important;
+    }
+
+    .kanban-column {
+        min-height: 480px !important;
+    }
+}

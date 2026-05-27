@@ -1,0 +1,29 @@
+/* UX V18 - Estabilidade e performance
+   Corrige travamento causado pela tentativa de separar chat em painel com observador pesado.
+   Mantém notificações estáveis da V16 e remove qualquer sobra visual da V17. */
+#v17ChatNotifPanel,
+.v17-chat-entry,
+.v17-alert-label {
+  display: none !important;
+}
+
+#uxOnboarding {
+  display: none !important;
+}
+
+/* deixa a central de notificações mais leve em telas pequenas */
+@media (max-width: 760px) {
+  #painelNotificacoes,
+  .painel-notificacoes,
+  .notification-panel,
+  .v12-notification-panel {
+    max-height: 100dvh !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+  }
+
+  .v12-notif-card,
+  .ux-notif-card {
+    contain: content;
+  }
+}

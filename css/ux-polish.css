@@ -1,0 +1,699 @@
+/* =========================================================
+   UX POLISH - melhorias visuais seguras
+   Camada adicionada por último para não alterar a lógica.
+   ========================================================= */
+
+:root {
+    --radius-lg: 24px;
+    --radius-md: 18px;
+    --radius-sm: 12px;
+    --soft-shadow: 0 16px 42px rgba(9, 30, 66, 0.10);
+    --soft-shadow-hover: 0 22px 58px rgba(9, 30, 66, 0.16);
+    --focus-ring: 0 0 0 4px rgba(0, 82, 204, 0.16);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background:
+        radial-gradient(circle at top left, rgba(0, 82, 204, 0.08), transparent 34rem),
+        radial-gradient(circle at bottom right, rgba(54, 179, 126, 0.08), transparent 30rem),
+        var(--bg);
+}
+
+body[data-ux-loading="true"] .main::before {
+    content: "Atualizando informações...";
+    position: fixed;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9000;
+    padding: 10px 16px;
+    border-radius: 999px;
+    background: rgba(23, 43, 77, 0.92);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 0.01em;
+    box-shadow: var(--shadow);
+}
+
+/* Acessibilidade e foco */
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+.menu-item:focus-visible,
+.modal-tab:focus-visible,
+.tab-btn:focus-visible,
+.project-tab:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring) !important;
+}
+
+button,
+.btn-primary,
+.btn-secondary,
+.btn-small,
+.menu-item,
+.task-card,
+.metric-card,
+.admin-card {
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        border-color 0.18s ease,
+        background 0.18s ease,
+        color 0.18s ease,
+        opacity 0.18s ease;
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-small,
+.btn-delete,
+.btn-start,
+.btn-done,
+.btn-cancel,
+.btn-cancel-edit,
+.filter-clear {
+    min-height: 42px;
+}
+
+.btn-primary:hover,
+.btn-secondary:hover,
+.btn-small:hover,
+.filter-clear:hover,
+.task-actions button:hover,
+.modal-actions button:hover {
+    transform: translateY(-1px);
+}
+
+/* Login */
+.login-page {
+    background:
+        radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.26), transparent 26rem),
+        linear-gradient(135deg, #063b89 0%, #0052cc 48%, #0f766e 100%);
+}
+
+.login-brand,
+.login-card {
+    border: 1px solid rgba(255, 255, 255, 0.20);
+    backdrop-filter: blur(18px) saturate(1.25);
+    -webkit-backdrop-filter: blur(18px) saturate(1.25);
+}
+
+.login-card {
+    box-shadow: 0 28px 80px rgba(3, 16, 38, 0.28);
+}
+
+.login-benefits span {
+    box-shadow: 0 8px 24px rgba(3, 16, 38, 0.12);
+}
+
+/* Sidebar */
+.sidebar {
+    background:
+        linear-gradient(180deg, #073b8f 0%, #0747a6 46%, #0f172a 100%) !important;
+    box-shadow: inset -1px 0 0 rgba(255,255,255,0.08), 10px 0 30px rgba(9, 30, 66, 0.08);
+}
+
+.sidebar-logo {
+    padding: 12px;
+    border-radius: 18px;
+    background: rgba(255,255,255,0.10);
+}
+
+.menu-item {
+    position: relative;
+    overflow: hidden;
+}
+
+.menu-item::before {
+    content: "";
+    position: absolute;
+    inset: 8px auto 8px 0;
+    width: 4px;
+    border-radius: 999px;
+    background: transparent;
+}
+
+.menu-item:hover,
+.menu-item.active {
+    background: rgba(255, 255, 255, 0.18) !important;
+    transform: translateX(2px);
+}
+
+.menu-item.active::before {
+    background: #fff;
+}
+
+.btn-logout {
+    width: 100%;
+    min-height: 42px;
+    border-radius: 14px;
+}
+
+/* Topbar e cartões */
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 70;
+    background: rgba(255, 255, 255, 0.86) !important;
+    backdrop-filter: blur(18px) saturate(1.4);
+    -webkit-backdrop-filter: blur(18px) saturate(1.4);
+}
+
+.topbar h1 {
+    line-height: 1.08;
+}
+
+.metric-card,
+.admin-card,
+.create-panel,
+.board-toolbar,
+.task-card,
+.modal-content,
+.notifications-panel,
+.project-card,
+.modelo-card,
+.chart-card {
+    border-color: rgba(223, 225, 230, 0.82) !important;
+    box-shadow: var(--soft-shadow) !important;
+}
+
+.metric-card:hover,
+.admin-card:hover,
+.project-card:hover,
+.modelo-card:hover,
+.chart-card:hover {
+    box-shadow: var(--soft-shadow-hover) !important;
+}
+
+.metric-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.metric-card::after {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), rgba(54, 179, 126, 0.9));
+    opacity: 0.75;
+}
+
+.metric-card.danger::after {
+    background: linear-gradient(90deg, var(--danger), var(--warning));
+}
+
+.metric-card strong {
+    letter-spacing: -1.4px;
+}
+
+.admin-card-header h2,
+.panel-header h2 {
+    letter-spacing: -0.035em;
+}
+
+/* Formulários */
+.form-group label {
+    letter-spacing: 0.01em;
+}
+
+input,
+select,
+textarea {
+    min-height: 43px;
+    border-radius: 13px !important;
+}
+
+textarea {
+    resize: vertical;
+}
+
+input:hover,
+select:hover,
+textarea:hover {
+    border-color: rgba(0, 82, 204, 0.45) !important;
+}
+
+/* Workspace */
+.workspace {
+    align-items: start;
+}
+
+.create-panel {
+    border-radius: var(--radius-lg) !important;
+}
+
+.create-panel .panel-header {
+    margin-bottom: 18px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.ux-form-hint {
+    margin: 12px 0 16px;
+    padding: 12px 14px;
+    border-radius: 14px;
+    background: #f0f7ff;
+    color: #0747a6;
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1.45;
+}
+
+/* Toolbar do board */
+.board-toolbar {
+    position: sticky;
+    top: 104px;
+    z-index: 60;
+    grid-template-columns: minmax(180px, 250px) minmax(260px, 1fr) repeat(5, minmax(150px, 210px)) auto;
+    align-items: end;
+    border-radius: var(--radius-lg) !important;
+    background: rgba(255, 255, 255, 0.90) !important;
+    backdrop-filter: blur(16px) saturate(1.25);
+    -webkit-backdrop-filter: blur(16px) saturate(1.25);
+}
+
+.board-toolbar.ux-has-filters {
+    border-color: rgba(0, 82, 204, 0.34) !important;
+}
+
+.search-box input {
+    width: 100%;
+}
+
+.board-toolbar select.ux-filter-active,
+.board-toolbar input.ux-filter-active {
+    border-color: var(--primary) !important;
+    background: #f0f7ff;
+}
+
+.ux-board-summary {
+    margin: -8px 0 16px;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.ux-board-summary-left,
+.ux-board-summary-right {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.ux-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 30px;
+    padding: 7px 11px;
+    border-radius: 999px;
+    background: #ffffff;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 900;
+    box-shadow: 0 4px 12px rgba(9, 30, 66, 0.06);
+}
+
+.ux-chip.strong {
+    color: var(--primary);
+    border-color: rgba(0, 82, 204, 0.25);
+    background: #f0f7ff;
+}
+
+.ux-chip.danger {
+    color: var(--danger);
+    border-color: rgba(222, 53, 11, 0.22);
+    background: #fff4f2;
+}
+
+.ux-chip.success {
+    color: #006644;
+    border-color: rgba(54, 179, 126, 0.24);
+    background: #eefcf6;
+}
+
+.ux-kbd {
+    padding: 2px 6px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: #f8fafc;
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 900;
+}
+
+/* Kanban */
+.kanban {
+    padding: 4px 2px 18px;
+    scrollbar-width: thin;
+}
+
+.kanban-column {
+    position: relative;
+    border: 1px solid rgba(223, 225, 230, 0.86);
+    background: rgba(235, 236, 240, 0.72) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.62);
+}
+
+.kanban-column::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 18px;
+    right: 18px;
+    height: 4px;
+    border-radius: 0 0 999px 999px;
+    background: var(--primary);
+    opacity: 0.75;
+}
+
+.kanban-column:nth-child(2)::before { background: var(--warning); }
+.kanban-column:nth-child(3)::before { background: var(--success); }
+.kanban-column:nth-child(4)::before { background: var(--muted); }
+
+.column-header {
+    position: sticky;
+    top: 186px;
+    z-index: 5;
+    background: inherit;
+    border-radius: 16px;
+}
+
+.column-header h3 {
+    letter-spacing: 0.035em;
+}
+
+.column-header span {
+    box-shadow: inset 0 -1px 0 rgba(9, 30, 66, 0.08);
+}
+
+.empty-column {
+    padding: 26px 16px !important;
+    background: rgba(255,255,255,0.58) !important;
+}
+
+.empty-column::before {
+    content: "✓";
+    display: block;
+    margin: 0 auto 8px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #eef2f7;
+    color: var(--muted);
+    line-height: 34px;
+    font-weight: 900;
+}
+
+.task-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 18px !important;
+}
+
+.task-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 5px;
+    background: var(--primary);
+    opacity: 0.72;
+}
+
+.task-card.prazo-vencido::before,
+.task-card.vencida::before,
+.task-card.atrasada::before {
+    background: var(--danger);
+}
+
+.task-card:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: var(--soft-shadow-hover) !important;
+}
+
+.task-card.compact {
+    padding: 12px 12px 12px 15px;
+}
+
+.task-title {
+    letter-spacing: -0.015em;
+}
+
+.task-desc {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.pill {
+    border: 1px solid rgba(9, 30, 66, 0.06);
+    box-shadow: inset 0 -1px 0 rgba(9, 30, 66, 0.06);
+}
+
+.prio-CRITICA {
+    background: #3b2f8f !important;
+    color: #fff !important;
+}
+
+.task-actions {
+    padding-top: 10px;
+    border-top: 1px solid rgba(223, 225, 230, 0.75);
+}
+
+/* Modais */
+.modal-content {
+    border-radius: 26px !important;
+    max-height: min(86vh, 920px);
+    overflow: hidden;
+}
+
+.modal-header {
+    background: linear-gradient(180deg, rgba(248,250,252,0.96), rgba(255,255,255,0.92));
+    border-bottom: 1px solid var(--border);
+}
+
+.modal-tabs {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+}
+
+.modal-tab.active,
+.project-tab.active,
+.tab-btn.active {
+    box-shadow: inset 0 -3px 0 var(--primary);
+}
+
+.modal-actions {
+    position: sticky;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-top: 1px solid var(--border);
+}
+
+.modal-info-card {
+    border-radius: 16px !important;
+}
+
+/* Notificações e listas */
+.notifications-panel {
+    border-radius: 24px !important;
+}
+
+.admin-empty {
+    border-style: dashed !important;
+    background: rgba(255,255,255,0.58);
+}
+
+.usuario-row {
+    border-radius: 18px !important;
+}
+
+/* Botão de voltar ao topo */
+.ux-scroll-top {
+    position: fixed;
+    right: 22px;
+    bottom: 22px;
+    z-index: 80;
+    width: 46px;
+    height: 46px;
+    border: none;
+    border-radius: 50%;
+    background: var(--primary);
+    color: #fff;
+    font-size: 20px;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(10px);
+}
+
+.ux-scroll-top.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+/* Dark mode */
+body[data-theme="dark"] {
+    background:
+        radial-gradient(circle at top left, rgba(59, 130, 246, 0.14), transparent 32rem),
+        radial-gradient(circle at bottom right, rgba(34, 197, 94, 0.10), transparent 28rem),
+        var(--bg) !important;
+}
+
+body[data-theme="dark"] .topbar,
+body[data-theme="dark"] .board-toolbar,
+body[data-theme="dark"] .modal-actions {
+    background: rgba(30, 41, 59, 0.88) !important;
+}
+
+body[data-theme="dark"] .kanban-column {
+    background: rgba(23, 32, 51, 0.84) !important;
+}
+
+body[data-theme="dark"] .ux-chip,
+body[data-theme="dark"] .empty-column,
+body[data-theme="dark"] .admin-empty {
+    background: rgba(15, 23, 42, 0.58) !important;
+    border-color: var(--border) !important;
+}
+
+body[data-theme="dark"] .ux-form-hint,
+body[data-theme="dark"] .ux-chip.strong,
+body[data-theme="dark"] .board-toolbar select.ux-filter-active,
+body[data-theme="dark"] .board-toolbar input.ux-filter-active {
+    background: rgba(59, 130, 246, 0.14) !important;
+    color: #bfdbfe !important;
+}
+
+body[data-theme="dark"] .modal-header {
+    background: linear-gradient(180deg, rgba(30, 41, 59, 0.98), rgba(30, 41, 59, 0.90));
+}
+
+body[data-theme="dark"] .task-actions {
+    border-color: var(--border);
+}
+
+body[data-theme="dark"] .ux-kbd {
+    background: #111827;
+    border-color: var(--border);
+}
+
+/* Responsividade */
+@media (max-width: 1280px) {
+    .board-toolbar {
+        grid-template-columns: repeat(2, minmax(220px, 1fr));
+        top: 94px;
+    }
+
+    .kanban {
+        grid-template-columns: repeat(4, minmax(280px, 1fr));
+    }
+}
+
+@media (max-width: 980px) {
+    .topbar {
+        position: relative;
+    }
+
+    .board-toolbar {
+        position: relative;
+        top: auto;
+        grid-template-columns: 1fr;
+    }
+
+    .column-header {
+        position: static;
+    }
+
+    .metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .ux-board-summary {
+        margin-top: 0;
+    }
+}
+
+@media (max-width: 720px) {
+    .topbar h1 {
+        font-size: 26px;
+    }
+
+    .metrics,
+    .admin-panel,
+    .workspace {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+    }
+
+    .metrics {
+        grid-template-columns: 1fr;
+    }
+
+    .top-actions {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .top-actions button {
+        width: 100%;
+    }
+
+    .kanban {
+        grid-template-columns: repeat(4, minmax(82vw, 1fr));
+        scroll-snap-type: x mandatory;
+    }
+
+    .kanban-column {
+        scroll-snap-align: start;
+        min-height: 430px;
+    }
+
+    .modal-content {
+        width: calc(100vw - 18px) !important;
+        border-radius: 20px !important;
+    }
+
+    .ux-scroll-top {
+        right: 16px;
+        bottom: 16px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition: none !important;
+        scroll-behavior: auto !important;
+    }
+}

@@ -1,0 +1,748 @@
+/* =========================================================
+   UX POLISH V2 - mudanças visuais perceptíveis e seguras
+   Somente CSS: não altera IDs, funções, rotas nem dados.
+   ========================================================= */
+
+:root {
+    --ux-blue: #2563eb;
+    --ux-blue-dark: #1e40af;
+    --ux-cyan: #06b6d4;
+    --ux-green: #10b981;
+    --ux-orange: #f59e0b;
+    --ux-red: #ef4444;
+    --ux-purple: #8b5cf6;
+    --ux-bg: #eef4ff;
+    --ux-card: rgba(255, 255, 255, 0.92);
+    --ux-border: rgba(37, 99, 235, 0.14);
+    --ux-shadow: 0 18px 45px rgba(15, 23, 42, 0.12);
+    --ux-shadow-strong: 0 28px 70px rgba(15, 23, 42, 0.20);
+    --ux-radius-xl: 28px;
+    --ux-radius-lg: 22px;
+    --ux-radius-md: 16px;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background:
+        radial-gradient(circle at 16% 8%, rgba(37, 99, 235, 0.20), transparent 32rem),
+        radial-gradient(circle at 86% 16%, rgba(6, 182, 212, 0.16), transparent 30rem),
+        linear-gradient(135deg, #f8fbff 0%, var(--ux-bg) 48%, #f8fafc 100%) !important;
+    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+}
+
+body.dark-theme,
+body.theme-dark,
+body.dark {
+    background:
+        radial-gradient(circle at 12% 8%, rgba(59, 130, 246, 0.22), transparent 32rem),
+        radial-gradient(circle at 86% 16%, rgba(20, 184, 166, 0.14), transparent 30rem),
+        linear-gradient(135deg, #020617 0%, #0f172a 55%, #111827 100%) !important;
+}
+
+/* Layout principal */
+.app:not(.hidden) {
+    background: transparent !important;
+}
+
+.main {
+    background: transparent !important;
+}
+
+.sidebar {
+    background:
+        radial-gradient(circle at 20% 8%, rgba(255, 255, 255, 0.20), transparent 9rem),
+        linear-gradient(180deg, #0f172a 0%, #1e3a8a 52%, #0f766e 100%) !important;
+    border-right: 1px solid rgba(255,255,255,0.14) !important;
+    box-shadow: 18px 0 45px rgba(15, 23, 42, 0.16) !important;
+}
+
+.sidebar-logo {
+    margin: 12px !important;
+    padding: 14px !important;
+    border-radius: 24px !important;
+    background: rgba(255,255,255,0.14) !important;
+    border: 1px solid rgba(255,255,255,0.18) !important;
+    backdrop-filter: blur(14px) !important;
+}
+
+.brand-badge,
+.brand-badge.small {
+    background: linear-gradient(135deg, #60a5fa, #22d3ee) !important;
+    color: white !important;
+    box-shadow: 0 12px 30px rgba(37, 99, 235, 0.35) !important;
+}
+
+.menu-item {
+    margin: 4px 12px !important;
+    border-radius: 16px !important;
+    color: rgba(255,255,255,0.82) !important;
+    border: 1px solid transparent !important;
+    transition: transform .18s ease, background .18s ease, color .18s ease, box-shadow .18s ease !important;
+}
+
+.menu-item:hover,
+.menu-item.active {
+    color: white !important;
+    background: rgba(255,255,255,0.16) !important;
+    border-color: rgba(255,255,255,0.16) !important;
+    transform: translateX(4px) !important;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.12) !important;
+}
+
+.menu-item.active {
+    background: linear-gradient(135deg, rgba(96,165,250,0.30), rgba(34,211,238,0.20)) !important;
+}
+
+.sidebar-footer {
+    padding: 12px !important;
+}
+
+.btn-logout {
+    border-radius: 16px !important;
+    background: rgba(239, 68, 68, 0.16) !important;
+    color: #fff !important;
+    border: 1px solid rgba(255,255,255,0.16) !important;
+}
+
+/* Topbar */
+.topbar {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 60 !important;
+    margin: 0 0 18px 0 !important;
+    padding: 24px 30px !important;
+    background: rgba(255,255,255,0.82) !important;
+    backdrop-filter: blur(22px) saturate(1.4) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(1.4) !important;
+    border-bottom: 1px solid rgba(37, 99, 235, 0.10) !important;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06) !important;
+}
+
+.topbar h1 {
+    font-size: clamp(26px, 3vw, 40px) !important;
+    line-height: 1.02 !important;
+    letter-spacing: -0.04em !important;
+    background: linear-gradient(135deg, #0f172a, #1d4ed8 60%, #0891b2) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+}
+
+.topbar p {
+    color: #64748b !important;
+    font-size: 14px !important;
+}
+
+.eyebrow {
+    color: var(--ux-blue) !important;
+    font-weight: 900 !important;
+    letter-spacing: .08em !important;
+}
+
+/* Botões e campos */
+button,
+.btn-primary,
+.btn-secondary,
+.btn-small,
+.btn-delete,
+.btn-start,
+.btn-done,
+.btn-cancel,
+.btn-cancel-edit,
+.filter-clear {
+    border-radius: 14px !important;
+    font-weight: 900 !important;
+    min-height: 42px !important;
+    transition: transform .18s ease, box-shadow .18s ease, filter .18s ease !important;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--ux-blue), var(--ux-cyan)) !important;
+    border: none !important;
+    box-shadow: 0 14px 30px rgba(37, 99, 235, 0.26) !important;
+}
+
+.btn-primary:hover,
+.btn-secondary:hover,
+.btn-small:hover,
+.task-actions button:hover {
+    transform: translateY(-2px) !important;
+    filter: brightness(1.03) !important;
+}
+
+.btn-secondary,
+.filter-clear {
+    background: rgba(255,255,255,0.88) !important;
+    border: 1px solid rgba(37, 99, 235, 0.16) !important;
+    color: #1e3a8a !important;
+    box-shadow: 0 10px 22px rgba(15,23,42,0.06) !important;
+}
+
+input,
+select,
+textarea {
+    border-radius: 14px !important;
+    border: 1px solid rgba(37, 99, 235, 0.16) !important;
+    background: rgba(255,255,255,0.92) !important;
+    transition: box-shadow .18s ease, border-color .18s ease, transform .18s ease !important;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: rgba(37, 99, 235, 0.70) !important;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.13) !important;
+    outline: none !important;
+}
+
+/* Cards gerais */
+.metric-card,
+.admin-card,
+.create-panel,
+.board-toolbar,
+.task-card,
+.modal-content,
+.notifications-panel,
+.project-card,
+.modelo-card,
+.chart-card {
+    background: var(--ux-card) !important;
+    border: 1px solid var(--ux-border) !important;
+    border-radius: var(--ux-radius-lg) !important;
+    box-shadow: var(--ux-shadow) !important;
+    backdrop-filter: blur(18px) saturate(1.25) !important;
+    -webkit-backdrop-filter: blur(18px) saturate(1.25) !important;
+}
+
+.metric-card,
+.admin-card,
+.project-card,
+.modelo-card,
+.chart-card,
+.task-card {
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease !important;
+}
+
+.metric-card:hover,
+.admin-card:hover,
+.project-card:hover,
+.modelo-card:hover,
+.chart-card:hover,
+.task-card:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: var(--ux-shadow-strong) !important;
+    border-color: rgba(37, 99, 235, 0.28) !important;
+}
+
+/* Métricas */
+.metrics {
+    padding: 0 30px 18px !important;
+    gap: 18px !important;
+}
+
+.metric-card {
+    position: relative !important;
+    overflow: hidden !important;
+    padding: 22px !important;
+}
+
+.metric-card::before {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 auto 0 0 !important;
+    width: 6px !important;
+    background: linear-gradient(180deg, var(--ux-blue), var(--ux-cyan)) !important;
+}
+
+.metric-card.danger::before {
+    background: linear-gradient(180deg, var(--ux-red), var(--ux-orange)) !important;
+}
+
+.metric-card span {
+    color: #64748b !important;
+    font-size: 12px !important;
+    text-transform: uppercase !important;
+    letter-spacing: .08em !important;
+    font-weight: 900 !important;
+}
+
+.metric-card strong {
+    display: block !important;
+    margin-top: 8px !important;
+    font-size: clamp(30px, 4vw, 48px) !important;
+    line-height: 1 !important;
+    letter-spacing: -0.05em !important;
+    color: #0f172a !important;
+}
+
+.metric-card small {
+    color: #64748b !important;
+}
+
+.metric-card.mini strong {
+    font-size: 28px !important;
+}
+
+/* Dashboard */
+.dashboard-home,
+.workspace,
+.admin-panel,
+.reports-panel,
+.projects-panel {
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+}
+
+.dashboard-grid {
+    gap: 20px !important;
+}
+
+.admin-card-header h2,
+.panel-header h2 {
+    letter-spacing: -0.03em !important;
+    color: #0f172a !important;
+}
+
+.quick-actions {
+    gap: 12px !important;
+}
+
+/* Criar tarefa */
+.workspace {
+    grid-template-columns: minmax(320px, 390px) minmax(0, 1fr) !important;
+    gap: 22px !important;
+}
+
+.create-panel {
+    top: 92px !important;
+    border-radius: 26px !important;
+    overflow: hidden !important;
+}
+
+.create-panel::before {
+    content: "Nova tarefa" !important;
+    display: block !important;
+    margin: -22px -22px 18px !important;
+    padding: 14px 22px !important;
+    color: white !important;
+    font-size: 12px !important;
+    font-weight: 900 !important;
+    text-transform: uppercase !important;
+    letter-spacing: .10em !important;
+    background: linear-gradient(135deg, var(--ux-blue), var(--ux-cyan)) !important;
+}
+
+/* Board */
+.board-area {
+    min-width: 0 !important;
+}
+
+.board-toolbar {
+    grid-template-columns: minmax(200px, 280px) minmax(260px, 1fr) repeat(5, minmax(150px, 190px)) !important;
+    gap: 12px !important;
+    padding: 16px !important;
+    margin-bottom: 16px !important;
+    overflow-x: auto !important;
+}
+
+.search-box input {
+    padding-left: 44px !important;
+}
+
+.ux-board-summary {
+    display: flex !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    flex-wrap: wrap !important;
+    margin: 0 0 16px !important;
+    padding: 12px !important;
+    border-radius: 18px !important;
+    background: rgba(255,255,255,0.72) !important;
+    border: 1px solid rgba(37,99,235,0.13) !important;
+    box-shadow: 0 10px 24px rgba(15,23,42,0.06) !important;
+}
+
+.ux-board-summary-left,
+.ux-board-summary-right {
+    display: flex !important;
+    gap: 8px !important;
+    flex-wrap: wrap !important;
+}
+
+.ux-chip {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 8px 11px !important;
+    border-radius: 999px !important;
+    background: white !important;
+    color: #334155 !important;
+    border: 1px solid rgba(37,99,235,0.12) !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+}
+
+.ux-chip.strong,
+.ux-board-summary .strong {
+    color: #1d4ed8 !important;
+    background: #dbeafe !important;
+}
+
+.ux-kbd {
+    padding: 2px 6px !important;
+    border-radius: 6px !important;
+    background: #f1f5f9 !important;
+    border: 1px solid #cbd5e1 !important;
+}
+
+.kanban {
+    gap: 18px !important;
+    padding: 4px 4px 18px !important;
+}
+
+.kanban-column {
+    background: rgba(255,255,255,0.64) !important;
+    border: 1px solid rgba(37,99,235,0.12) !important;
+    border-radius: 26px !important;
+    padding: 14px !important;
+    min-height: 560px !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.70), 0 18px 36px rgba(15,23,42,0.08) !important;
+}
+
+.kanban-column:nth-child(1) .column-header {
+    background: linear-gradient(135deg, #dbeafe, #eff6ff) !important;
+}
+
+.kanban-column:nth-child(2) .column-header {
+    background: linear-gradient(135deg, #fef3c7, #fffbeb) !important;
+}
+
+.kanban-column:nth-child(3) .column-header {
+    background: linear-gradient(135deg, #dcfce7, #f0fdf4) !important;
+}
+
+.kanban-column:nth-child(4) .column-header {
+    background: linear-gradient(135deg, #fee2e2, #fff1f2) !important;
+}
+
+.column-header {
+    padding: 14px !important;
+    border-radius: 18px !important;
+    margin-bottom: 12px !important;
+    border: 1px solid rgba(15,23,42,0.06) !important;
+}
+
+.column-header h3 {
+    color: #0f172a !important;
+    font-size: 13px !important;
+    letter-spacing: .08em !important;
+}
+
+.column-header span {
+    background: rgba(15,23,42,0.86) !important;
+    color: white !important;
+    min-width: 32px !important;
+    height: 32px !important;
+}
+
+/* Task cards mais visíveis */
+.task-card {
+    position: relative !important;
+    padding: 16px 16px 15px 18px !important;
+    border-radius: 20px !important;
+    border-left: 6px solid var(--ux-blue) !important;
+    background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(248,250,252,0.96)) !important;
+}
+
+.task-card::after {
+    content: "Abrir" !important;
+    position: absolute !important;
+    top: 12px !important;
+    right: 12px !important;
+    padding: 5px 8px !important;
+    border-radius: 999px !important;
+    background: rgba(37,99,235,0.08) !important;
+    color: #1d4ed8 !important;
+    font-size: 10px !important;
+    font-weight: 900 !important;
+    opacity: 0 !important;
+    transition: opacity .18s ease !important;
+}
+
+.task-card:hover::after {
+    opacity: 1 !important;
+}
+
+.task-title {
+    color: #0f172a !important;
+    font-size: 15px !important;
+    padding-right: 48px !important;
+}
+
+.task-desc {
+    color: #64748b !important;
+}
+
+.task-meta {
+    gap: 7px !important;
+}
+
+.pill {
+    border-radius: 999px !important;
+    border: 1px solid rgba(15,23,42,0.08) !important;
+    font-size: 10.5px !important;
+    letter-spacing: .02em !important;
+}
+
+.prio-BAIXA { background: #dcfce7 !important; color: #166534 !important; }
+.prio-MEDIA { background: #fef3c7 !important; color: #92400e !important; }
+.prio-ALTA { background: #ffedd5 !important; color: #c2410c !important; }
+.prio-CRITICA { background: #fee2e2 !important; color: #b91c1c !important; }
+.date-pill { background: #dbeafe !important; color: #1d4ed8 !important; }
+.owner-pill { background: #f1f5f9 !important; color: #334155 !important; }
+.project-pill { background: #ede9fe !important; color: #5b21b6 !important; }
+
+.task-card.prazo-vencido,
+.task-card.vencida,
+.task-card.overdue {
+    border-left-color: var(--ux-red) !important;
+    background: linear-gradient(180deg, #fff7f7, #fff) !important;
+}
+
+.task-actions {
+    padding-top: 10px !important;
+    border-top: 1px solid rgba(15,23,42,0.06) !important;
+}
+
+.task-actions button {
+    box-shadow: 0 8px 18px rgba(15,23,42,0.08) !important;
+}
+
+.empty-column,
+.admin-empty {
+    border: 1px dashed rgba(37,99,235,0.26) !important;
+    border-radius: 18px !important;
+    background: rgba(239,246,255,0.62) !important;
+    color: #64748b !important;
+}
+
+/* Modal */
+.modal-content {
+    border-radius: 28px !important;
+    overflow: hidden !important;
+    box-shadow: 0 40px 100px rgba(15,23,42,0.28) !important;
+}
+
+.modal-header {
+    background: linear-gradient(135deg, #0f172a, #1d4ed8) !important;
+    color: white !important;
+    border-bottom: none !important;
+}
+
+.modal-header h2,
+.modal-header p,
+.modal-status {
+    color: white !important;
+}
+
+.modal-close {
+    background: rgba(255,255,255,0.16) !important;
+    color: white !important;
+    border: 1px solid rgba(255,255,255,0.18) !important;
+}
+
+.modal-body {
+    background: #f8fafc !important;
+}
+
+.modal-actions {
+    background: rgba(248,250,252,0.96) !important;
+    border-top: 1px solid rgba(37,99,235,0.10) !important;
+}
+
+/* Login mais evidente */
+.login-page {
+    background:
+        radial-gradient(circle at 12% 12%, rgba(255,255,255,0.32), transparent 26rem),
+        radial-gradient(circle at 88% 8%, rgba(34,211,238,0.32), transparent 26rem),
+        linear-gradient(135deg, #0f172a 0%, #1d4ed8 54%, #0f766e 100%) !important;
+}
+
+.login-brand,
+.login-card {
+    border-radius: 30px !important;
+    box-shadow: 0 30px 90px rgba(0,0,0,0.24) !important;
+    backdrop-filter: blur(24px) saturate(1.35) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(1.35) !important;
+}
+
+.login-card {
+    background: rgba(255,255,255,0.92) !important;
+}
+
+.login-card h2 {
+    font-size: 30px !important;
+    letter-spacing: -0.04em !important;
+}
+
+/* Indicadores para garantir que o CSS carregou */
+body.ux-v2-loaded .topbar::after {
+    content: "Design moderno ativo" !important;
+    position: absolute !important;
+    right: 30px !important;
+    bottom: -14px !important;
+    padding: 7px 11px !important;
+    border-radius: 999px !important;
+    background: linear-gradient(135deg, #10b981, #06b6d4) !important;
+    color: white !important;
+    font-size: 11px !important;
+    font-weight: 900 !important;
+    box-shadow: 0 12px 24px rgba(16,185,129,0.22) !important;
+}
+
+/* Botão voltar ao topo */
+.ux-scroll-top {
+    position: fixed !important;
+    right: 22px !important;
+    bottom: 22px !important;
+    width: 46px !important;
+    height: 46px !important;
+    border: none !important;
+    border-radius: 999px !important;
+    background: linear-gradient(135deg, var(--ux-blue), var(--ux-cyan)) !important;
+    color: white !important;
+    box-shadow: 0 18px 38px rgba(37,99,235,0.30) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transform: translateY(8px) !important;
+    z-index: 9999 !important;
+}
+
+.ux-scroll-top.visible {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: translateY(0) !important;
+}
+
+.ux-filter-active {
+    border-color: var(--ux-blue) !important;
+    box-shadow: 0 0 0 4px rgba(37,99,235,0.12) !important;
+}
+
+/* Dark theme */
+body.dark-theme .topbar,
+body.theme-dark .topbar,
+body.dark .topbar,
+body.dark-theme .metric-card,
+body.theme-dark .metric-card,
+body.dark .metric-card,
+body.dark-theme .admin-card,
+body.theme-dark .admin-card,
+body.dark .admin-card,
+body.dark-theme .create-panel,
+body.theme-dark .create-panel,
+body.dark .create-panel,
+body.dark-theme .board-toolbar,
+body.theme-dark .board-toolbar,
+body.dark .board-toolbar,
+body.dark-theme .task-card,
+body.theme-dark .task-card,
+body.dark .task-card,
+body.dark-theme .modal-content,
+body.theme-dark .modal-content,
+body.dark .modal-content {
+    background: rgba(15,23,42,0.86) !important;
+    border-color: rgba(148,163,184,0.18) !important;
+    color: #e5e7eb !important;
+}
+
+body.dark-theme .topbar h1,
+body.theme-dark .topbar h1,
+body.dark .topbar h1,
+body.dark-theme .task-title,
+body.theme-dark .task-title,
+body.dark .task-title,
+body.dark-theme .metric-card strong,
+body.theme-dark .metric-card strong,
+body.dark .metric-card strong,
+body.dark-theme .admin-card-header h2,
+body.theme-dark .admin-card-header h2,
+body.dark .admin-card-header h2 {
+    color: #f8fafc !important;
+    background: none !important;
+    -webkit-text-fill-color: #f8fafc !important;
+}
+
+body.dark-theme .kanban-column,
+body.theme-dark .kanban-column,
+body.dark .kanban-column {
+    background: rgba(15,23,42,0.58) !important;
+}
+
+body.dark-theme input,
+body.theme-dark input,
+body.dark input,
+body.dark-theme select,
+body.theme-dark select,
+body.dark select,
+body.dark-theme textarea,
+body.theme-dark textarea,
+body.dark textarea {
+    background: rgba(15,23,42,0.90) !important;
+    color: #f8fafc !important;
+    border-color: rgba(148,163,184,0.22) !important;
+}
+
+/* Responsivo */
+@media (max-width: 1100px) {
+    .workspace {
+        grid-template-columns: 1fr !important;
+    }
+
+    .create-panel {
+        position: relative !important;
+        top: 0 !important;
+    }
+
+    .board-toolbar {
+        grid-template-columns: 1fr 1fr !important;
+    }
+}
+
+@media (max-width: 760px) {
+    .topbar,
+    .metrics,
+    .dashboard-home,
+    .workspace,
+    .admin-panel,
+    .reports-panel,
+    .projects-panel {
+        padding-left: 14px !important;
+        padding-right: 14px !important;
+    }
+
+    .topbar {
+        padding-top: 68px !important;
+    }
+
+    .top-actions {
+        width: 100% !important;
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+    }
+
+    .board-toolbar {
+        grid-template-columns: 1fr !important;
+    }
+
+    .kanban {
+        grid-template-columns: repeat(4, minmax(280px, 84vw)) !important;
+    }
+
+    body.ux-v2-loaded .topbar::after {
+        right: 14px !important;
+    }
+}

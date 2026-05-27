@@ -1,0 +1,221 @@
+/* =========================================================
+   UX FIX V4 - Correção do modal de subitens
+   Objetivo: tornar os subitens visíveis sem alterar JS, IDs,
+   funções, rotas ou regras do sistema.
+   ========================================================= */
+
+/* Modal maior e com rolagem controlada */
+.modal-content {
+    width: min(1080px, 96vw) !important;
+    max-height: 94vh !important;
+    margin: 3vh auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+}
+
+.modal-header {
+    padding: 22px 28px !important;
+    flex-shrink: 0 !important;
+}
+
+.modal-header h2 {
+    font-size: clamp(22px, 2.5vw, 30px) !important;
+    line-height: 1.15 !important;
+    margin-top: 6px !important;
+}
+
+/* A área de conteúdo passa a rolar; o rodapé não cobre os subitens */
+.modal-body {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    padding: 22px 28px 28px !important;
+    gap: 18px !important;
+    overscroll-behavior: contain !important;
+}
+
+.modal-actions {
+    flex-shrink: 0 !important;
+    position: relative !important;
+    bottom: auto !important;
+    padding: 14px 28px 18px !important;
+    gap: 8px !important;
+    box-shadow: 0 -14px 35px rgba(15, 23, 42, 0.08) !important;
+}
+
+.modal-actions button {
+    min-height: 38px !important;
+    padding: 9px 14px !important;
+}
+
+/* Abas mais compactas dentro do modal */
+.modal-tabs,
+.task-tabs,
+.tabs-nav {
+    flex-shrink: 0 !important;
+}
+
+/* Subitens mais compactos para caber melhor na tela */
+.subitems-section {
+    padding-top: 14px !important;
+}
+
+.subitems-header {
+    align-items: center !important;
+    margin-bottom: 8px !important;
+}
+
+.subitems-header h3 {
+    font-size: 14px !important;
+    margin-bottom: 2px !important;
+}
+
+.subitems-subtitle {
+    font-size: 12px !important;
+    line-height: 1.35 !important;
+}
+
+.subitem-progress-text {
+    padding: 6px 10px !important;
+    font-size: 11px !important;
+}
+
+.subitem-progress-bar {
+    height: 7px !important;
+    margin: 6px 0 12px !important;
+}
+
+/* O formulário estava ocupando muito espaço vertical */
+.subitem-form {
+    padding: 12px !important;
+    gap: 8px !important;
+    margin-bottom: 12px !important;
+    grid-template-columns: 1.45fr 0.95fr 0.85fr 0.75fr 1fr !important;
+    border-radius: 16px !important;
+}
+
+.subitem-form label,
+.subitem-form .form-group label {
+    font-size: 11px !important;
+    margin-bottom: 4px !important;
+}
+
+.subitem-form input,
+.subitem-form select,
+.subitem-form textarea {
+    min-height: 36px !important;
+    padding: 8px 10px !important;
+    font-size: 12px !important;
+}
+
+.subitem-form textarea {
+    min-height: 42px !important;
+    resize: vertical !important;
+}
+
+/* As dicas deixavam o formulário muito alto; ficam ocultas no modal */
+.subitem-form .field-hint {
+    display: none !important;
+}
+
+.subitem-description-field {
+    grid-column: 1 / 5 !important;
+}
+
+.subitem-form-actions {
+    grid-column: 5 / 6 !important;
+    align-self: end !important;
+    justify-content: flex-end !important;
+}
+
+.subitem-form-actions button {
+    width: 100% !important;
+    min-height: 38px !important;
+    padding: 9px 12px !important;
+}
+
+.subitems-list {
+    gap: 8px !important;
+    padding-bottom: 8px !important;
+}
+
+.subitem-card {
+    padding: 12px !important;
+    border-radius: 15px !important;
+}
+
+.subitem-title {
+    font-size: 14px !important;
+    margin-bottom: 3px !important;
+}
+
+.subitem-description {
+    font-size: 12px !important;
+    line-height: 1.35 !important;
+}
+
+.subitem-meta {
+    margin-top: 8px !important;
+    gap: 6px !important;
+}
+
+.subitem-actions {
+    margin-top: 8px !important;
+    gap: 6px !important;
+}
+
+.subitem-actions button {
+    min-height: 34px !important;
+    padding: 7px 10px !important;
+    font-size: 12px !important;
+}
+
+/* Melhor leitura em telas médias e pequenas */
+@media (max-width: 1000px) {
+    .modal-content {
+        width: min(960px, 96vw) !important;
+    }
+
+    .subitem-form {
+        grid-template-columns: 1fr 1fr 1fr !important;
+    }
+
+    .subitem-description-field,
+    .subitem-form-actions {
+        grid-column: 1 / -1 !important;
+    }
+
+    .subitem-form-actions {
+        justify-content: flex-start !important;
+    }
+
+    .subitem-form-actions button {
+        width: auto !important;
+    }
+}
+
+@media (max-width: 700px) {
+    .modal-content {
+        width: 100vw !important;
+        height: 100vh !important;
+        max-height: 100vh !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+    }
+
+    .modal-header,
+    .modal-body,
+    .modal-actions {
+        padding-left: 18px !important;
+        padding-right: 18px !important;
+    }
+
+    .subitem-form {
+        grid-template-columns: 1fr !important;
+    }
+
+    .subitem-top {
+        flex-direction: column !important;
+    }
+}
