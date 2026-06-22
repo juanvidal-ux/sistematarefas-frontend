@@ -211,6 +211,9 @@ async function abrirModalTarefa(id) {
     alternarAbaModal("DETALHES");
 
     await carregarSubitensTarefa(tarefa.id);
+    if (typeof carregarDocumentosTarefaSelecionada === "function") {
+        carregarDocumentosTarefaSelecionada();
+    }
     await carregarComentariosTarefa(tarefa.id);
     await carregarHistoricoTarefa(tarefa.id);
 }
@@ -222,7 +225,11 @@ function fecharModalTarefa() {
     subitemEdicaoId = null;
     comentariosTarefaSelecionada = [];
     historicoTarefaSelecionada = [];
+    documentoTarefaAbertoId = null;
     limparFormularioSubitem();
+    if (typeof limparFormularioDocumentoTarefa === "function") {
+        limparFormularioDocumentoTarefa();
+    }
     limparFormularioComentario();
 }
 

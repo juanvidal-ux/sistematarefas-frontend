@@ -243,7 +243,96 @@ function renderizarResumoProjetoCard(projeto) {
                 <span class="${diferenca > 0 ? "finance-negative" : diferenca < 0 ? "finance-positive" : ""}">Dif.: <strong>${formatarMoeda(diferenca)}</strong></span>
             </div>
         </div>
+        ${renderizarResumoDocumentosNoCard(projeto)}
     `;
+}
+
+function obterResumoDocumentosProjetoCard(projetoId) {
+    try {
+        const todos = JSON.parse(localStorage.getItem("taskflow_documentos_projeto_v1") || "[]");
+        const documentos = Array.isArray(todos)
+            ? todos.filter(doc => Number(doc.projetoId) === Number(projetoId))
+            : [];
+
+        const versoesValidas = documentos.flatMap(doc => (doc.versoes || []).filter(v => !v.excluido));
+        const documentosComAtual = documentos.map(doc => {
+            const validas = (doc.versoes || []).filter(v => !v.excluido);
+            const atual = validas.find(v => v.atual) || validas[validas.length - 1] || null;
+            return { ...doc, atual };
+        });
+
+        const ultimaAtualizacao = versoesValidas
+            .map(v => v.enviadoEm)
+            .filter(Boolean)
+            .sort()
+            .pop();
+
+        return {
+            totalDocumentos: documentos.length,
+            totalVersoes: versoesValidas.length,
+            aprovados: documentosComAtual.filter(doc => doc.atual?.status === "APROVADO").length,
+            emAnalise: documentosComAtual.filter(doc => doc.atual?.status === "EM_ANALISE").length,
+            ultimos: documentosComAtual
+                .filter(doc => doc.atual)
+                .sort((a, b) => new Date(b.atual.enviadoEm || 0) - new Date(a.atual.enviadoEm || 0))
+                .slice(0, 2),
+            ultimaAtualizacao
+        };
+    } catch (error) {
+        console.error("Erro ao montar resumo de documentos no card:", error);
+        return { totalDocumentos: 0, totalVersoes: 0, aprovados: 0, emAnalise: 0, ultimos: [], ultimaAtualizacao: null };
+    }
+}
+
+function renderizarResumoDocumentosNoCard(projeto) {
+    const resumo = obterResumoDocumentosProjetoCard(projeto.id);
+
+    if (!resumo.totalDocumentos) {
+        return `
+            <div class="project-documents-card empty">
+                <div>
+                    <span class="project-documents-title">Documentos</span>
+                    <strong>Nenhum documento anexado</strong>
+                    <small>Use para controlar desenhos técnicos, versões e evidências do projeto.</small>
+                </div>
+                <button class="btn-small neutral" onclick="abrirDocumentosProjetoDoCard(${projeto.id})">Adicionar</button>
+            </div>
+        `;
+    }
+
+    return `
+        <div class="project-documents-card">
+            <div class="project-documents-head">
+                <div>
+                    <span class="project-documents-title">Documentos</span>
+                    <strong>${resumo.totalDocumentos} doc. • ${resumo.totalVersoes} versões</strong>
+                    <small>Última atualização: ${resumo.ultimaAtualizacao ? formatarDataHoraDocumentoCard(resumo.ultimaAtualizacao) : "-"}</small>
+                </div>
+                <button class="btn-small neutral" onclick="abrirDocumentosProjetoDoCard(${projeto.id})">Ver</button>
+            </div>
+            <div class="project-documents-kpis">
+                <span class="doc-kpi aprovado">${resumo.aprovados} aprovados</span>
+                <span class="doc-kpi analise">${resumo.emAnalise} em análise</span>
+            </div>
+            <div class="project-documents-list">
+                ${resumo.ultimos.map(doc => `
+                    <div class="project-document-mini">
+                        <span>${escapeHtml(doc.nome || "Documento")}</span>
+                        <strong>V${doc.atual.numero}</strong>
+                    </div>
+                `).join("")}
+            </div>
+        </div>
+    `;
+}
+
+function formatarDataHoraDocumentoCard(valor) {
+    if (!valor) return "-";
+    try {
+        return new Date(valor).toLocaleDateString("pt-BR");
+    } catch (error) {
+        return valor;
+    }
 }
 
 function parseMoeda(valor) {

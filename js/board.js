@@ -40,6 +40,12 @@ async function buscarTarefas() {
             todasTarefas = data.content || [];
         }
 
+        // Mantém a lista carregada disponível para módulos auxiliares,
+        // principalmente notificações. Assim, ao selecionar um projeto,
+        // as notificações seguem o mesmo contexto do Board.
+        window.todasTarefas = todasTarefas;
+        window.tarefasContextoAtual = todasTarefas;
+
         renderizarBoard();
 
         atualizarMetricas();
@@ -110,8 +116,12 @@ function renderizarBoard() {
 
     atualizarFiltroResponsaveisBoard(tarefasFiltradas);
 
+    // Notificações devem acompanhar exatamente o contexto visual atual:
+    // projeto selecionado + filtros aplicados no Board.
+    window.tarefasContextoAtual = tarefasFiltradas;
+
     if (typeof atualizarNotificacoesInternas === "function") {
-        atualizarNotificacoesInternas(todasTarefas);
+        atualizarNotificacoesInternas(tarefasFiltradas);
     }
 }
 
@@ -194,6 +204,10 @@ function criarCardTarefa(tarefa) {
             </div>
 
             ${compacto ? "" : `
+                <div onclick="event.stopPropagation(); abrirModalTarefaDocumentos(${tarefa.id})">
+                    ${typeof montarResumoDocumentosTarefaCard === "function" ? montarResumoDocumentosTarefaCard(tarefa.id) : ""}
+                </div>
+
                 <div class="task-actions" onclick="event.stopPropagation()">
 
                     ${botaoMover(tarefa, "PENDENTE", "Voltar")}

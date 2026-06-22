@@ -1,0 +1,293 @@
+/* =========================================================
+   Design Balanced V7 — Densidade de sistema Kanban
+   Corrige a versão V6 que ficou grande demais.
+   Mantém legibilidade, mas com proporção compacta.
+   ========================================================= */
+
+body[data-layout="menu-slim-clean"] {
+    --b-space-1: 8px;
+    --b-space-15: 12px;
+    --b-space-2: 16px;
+    --b-space-25: 20px;
+    --b-space-3: 24px;
+
+    --b-text-xs: 11px;
+    --b-text-sm: 12px;
+    --b-text-md: 13px;
+    --b-text-base: 14px;
+    --b-text-readable: 15px;
+    --b-title-sm: 16px;
+    --b-title-md: 20px;
+    --b-title-lg: 28px;
+    --b-title-xl: 32px;
+
+    font-size: 14px !important;
+    line-height: 1.45 !important;
+}
+
+/* Base: sistema, não blog. */
+body[data-layout="menu-slim-clean"] #dashboardSection,
+body[data-layout="menu-slim-clean"] #dashboardSection input,
+body[data-layout="menu-slim-clean"] #dashboardSection select,
+body[data-layout="menu-slim-clean"] #dashboardSection textarea,
+body[data-layout="menu-slim-clean"] #dashboardSection button {
+    font-size: var(--b-text-base) !important;
+    line-height: 1.42 !important;
+}
+
+/* Títulos sem exagero */
+body[data-layout="menu-slim-clean"] #dashboardSection h1,
+body[data-layout="menu-slim-clean"] #dashboardSection #topbarTitulo {
+    font-size: clamp(24px, 1.8vw, 32px) !important;
+    line-height: 1.08 !important;
+    letter-spacing: -0.04em !important;
+    font-weight: 900 !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection h2 {
+    font-size: clamp(18px, 1.25vw, 22px) !important;
+    line-height: 1.18 !important;
+    letter-spacing: -0.025em !important;
+    font-weight: 850 !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection h3,
+body[data-layout="menu-slim-clean"] #dashboardSection .task-title {
+    font-size: var(--b-title-sm) !important;
+    line-height: 1.25 !important;
+    letter-spacing: -0.01em !important;
+    font-weight: 850 !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection p,
+body[data-layout="menu-slim-clean"] #dashboardSection .task-desc,
+body[data-layout="menu-slim-clean"] #dashboardSection .muted {
+    font-size: var(--b-text-base) !important;
+    line-height: 1.45 !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection small,
+body[data-layout="menu-slim-clean"] #dashboardSection .eyebrow,
+body[data-layout="menu-slim-clean"] #dashboardSection .pill,
+body[data-layout="menu-slim-clean"] #dashboardSection .field-hint {
+    font-size: var(--b-text-sm) !important;
+    line-height: 1.35 !important;
+}
+
+/* Limite de leitura em textos descritivos */
+body[data-layout="menu-slim-clean"] #dashboardSection .topbar p,
+body[data-layout="menu-slim-clean"] #dashboardSection .admin-card-header p,
+body[data-layout="menu-slim-clean"] #dashboardSection .ux-page-header p,
+body[data-layout="menu-slim-clean"] #dashboardSection .panel-header p,
+body[data-layout="menu-slim-clean"] #dashboardSection .modal-section p {
+    max-width: 72ch !important;
+}
+
+/* Espaçamento: múltiplos de 8, mas compacto */
+body[data-layout="menu-slim-clean"] #dashboardSection .main {
+    padding: var(--b-space-2) !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .topbar {
+    padding: var(--b-space-2) var(--b-space-3) !important;
+    margin-bottom: var(--b-space-2) !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .metrics,
+body[data-layout="menu-slim-clean"] #dashboardSection .workspace,
+body[data-layout="menu-slim-clean"] #dashboardSection .admin-panel,
+body[data-layout="menu-slim-clean"] #dashboardSection .ux-panel {
+    gap: var(--b-space-2) !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .metric-card,
+body[data-layout="menu-slim-clean"] #dashboardSection .admin-card,
+body[data-layout="menu-slim-clean"] #dashboardSection .create-panel,
+body[data-layout="menu-slim-clean"] #dashboardSection .board-toolbar,
+body[data-layout="menu-slim-clean"] #dashboardSection .modal-content,
+body[data-layout="menu-slim-clean"] #dashboardSection .notifications-panel,
+body[data-layout="menu-slim-clean"] #dashboardSection .project-detail-card,
+body[data-layout="menu-slim-clean"] #dashboardSection .project-detail-tabs-card,
+body[data-layout="menu-slim-clean"] #dashboardSection .document-form-card,
+body[data-layout="menu-slim-clean"] #dashboardSection .project-export-panel,
+body[data-layout="menu-slim-clean"] #dashboardSection .modelo-card,
+body[data-layout="menu-slim-clean"] #dashboardSection .chart-card,
+body[data-layout="menu-slim-clean"] #dashboardSection .export-option-card,
+body[data-layout="menu-slim-clean"] #dashboardSection .ux-card,
+body[data-layout="menu-slim-clean"] #dashboardSection .ux-kpi-card,
+body[data-layout="menu-slim-clean"] #dashboardSection .ux-page-header,
+body[data-layout="menu-slim-clean"] #dashboardSection .ux-toolbar {
+    padding: var(--b-space-2) !important;
+    border-radius: var(--b-space-2) !important;
+}
+
+/* Botões e inputs: bons para clique, sem ficarem gigantes */
+body[data-layout="menu-slim-clean"] #dashboardSection input,
+body[data-layout="menu-slim-clean"] #dashboardSection select,
+body[data-layout="menu-slim-clean"] #dashboardSection textarea {
+    min-height: 40px !important;
+    padding: 0 var(--b-space-15) !important;
+    border-radius: 10px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection textarea {
+    padding-top: var(--b-space-15) !important;
+    padding-bottom: var(--b-space-15) !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection button,
+body[data-layout="menu-slim-clean"] #dashboardSection .btn-primary,
+body[data-layout="menu-slim-clean"] #dashboardSection .btn-secondary,
+body[data-layout="menu-slim-clean"] #dashboardSection .btn-danger,
+body[data-layout="menu-slim-clean"] #dashboardSection .btn-delete,
+body[data-layout="menu-slim-clean"] #dashboardSection .btn-save,
+body[data-layout="menu-slim-clean"] #dashboardSection .btn-cancel-edit {
+    min-height: 40px !important;
+    padding: 0 var(--b-space-15) !important;
+    font-size: var(--b-text-base) !important;
+    border-radius: 10px !important;
+}
+
+/* Menu slim: área clicável boa, mas não exagerada */
+body[data-layout="menu-slim-clean"] #dashboardSection.app {
+    grid-template-columns: 64px minmax(0, 1fr) !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar {
+    width: 64px !important;
+    min-width: 64px !important;
+    max-width: 64px !important;
+    padding: var(--b-space-15) var(--b-space-1) !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .menu-item,
+body[data-layout="menu-slim-clean"] #dashboardSection .btn-logout,
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar-logo {
+    width: 44px !important;
+    min-width: 44px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .brand-badge,
+body[data-layout="menu-slim-clean"] #dashboardSection .brand-badge.small {
+    width: 36px !important;
+    min-width: 36px !important;
+    height: 36px !important;
+}
+
+/* Topbar nas telas de Board/Minhas tarefas mais compacta */
+body[data-layout="menu-slim-clean"][data-current-page="BOARD"] #dashboardSection .topbar,
+body[data-layout="menu-slim-clean"][data-current-page="MINHAS"] #dashboardSection .topbar {
+    min-height: 56px !important;
+    padding: var(--b-space-15) var(--b-space-2) !important;
+    margin-bottom: var(--b-space-15) !important;
+}
+
+body[data-layout="menu-slim-clean"][data-current-page="BOARD"] #dashboardSection .topbar h1,
+body[data-layout="menu-slim-clean"][data-current-page="MINHAS"] #dashboardSection .topbar h1 {
+    font-size: 22px !important;
+}
+
+/* Filtros do Kanban compactos */
+body[data-layout="menu-slim-clean"] #dashboardSection .board-toolbar,
+body[data-layout="menu-slim-clean"] #dashboardSection .ux-toolbar {
+    gap: var(--b-space-1) !important;
+    padding: var(--b-space-1) !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .board-toolbar input,
+body[data-layout="menu-slim-clean"] #dashboardSection .board-toolbar select {
+    min-height: 38px !important;
+    height: 38px !important;
+    font-size: var(--b-text-md) !important;
+}
+
+/* Kanban com leitura boa e densidade adequada */
+body[data-layout="menu-slim-clean"] #dashboardSection .kanban {
+    gap: var(--b-space-15) !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .kanban-column {
+    padding: var(--b-space-15) !important;
+    border-radius: 14px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .column-header {
+    padding: var(--b-space-1) var(--b-space-1) var(--b-space-15) !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .column-header h3 {
+    font-size: var(--b-text-md) !important;
+    line-height: 1.2 !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .task-card {
+    padding: var(--b-space-15) !important;
+    border-radius: 12px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .task-title {
+    font-size: 15px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .task-desc {
+    font-size: 13px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .pill {
+    padding: 4px 8px !important;
+    font-size: 11px !important;
+}
+
+/* Drawer da nova tarefa mais equilibrado */
+body[data-layout="menu-slim-clean"] #dashboardSection #novaTarefaPanel.create-panel:not(.create-panel-collapsed) {
+    width: min(430px, calc(100vw - 104px)) !important;
+    padding: var(--b-space-2) !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection #novaTarefaPanel .nova-tarefa-header h2 {
+    font-size: 20px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection #novaTarefaPanel .form-group,
+body[data-layout="menu-slim-clean"] #dashboardSection #novaTarefaPanel .form-row {
+    margin-bottom: var(--b-space-15) !important;
+    gap: var(--b-space-15) !important;
+}
+
+/* Breakpoints compactos */
+@media (max-width: 480px) {
+    body[data-layout="menu-slim-clean"] #dashboardSection .main {
+        padding: var(--b-space-15) !important;
+    }
+
+    body[data-layout="menu-slim-clean"] #dashboardSection h1,
+    body[data-layout="menu-slim-clean"] #dashboardSection #topbarTitulo {
+        font-size: 24px !important;
+    }
+
+    body[data-layout="menu-slim-clean"] #dashboardSection button,
+    body[data-layout="menu-slim-clean"] #dashboardSection input,
+    body[data-layout="menu-slim-clean"] #dashboardSection select {
+        min-height: 44px !important;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+    body[data-layout="menu-slim-clean"] #dashboardSection .main {
+        padding: var(--b-space-2) !important;
+    }
+
+    body[data-layout="menu-slim-clean"] #dashboardSection .metrics,
+    body[data-layout="menu-slim-clean"] #dashboardSection .admin-form-grid,
+    body[data-layout="menu-slim-clean"] #dashboardSection .modal-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+@media (min-width: 1201px) {
+    body[data-layout="menu-slim-clean"] #dashboardSection .main {
+        padding: var(--b-space-3) !important;
+    }
+}

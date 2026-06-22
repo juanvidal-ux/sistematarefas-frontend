@@ -67,6 +67,13 @@
 
   function obterTarefas() {
     const mapa = new Map();
+    // Prioriza o contexto visual atual do Board.
+    // Ex.: ao escolher um projeto, o painel de notificações deve mostrar
+    // as notificações daquele projeto, não voltar para “minhas tarefas”.
+    if (Array.isArray(window.tarefasContextoAtual) && window.tarefasContextoAtual.length) {
+      window.tarefasContextoAtual.forEach(t => t?.id != null && mapa.set(String(t.id), t));
+      return [...mapa.values()];
+    }
     if (Array.isArray(window.todasTarefas)) window.todasTarefas.forEach(t => t?.id != null && mapa.set(String(t.id), t));
     try {
       if (typeof todasTarefas !== 'undefined' && Array.isArray(todasTarefas)) todasTarefas.forEach(t => t?.id != null && mapa.set(String(t.id), t));
@@ -677,7 +684,7 @@
       alternarPainelNotificacoes = function() {
         window.alternarPainelNotificacoesOriginalV21();
         const aberto = !document.getElementById('painelNotificacoes')?.classList.contains('hidden');
-        if (aberto) { montarNotificacoes(); carregarResumoComentariosDasTarefas(false); }
+        if (aberto) { montarNotificacoes(obterTarefas()); carregarResumoComentariosDasTarefas(false); }
         atualizarBotaoFechar();
       };
     }

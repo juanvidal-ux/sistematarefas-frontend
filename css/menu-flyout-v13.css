@@ -1,0 +1,280 @@
+
+/* =========================================================
+   V13 — Menu Flyout
+   Adiciona botão Menu no rail slim e painel de navegação com nomes.
+   Frontend only: não altera backend, endpoints ou regras.
+   ========================================================= */
+
+body[data-layout="menu-slim-clean"] #dashboardSection .slim-menu-toggle {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
+    margin: 4px auto 8px !important;
+    padding: 0 !important;
+    border-radius: 12px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border: 1px solid rgba(255,255,255,.16) !important;
+    background: rgba(255,255,255,.09) !important;
+    color: #eaf2ff !important;
+    cursor: pointer !important;
+    font-size: 16px !important;
+    font-weight: 900 !important;
+    box-shadow: 0 8px 18px rgba(15,23,42,.14) !important;
+    transition: background .16s ease, transform .16s ease, box-shadow .16s ease, border-color .16s ease !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .slim-menu-toggle:hover,
+body[data-layout="menu-slim-clean"] #dashboardSection .slim-menu-toggle.is-open {
+    background: linear-gradient(135deg, #2563eb, #0ea5e9) !important;
+    border-color: rgba(255,255,255,.20) !important;
+    color: #fff !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 12px 24px rgba(37,99,235,.28) !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .slim-menu-toggle span {
+    line-height: 1 !important;
+}
+
+body[data-layout="menu-slim-clean"] .slim-menu-panel {
+    position: fixed !important;
+    left: 68px !important;
+    top: 16px !important;
+    z-index: 120000 !important;
+    width: 292px !important;
+    max-height: calc(100vh - 32px) !important;
+    padding: 12px !important;
+    border-radius: 18px !important;
+    background: rgba(255,255,255,.92) !important;
+    color: #0f172a !important;
+    border: 1px solid rgba(203,213,225,.82) !important;
+    box-shadow: 0 28px 80px rgba(15,23,42,.22) !important;
+    backdrop-filter: blur(20px) saturate(1.12) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(1.12) !important;
+    overflow: auto !important;
+    transform: translateX(-8px) scale(.98) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transition: opacity .16s ease, transform .16s ease !important;
+}
+
+body[data-theme="dark"][data-layout="menu-slim-clean"] .slim-menu-panel {
+    background: rgba(15,23,42,.92) !important;
+    color: #f8fafc !important;
+    border-color: rgba(71,85,105,.82) !important;
+    box-shadow: 0 28px 80px rgba(0,0,0,.42) !important;
+}
+
+body[data-layout="menu-slim-clean"] .slim-menu-panel.is-open {
+    transform: translateX(0) scale(1) !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+}
+
+body[data-layout="menu-slim-clean"] .slim-menu-panel.hidden {
+    display: block !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+body[data-layout="menu-slim-clean"] .slim-menu-panel-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    padding: 6px 6px 10px !important;
+    border-bottom: 1px solid rgba(203,213,225,.62) !important;
+    margin-bottom: 8px !important;
+}
+
+body[data-theme="dark"][data-layout="menu-slim-clean"] .slim-menu-panel-header {
+    border-bottom-color: rgba(71,85,105,.72) !important;
+}
+
+body[data-layout="menu-slim-clean"] .slim-menu-panel-title {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1px !important;
+}
+
+body[data-layout="menu-slim-clean"] .slim-menu-panel-title strong {
+    color: inherit !important;
+    font-size: 14px !important;
+    line-height: 1.1 !important;
+    font-weight: 900 !important;
+}
+
+body[data-layout="menu-slim-clean"] .slim-menu-panel-title small {
+    color: #64748b !important;
+    font-size: 10.5px !important;
+    line-height: 1.2 !important;
+    font-weight: 700 !important;
+}
+
+body[data-theme="dark"][data-layout="menu-slim-clean"] .slim-menu-panel-title small {
+    color: #94a3b8 !important;
+}
+
+body[data-layout="menu-slim-clean"] .slim-menu-close {
+    width: 30px !important;
+    height: 30px !important;
+    min-height: 30px !important;
+    border-radius: 10px !important;
+    border: 1px solid rgba(203,213,225,.74) !important;
+    background: rgba(248,250,252,.9) !important;
+    color: #334155 !important;
+    cursor: pointer !important;
+    font-size: 15px !important;
+    font-weight: 900 !important;
+}
+
+body[data-theme="dark"][data-layout="menu-slim-clean"] .slim-menu-close {
+    background: rgba(30,41,59,.9) !important;
+    color: #f8fafc !important;
+    border-color: rgba(71,85,105,.82) !important;
+}
+
+body[data-layout="menu-slim-clean"] .slim-menu-panel-list {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 5px !important;
+}
+
+body[data-layout="menu-slim-clean"] .slim-menu-panel-item {
+    width: 100% !important;
+    min-height: 42px !important;
+    padding: 7px 8px !important;
+    display: grid !important;
+    grid-template-columns: 34px minmax(0, 1fr) auto !important;
+    align-items: center !important;
+    gap: 8px !important;
+    border: 1px solid transparent !important;
+    border-radius: 13px !important;
+    background: transparent !important;
+    color: #172033 !important;
+    cursor: pointer !important;
+    text-align: left !important;
+    box-shadow: none !important;
+    transition: background .14s ease, border-color .14s ease, transform .14s ease !important;
+}
+
+body[data-layout="menu-slim-clean"] .slim-menu-panel-item:hover,
+body[data-layout="menu-slim-clean"] .slim-menu-panel-item.is-active {
+    background: rgba(37,99,235,.10) !important;
+    border-color: rgba(37,99,235,.18) !important;
+    transform: translateX(2px) !important;
+}
+
+body[data-theme="dark"][data-layout="menu-slim-clean"] .slim-menu-panel-item {
+    color: #f8fafc !important;
+}
+
+body[data-theme="dark"][data-layout="menu-slim-clean"] .slim-menu-panel-item:hover,
+body[data-theme="dark"][data-layout="menu-slim-clean"] .slim-menu-panel-item.is-active {
+    background: rgba(96,165,250,.14) !important;
+    border-color: rgba(96,165,250,.22) !important;
+}
+
+body[data-layout="menu-slim-clean"] .slim-menu-panel-icon {
+    width: 34px !important;
+    height: 34px !important;
+    border-radius: 11px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: rgba(37,99,235,.10) !important;
+    color: #2563eb !important;
+    font-size: 15px !important;
+}
+
+body[data-layout="menu-slim-clean"] .slim-menu-panel-item.is-active .slim-menu-panel-icon {
+    background: linear-gradient(135deg, #2563eb, #0ea5e9) !important;
+    color: #fff !important;
+}
+
+body[data-layout="menu-slim-clean"] .slim-menu-panel-label {
+    min-width: 0 !important;
+}
+
+body[data-layout="menu-slim-clean"] .slim-menu-panel-label strong {
+    color: inherit !important;
+    display: block !important;
+    font-size: 12px !important;
+    line-height: 1.1 !important;
+    font-weight: 900 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+body[data-layout="menu-slim-clean"] .slim-menu-panel-label small {
+    display: block !important;
+    margin-top: 2px !important;
+    color: #64748b !important;
+    font-size: 10px !important;
+    line-height: 1.1 !important;
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+body[data-theme="dark"][data-layout="menu-slim-clean"] .slim-menu-panel-label small {
+    color: #94a3b8 !important;
+}
+
+body[data-layout="menu-slim-clean"] .slim-menu-panel-arrow {
+    color: #94a3b8 !important;
+    font-size: 13px !important;
+    font-weight: 900 !important;
+}
+
+body[data-layout="menu-slim-clean"] .slim-menu-backdrop {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 119999 !important;
+    background: rgba(15,23,42,.10) !important;
+    backdrop-filter: blur(1px) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transition: opacity .16s ease !important;
+}
+
+body[data-layout="menu-slim-clean"] .slim-menu-backdrop.is-open {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+}
+
+@media (max-width: 768px) {
+    body[data-layout="menu-slim-clean"] .slim-menu-panel {
+        left: 60px !important;
+        top: 10px !important;
+        width: min(280px, calc(100vw - 76px)) !important;
+        max-height: calc(100vh - 20px) !important;
+    }
+
+    body[data-layout="menu-slim-clean"] #dashboardSection .slim-menu-toggle {
+        width: 36px !important;
+        height: 36px !important;
+        min-height: 36px !important;
+    }
+}
+
+
+/* =========================================================
+   V14 — Correção do painel do botão Menu
+   O painel estava ficando com classe .hidden e não aparecia.
+   ========================================================= */
+body[data-layout="menu-slim-clean"] .slim-menu-panel.hidden.is-open {
+    display: block !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: translateX(0) scale(1) !important;
+}
+
+body[data-layout="menu-slim-clean"] .slim-menu-backdrop.is-open {
+    opacity: .55 !important;
+}

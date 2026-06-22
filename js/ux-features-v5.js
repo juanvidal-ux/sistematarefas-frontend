@@ -5,8 +5,6 @@
         "UX_MINHA_AREA",
         "UX_TABELA",
         "UX_CALENDARIO",
-        "UX_RELATORIOS",
-        "UX_FILTROS",
         "UX_AJUDA",
         "UX_APRESENTACAO"
     ]);
@@ -15,8 +13,6 @@
         UX_MINHA_AREA: "Minha área",
         UX_TABELA: "Lista/Tabela",
         UX_CALENDARIO: "Calendário",
-        UX_RELATORIOS: "Relatórios",
-        UX_FILTROS: "Filtros salvos",
         UX_AJUDA: "Ajuda",
         UX_APRESENTACAO: "Apresentação"
     };
@@ -32,6 +28,38 @@
 
     function $(id){ return document.getElementById(id); }
     function tarefas(){ return Array.isArray(window.todasTarefas) ? window.todasTarefas : (typeof todasTarefas !== "undefined" ? todasTarefas : []); }
+    function projetosDisponiveis(){
+        const lista = tarefas();
+        const mapa = new Map();
+        lista.forEach(t => {
+            const id = t.projetoId ?? t.projeto_id ?? t.projeto?.id ?? "";
+            const nome = t.projetoNome ?? t.projeto_nome ?? t.projeto?.nome ?? t.projeto ?? "Sem projeto";
+            const key = id ? String(id) : String(nome);
+            if (!mapa.has(key)) mapa.set(key, { key, nome: String(nome || "Sem projeto") });
+        });
+        return [...mapa.values()].sort((a,b)=>a.nome.localeCompare(b.nome));
+    }
+    function tiposProjetoDisponiveis(){
+        const campos = ["tipoProjeto", "tipo_projeto", "tipo", "categoria", "segmento"];
+        const set = new Set();
+        tarefas().forEach(t => {
+            const projeto = t.projeto || {};
+            for (const campo of campos) {
+                const valor = t[campo] ?? projeto[campo];
+                if (valor) set.add(String(valor));
+            }
+        });
+        return [...set].sort((a,b)=>a.localeCompare(b));
+    }
+    function chaveProjetoTarefa(t){
+        const id = t.projetoId ?? t.projeto_id ?? t.projeto?.id ?? "";
+        const nome = t.projetoNome ?? t.projeto_nome ?? t.projeto?.nome ?? t.projeto ?? "Sem projeto";
+        return id ? String(id) : String(nome);
+    }
+    function tipoProjetoTarefa(t){
+        const projeto = t.projeto || {};
+        return String(t.tipoProjeto ?? t.tipo_projeto ?? t.tipo ?? t.categoria ?? t.segmento ?? projeto.tipoProjeto ?? projeto.tipo_projeto ?? projeto.tipo ?? projeto.categoria ?? projeto.segmento ?? "");
+    }
     function usuario(){ return window.usuarioLogado || (typeof usuarioLogado !== "undefined" ? usuarioLogado : null); }
     function esc(v){
         if (typeof escapeHtml === "function") return escapeHtml(v ?? "");
@@ -73,12 +101,17 @@
 
     function filtrarBase(){
         const texto = ($("uxBuscaGlobal")?.value || "").toLowerCase().trim();
+        const tipoProjeto = $("uxFiltroTipoProjeto")?.value || "";
+        const projeto = $("uxFiltroProjeto")?.value || "";
         const status = $("uxFiltroStatus")?.value || "";
         const prioridade = $("uxFiltroPrioridade")?.value || "";
         const prazo = $("uxFiltroPrazo")?.value || "";
         const lista = tarefas().filter(t => {
-            const alvo = [t.titulo,t.descricao,t.responsavel,t.projetoNome,t.observacoes,t.status,t.prioridade].join(" ").toLowerCase();
+            const nomeProjeto = t.projetoNome ?? t.projeto_nome ?? t.projeto?.nome ?? t.projeto ?? "";
+            const alvo = [t.titulo,t.descricao,t.responsavel,nomeProjeto,t.observacoes,t.status,t.prioridade,tipoProjetoTarefa(t)].join(" ").toLowerCase();
             const bateTexto = !texto || alvo.includes(texto);
+            const bateTipoProjeto = !tipoProjeto || tipoProjetoTarefa(t) === tipoProjeto;
+            const bateProjeto = !projeto || chaveProjetoTarefa(t) === projeto;
             const bateStatus = !status || t.status === status;
             const batePrio = !prioridade || t.prioridade === prioridade;
             let batePrazo = true;
@@ -87,7 +120,7 @@
             if (prazo === "HOJE") batePrazo = dias === 0;
             if (prazo === "SEMANA") batePrazo = dias !== null && dias >= 0 && dias <= 7;
             if (prazo === "SEM_PRAZO") batePrazo = !t.prazo;
-            return bateTexto && bateStatus && batePrio && batePrazo;
+            return bateTexto && bateTipoProjeto && bateProjeto && bateStatus && batePrio && batePrazo;
         });
         const ordem = $("uxOrdenacao")?.value || "PRAZO";
         return lista.sort((a,b)=>{
@@ -109,104 +142,151 @@
         return { total, vencidas, hoje, criticas, concluidas, percentual: total ? Math.round((concluidas/total)*100) : 0 };
     }
 
-    function toolbarHTML(){
-        return `
-            <div class="ux-toolbar">
-                <input id="uxBuscaGlobal" type="text" placeholder="Buscar tarefa, descrição, responsável ou projeto" oninput="uxAtualizarPaginaAtual()">
-                <select id="uxFiltroStatus" onchange="uxAtualizarPaginaAtual()">
-                    <option value="">Todos os status</option><option value="PENDENTE">Pendente</option><option value="EM_ANDAMENTO">Em andamento</option><option value="CONCLUIDA">Concluída</option><option value="CANCELADA">Cancelada</option>
-                </select>
-                <select id="uxFiltroPrioridade" onchange="uxAtualizarPaginaAtual()">
-                    <option value="">Todas as prioridades</option><option value="CRITICA">Crítica</option><option value="ALTA">Alta</option><option value="MEDIA">Média</option><option value="BAIXA">Baixa</option>
-                </select>
-                <select id="uxFiltroPrazo" onchange="uxAtualizarPaginaAtual()">
-                    <option value="">Todos os prazos</option><option value="VENCIDAS">Vencidas</option><option value="HOJE">Hoje</option><option value="SEMANA">Próximos 7 dias</option><option value="SEM_PRAZO">Sem prazo</option>
-                </select>
-                <select id="uxOrdenacao" onchange="uxAtualizarPaginaAtual()">
-                    <option value="PRAZO">Menor prazo</option><option value="PRIORIDADE">Maior prioridade</option><option value="STATUS">Status</option><option value="TITULO">Título</option>
-                </select>
-                <button class="btn-secondary" onclick="uxLimparFiltrosGlobais()">Limpar</button>
-                <button class="btn-primary" onclick="uxSalvarFiltroAtual()">Salvar filtro</button>
-            </div>`;
-    }
 
+    // Correção Rev16.29 — funções auxiliares restauradas para o calendário e páginas UX.
+    // Sem estas funções, o clique em "Calendário" gera ReferenceError e a tela não renderiza.
     function kpiHTML(k){
-        return `<div class="ux-kpi-grid">
-            <div class="ux-kpi-card"><span>Total</span><strong>${k.total}</strong><small>Tarefas consideradas</small></div>
-            <div class="ux-kpi-card danger"><span>Vencidas</span><strong>${k.vencidas}</strong><small>Precisam de atenção</small></div>
-            <div class="ux-kpi-card warning"><span>Hoje</span><strong>${k.hoje}</strong><small>Vencem hoje</small></div>
-            <div class="ux-kpi-card success"><span>Conclusão</span><strong>${k.percentual}%</strong><small>${k.concluidas} concluídas</small></div>
-        </div>`;
-    }
-
-    function tabelaHTML(lista){
-        if (!lista.length) return `<div class="ux-empty">Nenhuma tarefa encontrada com os filtros atuais.</div>`;
-        return `<div class="ux-table-wrap"><table class="ux-table"><thead><tr>
-            <th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Responsável</th><th>Projeto</th><th>Prazo</th><th>Ações</th>
-        </tr></thead><tbody>${lista.map(t=>{
-            const prazo = infoPrazo(t);
-            return `<tr>
-                <td><div class="ux-task-title">${esc(t.titulo)}</div><div class="ux-task-sub">${esc(t.descricao || "Sem descrição")}</div></td>
-                <td><span class="ux-pill ${statusClass(t.status)}">${STATUS_LABELS[t.status] || fmt(t.status)}</span></td>
-                <td><span class="ux-pill ${prioClass(t.prioridade)}">${fmt(t.prioridade)}</span></td>
-                <td>${esc(t.responsavel || "Usuário")}</td>
-                <td>${esc(t.projetoNome || "Sem projeto")}</td>
-                <td><span class="ux-pill ${prazo.classe}">${esc(prazo.texto)}</span></td>
-                <td><button class="btn-secondary" onclick="abrirTarefaUx(${t.id})">Abrir</button></td>
-            </tr>`;
-        }).join("")}</tbody></table></div>`;
-    }
-
-    function renderTabela(){
-        const lista = filtrarBase(); const el = $("uxTabelaConteudo"); if(!el) return;
-        el.innerHTML = toolbarHTML() + kpiHTML(kpis(lista)) + tabelaHTML(lista);
-    }
-
-    function renderMinhaArea(){
-        const u = usuario();
-        const nome = u?.nome || u?.email || "Usuário";
-        const minhas = tarefas().filter(t => !u?.nome || (t.responsavel || "").toLowerCase().includes(String(u.nome||"").toLowerCase()) || !t.responsavel);
-        const base = minhas.length ? minhas : tarefas();
-        const vencidas = base.filter(t => t.status !== "CONCLUIDA" && diasAte(t.prazo) !== null && diasAte(t.prazo) < 0).slice(0,6);
-        const hoje = base.filter(t => diasAte(t.prazo) === 0 && t.status !== "CONCLUIDA").slice(0,6);
-        const proximas = base.filter(t => { const d=diasAte(t.prazo); return d !== null && d > 0 && d <= 7 && t.status !== "CONCLUIDA"; }).slice(0,8);
-        const conteudo = $("uxMinhaAreaConteudo"); if(!conteudo) return;
-        conteudo.innerHTML = `${kpiHTML(kpis(base))}
-            <div class="ux-grid-2">
-                <div class="ux-card"><div class="ux-card-header"><div><h3>Olá, ${esc(nome)}</h3><p>Estas são as prioridades mais importantes para sua rotina.</p></div><button class="btn-primary" onclick="focarNovaTarefa()">+ Nova tarefa</button></div>${listaCompactaHTML([...vencidas,...hoje,...proximas].slice(0,10), "Nenhuma pendência urgente encontrada.")}</div>
-                <div class="ux-card"><div class="ux-card-header"><div><h3>Atalhos rápidos</h3><p>Acesse as principais visões do sistema.</p></div></div><div class="ux-list">
-                    <button class="ux-list-item" onclick="abrirTabelaTarefas()"><span class="ux-list-main"><strong>Ver em tabela</strong><small>Ideal para filtrar e comparar tarefas.</small></span><span>→</span></button>
-                    <button class="ux-list-item" onclick="abrirCalendarioTarefas()"><span class="ux-list-main"><strong>Ver calendário</strong><small>Organize a semana pelos prazos.</small></span><span>→</span></button>
-                    <button class="ux-list-item" onclick="abrirRelatoriosAvancados()"><span class="ux-list-main"><strong>Relatórios</strong><small>Acompanhe status, responsáveis e atrasos.</small></span><span>→</span></button>
-                </div></div>
-            </div>
-            <div class="ux-grid-2"><div class="ux-card"><div class="ux-card-header"><div><h3>Vencidas</h3><p>Prioridade máxima.</p></div></div>${listaCompactaHTML(vencidas, "Nenhuma tarefa vencida.")}</div><div class="ux-card"><div class="ux-card-header"><div><h3>Próximas da semana</h3><p>Prazos que merecem acompanhamento.</p></div></div>${listaCompactaHTML(proximas, "Nenhuma tarefa para os próximos 7 dias.")}</div></div>`;
+        const itens = [
+            ["Total", k.total, "Tarefas filtradas"],
+            ["Vencidas", k.vencidas, "Precisam de atenção"],
+            ["Hoje", k.hoje, "Vencem hoje"],
+            ["Críticas/Altas", k.criticas, "Prioridade elevada"],
+            ["Concluídas", `${k.percentual}%`, `${k.concluidas} finalizada${k.concluidas === 1 ? "" : "s"}`]
+        ];
+        return `<div class="ux-kpi-grid">${itens.map(([label, valor, desc]) => `
+            <div class="ux-kpi-card">
+                <small>${esc(label)}</small>
+                <strong>${esc(valor)}</strong>
+                <span>${esc(desc)}</span>
+            </div>`).join("")}</div>`;
     }
 
     function listaCompactaHTML(lista, vazio){
-        if(!lista.length) return `<div class="ux-empty">${vazio}</div>`;
-        return `<div class="ux-list">${lista.map(t=>`<div class="ux-list-item"><div class="ux-list-main"><strong>${esc(t.titulo)}</strong><small>${esc(t.responsavel || "Usuário")} • ${esc(t.projetoNome || "Sem projeto")} • ${fmtData(t.prazo)}</small></div><div class="ux-list-actions"><span class="ux-pill ${prioClass(t.prioridade)}">${fmt(t.prioridade)}</span><button class="btn-secondary" onclick="abrirTarefaUx(${t.id})">Abrir</button></div></div>`).join("")}</div>`;
+        if(!lista || !lista.length) return `<div class="ux-empty">${esc(vazio || "Sem dados para exibir.")}</div>`;
+        return `<div class="ux-list">${lista.map(t => {
+            const prazo = infoPrazo(t);
+            return `<div class="ux-list-item">
+                <div class="ux-list-main">
+                    <strong>${esc(t.titulo || "Tarefa sem título")}</strong>
+                    <small>${esc(t.projetoNome || t.projeto_nome || t.projeto?.nome || "Sem projeto")} • ${esc(t.responsavel || "Sem responsável")}</small>
+                </div>
+                <div class="ux-list-actions">
+                    <span class="pill ${prioClass(t.prioridade)}">${esc(fmt(t.prioridade || "MEDIA"))}</span>
+                    <span class="pill ${prazo.classe || ""}">${esc(prazo.texto || fmtData(t.prazo))}</span>
+                    <button class="btn-secondary" onclick="abrirTarefaUx(${Number(t.id) || 0})">Abrir</button>
+                </div>
+            </div>`;
+        }).join("")}</div>`;
     }
 
     function calendarioReferenciaAtual(){
         const hoje = dataHoje();
-        if (window.uxCalendarioAno === undefined || window.uxCalendarioMes === undefined) {
-            window.uxCalendarioAno = hoje.getFullYear();
-            window.uxCalendarioMes = hoje.getMonth();
-        }
-        return new Date(Number(window.uxCalendarioAno), Number(window.uxCalendarioMes), 1);
+        const ano = Number.isInteger(window.uxCalendarioAno) ? window.uxCalendarioAno : hoje.getFullYear();
+        const mes = Number.isInteger(window.uxCalendarioMes) ? window.uxCalendarioMes : hoje.getMonth();
+        return new Date(ano, mes, 1);
     }
 
     function calendarioPickerHTML(referencia){
         const meses = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
         const anoAtual = dataHoje().getFullYear();
-        const anoRef = referencia.getFullYear();
-        const inicioAno = Math.min(anoAtual - 3, anoRef - 3);
-        const fimAno = Math.max(anoAtual + 5, anoRef + 5);
-        const mesesOptions = meses.map((m,i)=>`<option value="${i}" ${i===referencia.getMonth()?"selected":""}>${m}</option>`).join("");
-        let anosOptions = "";
-        for(let ano = inicioAno; ano <= fimAno; ano++) anosOptions += `<option value="${ano}" ${ano===anoRef?"selected":""}>${ano}</option>`;
-        return `<div class="ux-calendar-picker" aria-label="Escolher mês do calendário"><label>Mês <select id="uxCalendarioMesSelect" onchange="uxSelecionarMesCalendario()">${mesesOptions}</select></label><label>Ano <select id="uxCalendarioAnoSelect" onchange="uxSelecionarMesCalendario()">${anosOptions}</select></label></div>`;
+        const anos = [];
+        for(let ano = anoAtual - 3; ano <= anoAtual + 4; ano++) anos.push(ano);
+        return `<div class="ux-calendar-picker">
+            <label>Mês
+                <select id="uxCalendarioMesSelect" onchange="uxSelecionarMesCalendario()">
+                    ${meses.map((nome, idx) => `<option value="${idx}" ${idx === referencia.getMonth() ? "selected" : ""}>${esc(nome)}</option>`).join("")}
+                </select>
+            </label>
+            <label>Ano
+                <select id="uxCalendarioAnoSelect" onchange="uxSelecionarMesCalendario()">
+                    ${anos.map(ano => `<option value="${ano}" ${ano === referencia.getFullYear() ? "selected" : ""}>${ano}</option>`).join("")}
+                </select>
+            </label>
+        </div>`;
+    }
+
+    function renderMinhaArea(){
+        const el = $("uxMinhaAreaConteudo"); if(!el) return;
+        const base = filtrarBase();
+        const atual = usuario();
+        const nome = String(atual?.nome || atual?.email || "").toLowerCase();
+        const minhas = nome
+            ? base.filter(t => String(t.responsavel || t.responsavelNome || t.usuarioNome || "").toLowerCase().includes(nome.split("@")[0]))
+            : base;
+        const atencao = minhas.filter(t => {
+            const dias = diasAte(t.prazo);
+            return t.status !== "CONCLUIDA" && ((dias !== null && dias <= 7) || ["CRITICA","ALTA"].includes(t.prioridade));
+        }).slice(0, 12);
+        el.innerHTML = toolbarHTML() + kpiHTML(kpis(minhas)) + `
+            <div class="ux-grid-2">
+                <div class="ux-card">
+                    <div class="ux-card-header"><div><h3>Prioridades da minha área</h3><p>Tarefas próximas, vencidas ou de maior prioridade.</p></div></div>
+                    ${listaCompactaHTML(atencao, "Nenhuma prioridade encontrada para os filtros atuais.")}
+                </div>
+                <div class="ux-card">
+                    <div class="ux-card-header"><div><h3>Minhas tarefas recentes</h3><p>Lista rápida para abrir e acompanhar.</p></div></div>
+                    ${listaCompactaHTML(minhas.slice(0, 12), "Nenhuma tarefa encontrada.")}
+                </div>
+            </div>`;
+    }
+
+    function renderTabela(){
+        const el = $("uxTabelaConteudo"); if(!el) return;
+        const lista = filtrarBase();
+        const linhas = lista.map(t => {
+            const prazo = infoPrazo(t);
+            return `<tr>
+                <td><button class="btn-link" onclick="abrirTarefaUx(${Number(t.id) || 0})">${esc(t.titulo || "Sem título")}</button></td>
+                <td>${esc(t.projetoNome || t.projeto_nome || t.projeto?.nome || "Sem projeto")}</td>
+                <td>${esc(t.responsavel || "-")}</td>
+                <td><span class="pill ${statusClass(t.status)}">${esc(STATUS_LABELS[t.status] || fmt(t.status || "PENDENTE"))}</span></td>
+                <td><span class="pill ${prioClass(t.prioridade)}">${esc(fmt(t.prioridade || "MEDIA"))}</span></td>
+                <td><span class="pill ${prazo.classe || ""}">${esc(prazo.texto || fmtData(t.prazo))}</span></td>
+            </tr>`;
+        }).join("");
+        el.innerHTML = toolbarHTML() + kpiHTML(kpis(lista)) + `
+            <div class="ux-card">
+                <div class="ux-card-header"><div><h3>Lista de tarefas</h3><p>${lista.length} tarefa${lista.length === 1 ? "" : "s"} encontrada${lista.length === 1 ? "" : "s"}.</p></div></div>
+                <div class="ux-table-wrap"><table class="ux-table">
+                    <thead><tr><th>Tarefa</th><th>Projeto</th><th>Responsável</th><th>Status</th><th>Prioridade</th><th>Prazo</th></tr></thead>
+                    <tbody>${linhas || `<tr><td colspan="6"><div class="ux-empty">Nenhuma tarefa encontrada para os filtros atuais.</div></td></tr>`}</tbody>
+                </table></div>
+            </div>`;
+    }
+
+    function toolbarHTML(){
+        const tipoAtual = $("uxFiltroTipoProjeto")?.value || "";
+        const projetoAtual = $("uxFiltroProjeto")?.value || "";
+        const statusAtual = $("uxFiltroStatus")?.value || "";
+        const prioridadeAtual = $("uxFiltroPrioridade")?.value || "";
+        const prazoAtual = $("uxFiltroPrazo")?.value || "";
+        const ordemAtual = $("uxOrdenacao")?.value || "PRAZO";
+        const tipos = tiposProjetoDisponiveis();
+        const projetos = projetosDisponiveis();
+        const opt = (value, label, atual) => `<option value="${esc(value)}" ${String(value)===String(atual)?"selected":""}>${esc(label)}</option>`;
+        return `
+            <div class="ux-toolbar ux-toolbar-calendar">
+                <input id="uxBuscaGlobal" type="text" placeholder="Buscar tarefa, descrição, responsável ou projeto" oninput="uxAtualizarPaginaAtual()" value="${esc($("uxBuscaGlobal")?.value || "")}">
+                <select id="uxFiltroTipoProjeto" onchange="uxAtualizarPaginaAtual()">
+                    <option value="">Todos os tipos</option>${tipos.map(t=>opt(t,t,tipoAtual)).join("")}
+                </select>
+                <select id="uxFiltroProjeto" onchange="uxAtualizarPaginaAtual()">
+                    <option value="">Todos os projetos</option>${projetos.map(p=>opt(p.key,p.nome,projetoAtual)).join("")}
+                </select>
+                <select id="uxFiltroStatus" onchange="uxAtualizarPaginaAtual()">
+                    ${opt("", "Todos os status", statusAtual)}${opt("PENDENTE", "Pendente", statusAtual)}${opt("EM_ANDAMENTO", "Em andamento", statusAtual)}${opt("CONCLUIDA", "Concluída", statusAtual)}${opt("CANCELADA", "Cancelada", statusAtual)}
+                </select>
+                <select id="uxFiltroPrioridade" onchange="uxAtualizarPaginaAtual()">
+                    ${opt("", "Todas as prioridades", prioridadeAtual)}${opt("CRITICA", "Crítica", prioridadeAtual)}${opt("ALTA", "Alta", prioridadeAtual)}${opt("MEDIA", "Média", prioridadeAtual)}${opt("BAIXA", "Baixa", prioridadeAtual)}
+                </select>
+                <select id="uxFiltroPrazo" onchange="uxAtualizarPaginaAtual()">
+                    ${opt("", "Todos os prazos", prazoAtual)}${opt("VENCIDAS", "Vencidas", prazoAtual)}${opt("HOJE", "Hoje", prazoAtual)}${opt("SEMANA", "Próximos 7 dias", prazoAtual)}${opt("SEM_PRAZO", "Sem prazo", prazoAtual)}
+                </select>
+                <select id="uxOrdenacao" onchange="uxAtualizarPaginaAtual()">
+                    ${opt("PRAZO", "Menor prazo", ordemAtual)}${opt("PRIORIDADE", "Maior prioridade", ordemAtual)}${opt("STATUS", "Status", ordemAtual)}${opt("TITULO", "Título", ordemAtual)}
+                </select>
+                <button class="btn-secondary" onclick="uxLimparFiltrosGlobais()">Limpar</button>
+            </div>`;
     }
 
     function renderCalendario(){
@@ -275,32 +355,6 @@
         return `<div class="ux-report-bars">${dados.slice(0,lim).map(([label,valor])=>`<div class="ux-bar-row"><div class="ux-bar-label">${esc(label)}</div><div class="ux-bar-track"><div class="ux-bar-fill" style="width:${Math.max(4,Math.round(valor/max*100))}%"></div></div><div class="ux-bar-value">${valor}</div></div>`).join("")}</div>`;
     }
 
-    function getFiltrosSalvos(){ try{return JSON.parse(localStorage.getItem("vidalsystem_filtros_salvos")||"[]");}catch(e){return [];} }
-    function setFiltrosSalvos(v){ localStorage.setItem("vidalsystem_filtros_salvos", JSON.stringify(v)); }
-    window.uxSalvarFiltroAtual = function(){
-        const nome = prompt("Nome para este filtro:", "Minhas tarefas filtradas"); if(!nome) return;
-        const filtro = { id: Date.now(), nome, texto: $("uxBuscaGlobal")?.value || $("filtroTexto")?.value || "", status: $("uxFiltroStatus")?.value || $("filtroStatus")?.value || "", prioridade: $("uxFiltroPrioridade")?.value || $("filtroPrioridade")?.value || "", prazo: $("uxFiltroPrazo")?.value || $("filtroPrazo")?.value || "", criadoEm: new Date().toISOString() };
-        const filtros = getFiltrosSalvos(); filtros.unshift(filtro); setFiltrosSalvos(filtros.slice(0,20));
-        if(typeof mostrarToast === "function") mostrarToast("Filtro salvo.");
-        renderFiltros();
-    };
-    window.uxAplicarFiltroSalvo = function(id){
-        const f = getFiltrosSalvos().find(x=>String(x.id)===String(id)); if(!f) return;
-        if($("filtroTexto")) $("filtroTexto").value = f.texto || "";
-        if($("filtroStatus")) $("filtroStatus").value = f.status || "";
-        if($("filtroPrioridade")) $("filtroPrioridade").value = f.prioridade || "";
-        if($("filtroPrazo")) $("filtroPrazo").value = f.prazo || "";
-        ["uxBuscaGlobal","uxFiltroStatus","uxFiltroPrioridade","uxFiltroPrazo"].forEach(idEl=>{ if($(idEl)) $(idEl).value = f[idEl==="uxBuscaGlobal"?"texto":idEl.replace("uxFiltro","").toLowerCase()] || ""; });
-        if(typeof renderizarBoard === "function") renderizarBoard();
-        abrirTabelaTarefas();
-    };
-    window.uxExcluirFiltroSalvo = function(id){ setFiltrosSalvos(getFiltrosSalvos().filter(f=>String(f.id)!==String(id))); renderFiltros(); };
-    function renderFiltros(){
-        const el = $("uxFiltrosConteudo"); if(!el) return;
-        const filtros = getFiltrosSalvos();
-        el.innerHTML = `<div class="ux-card"><div class="ux-card-header"><div><h3>Filtros salvos</h3><p>Guarde combinações usadas com frequência.</p></div><button class="btn-primary" onclick="uxSalvarFiltroAtual()">Salvar filtro atual</button></div>${filtros.length ? `<div class="ux-list">${filtros.map(f=>`<div class="ux-saved-filter"><div><strong>${esc(f.nome)}</strong><small>${esc([f.texto, f.status, f.prioridade, f.prazo].filter(Boolean).join(" • ") || "Sem critérios específicos")}</small></div><div class="ux-list-actions"><button class="btn-secondary" onclick="uxAplicarFiltroSalvo(${f.id})">Aplicar</button><button class="btn-delete" onclick="uxExcluirFiltroSalvo(${f.id})">Excluir</button></div></div>`).join("")}</div>` : `<div class="ux-empty">Nenhum filtro salvo ainda.</div>`}</div>`;
-    }
-
     function renderAjuda(){
         const el = $("uxAjudaConteudo"); if(!el) return;
         el.innerHTML = `<div class="ux-help-grid">
@@ -310,9 +364,8 @@
                 ["🔎","Filtrar tarefas","Use busca, status, prioridade, prazo e responsável."],
                 ["✅","Subitens","Abra uma tarefa e use a aba Subitens para criar checklists."],
                 ["💬","Comentários","Registre atualizações na aba Comentários da tarefa."],
-                ["📊","Relatórios","Acompanhe vencidas, responsáveis, projetos e progresso geral."],
                 ["⌨️","Atalhos","Ctrl + K foca a busca. Esc fecha alguns modais."],
-                ["🧭","Visualizações","Use Kanban, tabela, calendário e apresentação conforme sua rotina."],
+                ["🧭","Visualizações","Use o Kanban para operação diária e acesse calendário apenas pelo menu Calendário."],
                 ["🛡️","Permissões","Algumas ações aparecem apenas para administradores."],
             ].map(x=>`<div class="ux-help-card"><span>${x[0]}</span><h3>${x[1]}</h3><p>${x[2]}</p></div>`).join("")}
         </div>`;
@@ -332,10 +385,8 @@
         const main = document.querySelector("main.main"); if(!main || $("uxTabelaPanel")) return;
         main.insertAdjacentHTML("beforeend", `
             ${criarPainel("uxMinhaAreaPanel","Minha área","Uma visão focada no usuário logado, com prioridades, vencimentos e atalhos operacionais.","uxMinhaAreaConteudo","<button class='btn-primary' onclick='focarNovaTarefa()'>+ Nova tarefa</button>")}
-            ${criarPainel("uxTabelaPanel","Visualização em lista/tabela","Tabela operacional para localizar, ordenar e abrir tarefas com mais velocidade.","uxTabelaConteudo","<button class='btn-primary' onclick='uxSalvarFiltroAtual()'>Salvar filtro</button>")}
+            ${criarPainel("uxTabelaPanel","Visualização em lista/tabela","Tabela operacional para localizar, ordenar e abrir tarefas com mais velocidade.","uxTabelaConteudo")}
             ${criarPainel("uxCalendarioPanel","Calendário de tarefas","Prazos em visão semanal/quinzenal para acompanhar tarefas vencidas, do dia e próximas.","uxCalendarioConteudo")}
-            ${criarPainel("uxRelatoriosPanel","Relatórios","Indicadores por status, responsável, projeto, atraso e prioridade, usando os dados já carregados.","uxRelatoriosConteudo","<button class='btn-secondary' onclick='abrirModoApresentacaoGeral()'>Modo apresentação</button>")}
-            ${criarPainel("uxFiltrosPanel","Filtros salvos","Salve filtros frequentes e aplique com um clique no Board ou na tabela.","uxFiltrosConteudo")}
             ${criarPainel("uxAjudaPanel","Ajuda interna","Guia rápido de uso do sistema para reduzir dúvidas e facilitar treinamento.","uxAjudaConteudo")}
             ${criarPainel("uxApresentacaoPanel","Modo apresentação","Painel limpo para reuniões, acompanhamento com coordenação e status report.","uxApresentacaoConteudo","<button class='btn-primary' onclick='window.print()'>Imprimir</button>")}
         `);
@@ -347,12 +398,10 @@
         const bloco = document.createElement("div");
         bloco.className = "ux-menu-extension";
         bloco.innerHTML = `
-            <button class="menu-item" data-page="UX_MINHA_AREA" onclick="abrirMinhaAreaUx()"><span>🏠</span> Minha área</button>
-            <button class="menu-item" data-page="UX_TABELA" onclick="abrirTabelaTarefas()"><span>📋</span> Lista/Tabela</button>
-            <button class="menu-item" data-page="UX_CALENDARIO" onclick="abrirCalendarioTarefas()"><span>📅</span> Calendário</button>
-            <button class="menu-item" data-page="UX_RELATORIOS" onclick="abrirRelatoriosAvancados()"><span>📈</span> Relatórios</button>
-            <button class="menu-item" data-page="UX_FILTROS" onclick="abrirFiltrosSalvos()"><span>⭐</span> Filtros salvos</button>
-            <button class="menu-item" data-page="UX_AJUDA" onclick="abrirAjudaSistema()"><span>❔</span> Ajuda</button>
+            <div class="menu-section-label">Apoio</div>
+            <button class="menu-item" data-page="UX_MINHA_AREA" onclick="abrirMinhaAreaUx()"><span>🏠</span><span class="menu-text">Minha área</span></button>
+            <button class="menu-item" data-page="UX_CALENDARIO" onclick="abrirCalendarioTarefas()"><span>📅</span><span class="menu-text">Calendário</span></button>
+            <button class="menu-item" data-page="UX_AJUDA" onclick="abrirAjudaSistema()"><span>❔</span><span class="menu-text">Ajuda</span></button>
         `;
         const temaBtn = Array.from(menu.querySelectorAll("button")).find(b => b.textContent.includes("Tema"));
         menu.insertBefore(bloco, temaBtn || null);
@@ -382,35 +431,32 @@
     function ativarMenu(page){ document.querySelectorAll(".menu-item[data-page]").forEach(item=>item.classList.toggle("active", item.dataset.page === page)); }
     function mostrarCustom(page){
         criarEstrutura(); esconderPadrao(); ativarMenu(page);
-        const panelMap = { UX_MINHA_AREA:"uxMinhaAreaPanel", UX_TABELA:"uxTabelaPanel", UX_CALENDARIO:"uxCalendarioPanel", UX_RELATORIOS:"uxRelatoriosPanel", UX_FILTROS:"uxFiltrosPanel", UX_AJUDA:"uxAjudaPanel", UX_APRESENTACAO:"uxApresentacaoPanel" };
+        const panelMap = { UX_MINHA_AREA:"uxMinhaAreaPanel", UX_TABELA:"uxTabelaPanel", UX_CALENDARIO:"uxCalendarioPanel", UX_AJUDA:"uxAjudaPanel", UX_APRESENTACAO:"uxApresentacaoPanel" };
         $(panelMap[page])?.classList.remove("app-page-hidden");
         window.paginaAtual = page;
+        if (typeof atualizarTopbarContexto === "function") atualizarTopbarContexto(page);
         renderPage(page);
     }
     function renderPage(page){
         if(page === "UX_MINHA_AREA") renderMinhaArea();
         if(page === "UX_TABELA") renderTabela();
         if(page === "UX_CALENDARIO") renderCalendario();
-        if(page === "UX_RELATORIOS") renderRelatorios();
-        if(page === "UX_FILTROS") renderFiltros();
         if(page === "UX_AJUDA") renderAjuda();
         if(page === "UX_APRESENTACAO") renderApresentacao();
     }
 
     window.uxAtualizarPaginaAtual = function(){ renderPage(window.paginaAtual || (typeof paginaAtual !== "undefined" ? paginaAtual : "")); };
-    window.uxLimparFiltrosGlobais = function(){ ["uxBuscaGlobal","uxFiltroStatus","uxFiltroPrioridade","uxFiltroPrazo"].forEach(id=>{ if($(id)) $(id).value=""; }); window.uxAtualizarPaginaAtual(); };
+    window.uxLimparFiltrosGlobais = function(){ ["uxBuscaGlobal","uxFiltroTipoProjeto","uxFiltroProjeto","uxFiltroStatus","uxFiltroPrioridade","uxFiltroPrazo"].forEach(id=>{ if($(id)) $(id).value=""; }); window.uxAtualizarPaginaAtual(); };
     window.abrirMinhaAreaUx = function(){ mostrarCustom("UX_MINHA_AREA"); };
     window.abrirTabelaTarefas = function(){ mostrarCustom("UX_TABELA"); };
     window.abrirCalendarioTarefas = function(){ mostrarCustom("UX_CALENDARIO"); };
-    window.abrirRelatoriosAvancados = function(){ mostrarCustom("UX_RELATORIOS"); };
-    window.abrirFiltrosSalvos = function(){ mostrarCustom("UX_FILTROS"); };
     window.abrirAjudaSistema = function(){ mostrarCustom("UX_AJUDA"); };
     window.abrirModoApresentacaoGeral = function(){ mostrarCustom("UX_APRESENTACAO"); };
 
     function inserirAtalhosBoard(){
-        const toolbar = document.querySelector(".board-toolbar"); if(!toolbar || toolbar.dataset.uxViews) return;
-        toolbar.dataset.uxViews = "1";
-        toolbar.insertAdjacentHTML("afterbegin", `<button class="btn-secondary" type="button" onclick="abrirTabelaTarefas()">Tabela</button><button class="btn-secondary" type="button" onclick="abrirCalendarioTarefas()">Calendário</button><button class="btn-secondary" type="button" onclick="abrirRelatoriosAvancados()">Relatórios</button>`);
+        // Rev16.19: a opção Lista/Tabela saiu do Kanban para evitar duplicidade visual.
+        const toolbar = document.querySelector(".board-toolbar");
+        if (toolbar) toolbar.dataset.uxViews = "1";
     }
 
     function wrapRender(){

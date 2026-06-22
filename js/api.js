@@ -109,4 +109,5 @@ async function apiRequest(path, options = {}) {
 const apiGet = (path, options = {}) => apiRequest(path, { ...options, method: "GET" });
 const apiPost = (path, body, options = {}) => apiRequest(path, { ...options, method: "POST", body });
 const apiPut = (path, body, options = {}) => apiRequest(path, { ...options, method: "PUT", body });
+const apiPatch = (path, body, options = {}) => apiRequest(path, { ...options, method: "PATCH", body });
 const apiDelete = (path, options = {}) => apiRequest(path, { ...options, method: "DELETE" });

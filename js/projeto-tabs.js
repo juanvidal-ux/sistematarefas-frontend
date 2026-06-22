@@ -17,6 +17,7 @@ function alternarAbaDetalheProjeto(aba) {
         USUARIOS: "tabProjetoUsuarios",
         CUSTOS: "tabProjetoCustos",
         TIMELINE: "tabProjetoTimeline",
+        DOCUMENTOS: "tabProjetoDocumentos",
         EXPORTACOES: "tabProjetoExportacoes"
     };
 
@@ -29,7 +30,7 @@ function aplicarAbaDetalheProjeto() {
     const insights = document.querySelector(".project-insights-card");
     const detalheGrid = document.querySelector("#projetoDetalhePanel .project-detail-grid");
     const exportacoes = document.getElementById("abaProjetoExportacoes");
-    const timelineHorizontal = document.querySelector(".timeline-horizontal-card");
+    const documentos = document.getElementById("abaProjetoDocumentos");
 
     if (insights) {
         insights.classList.toggle("app-page-hidden", !["VISAO", "CUSTOS"].includes(abaDetalheProjetoAtual));
@@ -39,19 +40,24 @@ function aplicarAbaDetalheProjeto() {
         detalheGrid.classList.toggle("app-page-hidden", !["VISAO", "TAREFAS", "USUARIOS", "CUSTOS"].includes(abaDetalheProjetoAtual));
     }
 
-    if (timelineHorizontal) {
-        timelineHorizontal.classList.toggle("app-page-hidden", abaDetalheProjetoAtual !== "TIMELINE");
+
+    if (documentos) {
+        documentos.classList.toggle("app-page-hidden", abaDetalheProjetoAtual !== "DOCUMENTOS");
     }
 
     if (exportacoes) {
         exportacoes.classList.toggle("app-page-hidden", abaDetalheProjetoAtual !== "EXPORTACOES");
+    }
+
+    if (abaDetalheProjetoAtual === "DOCUMENTOS" && typeof carregarDocumentosProjeto === "function") {
+        carregarDocumentosProjeto();
     }
 }
 
 function filtrarDetalheProjetoLocal() {
     const termo = document.getElementById("buscaInternaProjeto")?.value?.trim().toLowerCase() || "";
 
-    document.querySelectorAll("#projetoDetalhePanel .mini-task, #projetoDetalhePanel .usuario-row, #projetoDetalhePanel .timeline-item, #projetoDetalhePanel .timeline-horizontal-item").forEach(item => {
+    document.querySelectorAll("#projetoDetalhePanel .mini-task, #projetoDetalhePanel .usuario-row, #projetoDetalhePanel .timeline-item").forEach(item => {
         if (!termo) {
             item.classList.remove("search-hidden");
             return;
@@ -123,4 +129,9 @@ function abrirModoApresentacaoProjeto() {
 
 function fecharModoApresentacaoProjeto() {
     document.getElementById("modalApresentacaoProjeto")?.classList.add("hidden");
+}
+
+async function abrirDocumentosProjetoDoCard(projetoId) {
+    await abrirDetalheProjeto(projetoId);
+    alternarAbaDetalheProjeto("DOCUMENTOS");
 }

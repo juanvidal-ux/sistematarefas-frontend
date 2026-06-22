@@ -1,0 +1,242 @@
+/* Rev16.26 - Sidebar expandida premium estável */
+#dashboardSection.app {
+    display: grid !important;
+    grid-template-columns: 260px minmax(0, 1fr) !important;
+}
+
+#dashboardSection .sidebar {
+    position: sticky !important;
+    top: 0 !important;
+    height: 100vh !important;
+    width: 260px !important;
+    min-width: 260px !important;
+    max-width: 260px !important;
+    padding: 16px 14px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    background:
+        radial-gradient(circle at 20% 6%, rgba(59, 130, 246, .28), transparent 110px),
+        linear-gradient(180deg, #0f172a 0%, #1e3a8a 56%, #0f766e 100%) !important;
+    border-right: 1px solid rgba(255,255,255,.14) !important;
+    box-shadow: 18px 0 45px rgba(15,23,42,.16) !important;
+}
+
+#dashboardSection .sidebar-logo {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    min-height: 70px !important;
+    margin: 0 0 16px 0 !important;
+    padding: 12px !important;
+    border-radius: 20px !important;
+    background: rgba(255,255,255,.12) !important;
+    border: 1px solid rgba(255,255,255,.16) !important;
+    backdrop-filter: blur(12px) !important;
+}
+
+#dashboardSection .brand-badge.small {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    border-radius: 14px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: linear-gradient(135deg, #2563eb, #06b6d4) !important;
+    color: #fff !important;
+    font-weight: 900 !important;
+    box-shadow: 0 14px 30px rgba(37,99,235,.28) !important;
+}
+
+#dashboardSection .sidebar-brand-text {
+    display: block !important;
+    min-width: 0 !important;
+}
+
+#dashboardSection .sidebar-brand-text strong,
+#dashboardSection .sidebar-logo strong {
+    display: block !important;
+    color: #fff !important;
+    font-size: 16px !important;
+    line-height: 1.1 !important;
+}
+
+#dashboardSection .sidebar-brand-text small,
+#dashboardSection .sidebar-logo small {
+    display: block !important;
+    margin-top: 2px !important;
+    color: rgba(255,255,255,.62) !important;
+    font-size: 11px !important;
+}
+
+#dashboardSection .menu {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+    padding: 2px 0 10px 0 !important;
+    scrollbar-width: none !important;
+}
+
+#dashboardSection .menu::-webkit-scrollbar {
+    width: 0 !important;
+    height: 0 !important;
+}
+
+#dashboardSection .menu-item {
+    width: 100% !important;
+    min-height: 44px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 12px !important;
+    padding: 11px 12px !important;
+    margin: 0 !important;
+    border: 1px solid transparent !important;
+    border-radius: 14px !important;
+    background: transparent !important;
+    color: rgba(255,255,255,.80) !important;
+    text-align: left !important;
+    font-size: 14px !important;
+    font-weight: 800 !important;
+    letter-spacing: -.01em !important;
+    cursor: pointer !important;
+    transition: background .16s ease, color .16s ease, border-color .16s ease, transform .16s ease !important;
+    white-space: nowrap !important;
+}
+
+#dashboardSection .menu-item:hover {
+    color: #fff !important;
+    background: rgba(255,255,255,.12) !important;
+    border-color: rgba(255,255,255,.12) !important;
+    transform: translateX(3px) !important;
+}
+
+#dashboardSection .menu-item.active {
+    color: #fff !important;
+    background: linear-gradient(135deg, rgba(37,99,235,.48), rgba(6,182,212,.30)) !important;
+    border-color: rgba(255,255,255,.18) !important;
+    box-shadow: inset 3px 0 0 rgba(255,255,255,.80), 0 14px 30px rgba(15,23,42,.18) !important;
+}
+
+#dashboardSection .menu-icon {
+    width: 24px !important;
+    min-width: 24px !important;
+    height: 24px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 16px !important;
+    line-height: 1 !important;
+    opacity: .95 !important;
+}
+
+#dashboardSection .menu-text {
+    display: inline-block !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+#dashboardSection .notif-badge {
+    margin-left: auto !important;
+    min-width: 20px !important;
+    height: 20px !important;
+    padding: 0 6px !important;
+    border-radius: 999px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: #ef4444 !important;
+    color: #fff !important;
+    font-size: 11px !important;
+    font-weight: 900 !important;
+}
+
+#dashboardSection .notif-badge.hidden {
+    display: none !important;
+}
+
+#dashboardSection .sidebar-footer {
+    flex: 0 0 auto !important;
+    padding: 12px 0 0 0 !important;
+    margin-top: auto !important;
+    border-top: 1px solid rgba(255,255,255,.12) !important;
+}
+
+#dashboardSection .btn-logout {
+    width: 100% !important;
+    min-height: 44px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    border-radius: 14px !important;
+    border: 1px solid rgba(255,255,255,.16) !important;
+    background: rgba(255,255,255,.08) !important;
+    color: #fff !important;
+    font-weight: 900 !important;
+    cursor: pointer !important;
+}
+
+#dashboardSection .btn-logout:hover {
+    background: rgba(239,68,68,.22) !important;
+    border-color: rgba(239,68,68,.26) !important;
+}
+
+#dashboardSection.sidebar-compacta {
+    grid-template-columns: 260px minmax(0, 1fr) !important;
+}
+
+#dashboardSection.sidebar-compacta .sidebar {
+    width: 260px !important;
+    min-width: 260px !important;
+    max-width: 260px !important;
+}
+
+#dashboardSection.sidebar-compacta .menu-text,
+#dashboardSection.sidebar-compacta .sidebar-brand-text,
+#dashboardSection.sidebar-compacta .btn-logout {
+    display: flex !important;
+}
+
+@media (max-width: 900px) {
+    #dashboardSection.app {
+        display: block !important;
+    }
+
+    #dashboardSection .sidebar {
+        position: fixed !important;
+        left: -280px !important;
+        z-index: 500 !important;
+        transition: left .2s ease !important;
+    }
+
+    #dashboardSection.menu-open .sidebar,
+    body.menu-open #dashboardSection .sidebar {
+        left: 0 !important;
+    }
+}
+
+/* Rev16.27 - Correção de permissões visuais
+   Alguns estilos da sidebar usavam display:flex !important em .menu-item,
+   sobrescrevendo a classe .hidden. Esta regra deve ficar por último. */
+#dashboardSection .menu-item.hidden,
+#dashboardSection .admin-only.hidden,
+#dashboardSection .super-admin-only.hidden,
+#dashboardSection .admin-action.hidden,
+#dashboardSection .super-admin-action.hidden,
+#dashboardSection .hidden {
+    display: none !important;
+}
+
+/* Garante que painéis restritos também não apareçam quando ocultos. */
+#superAdminPanel.hidden,
+#adminPanel.hidden,
+.super-admin-only.hidden,
+.admin-only.hidden {
+    display: none !important;
+}

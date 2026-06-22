@@ -239,6 +239,13 @@ function renderizarProjetosAdmin() {
 
                     <button
                         class="btn-small neutral"
+                        onclick="abrirDocumentosProjetoDoCard(${projeto.id})"
+                    >
+                        Documentos
+                    </button>
+
+                    <button
+                        class="btn-small neutral"
                         onclick="selecionarProjetoNoBoard(${projeto.id})"
                     >
                         Abrir Kanban
@@ -593,13 +600,14 @@ function renderizarDetalheProjeto() {
     renderizarUsuariosDetalheProjeto();
     renderizarTimelineDetalheProjeto();
 
+    if (typeof carregarDocumentosProjeto === "function") {
+        carregarDocumentosProjeto();
+    }
+
     if (typeof renderizarGraficosProjeto === "function") {
         renderizarGraficosProjeto();
     }
 
-    if (typeof renderizarTimelineHorizontalProjeto === "function") {
-        renderizarTimelineHorizontalProjeto();
-    }
 }
 
 function renderizarKanbanDetalheProjeto() {

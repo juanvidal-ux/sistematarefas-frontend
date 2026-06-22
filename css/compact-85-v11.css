@@ -1,0 +1,352 @@
+
+/* =========================================================
+   V11 — Escala visual 85%
+   Objetivo: manter o modelo aprovado, mas com sensação de zoom ~85%.
+   Não altera backend, endpoints nem lógica JS.
+   ========================================================= */
+
+body[data-layout="menu-slim-clean"] {
+    --v11-scale: .85;
+    font-size: 12.5px !important;
+}
+
+/* Menu slim proporcional */
+body[data-layout="menu-slim-clean"] #dashboardSection.app {
+    grid-template-columns: 56px minmax(0, 1fr) !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar {
+    width: 56px !important;
+    min-width: 56px !important;
+    max-width: 56px !important;
+    padding: 8px 6px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar-logo {
+    width: 42px !important;
+    min-height: 42px !important;
+    margin-bottom: 10px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .brand-badge {
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    font-size: 11px !important;
+    border-radius: 12px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .menu,
+body[data-layout="menu-slim-clean"] #dashboardSection .menu-section,
+body[data-layout="menu-slim-clean"] #dashboardSection .menu-section-items {
+    gap: 6px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .menu-item,
+body[data-layout="menu-slim-clean"] #dashboardSection .btn-logout {
+    width: 38px !important;
+    min-width: 38px !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    border-radius: 12px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .menu-icon,
+body[data-layout="menu-slim-clean"] #dashboardSection .menu-item > span:first-child:not(.menu-text) {
+    width: 19px !important;
+    min-width: 19px !important;
+    height: 19px !important;
+    font-size: 14px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .btn-logout span {
+    font-size: 15px !important;
+}
+
+/* Área principal mais densa */
+body[data-layout="menu-slim-clean"] #dashboardSection .main {
+    padding: 12px 16px 16px !important;
+}
+
+/* Header principal */
+body[data-layout="menu-slim-clean"] #dashboardSection .topbar {
+    min-height: 54px !important;
+    padding: 8px 16px !important;
+    margin-bottom: 10px !important;
+    border-radius: 12px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .topbar h1,
+body[data-layout="menu-slim-clean"] #dashboardSection #topbarTitulo {
+    font-size: clamp(19px, 1.25vw, 22px) !important;
+    line-height: 1.05 !important;
+    letter-spacing: -.02em !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .topbar p {
+    font-size: 11px !important;
+    line-height: 1.25 !important;
+    margin-top: 2px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .eyebrow {
+    font-size: 9.5px !important;
+    line-height: 1.1 !important;
+    margin-bottom: 1px !important;
+    letter-spacing: .09em !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .top-actions {
+    gap: 6px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .top-actions button,
+body[data-layout="menu-slim-clean"] #dashboardSection .btn-primary,
+body[data-layout="menu-slim-clean"] #dashboardSection .btn-secondary,
+body[data-layout="menu-slim-clean"] #dashboardSection .btn-cancel-edit,
+body[data-layout="menu-slim-clean"] #dashboardSection .btn-save {
+    min-height: 32px !important;
+    height: 32px !important;
+    padding: 0 11px !important;
+    font-size: 11.5px !important;
+    border-radius: 8px !important;
+}
+
+/* Containers e cartões gerais */
+body[data-layout="menu-slim-clean"] #dashboardSection .metric-card,
+body[data-layout="menu-slim-clean"] #dashboardSection .admin-card,
+body[data-layout="menu-slim-clean"] #dashboardSection .create-panel,
+body[data-layout="menu-slim-clean"] #dashboardSection .board-toolbar,
+body[data-layout="menu-slim-clean"] #dashboardSection .modal-content,
+body[data-layout="menu-slim-clean"] #dashboardSection .notifications-panel,
+body[data-layout="menu-slim-clean"] #dashboardSection .project-detail-card,
+body[data-layout="menu-slim-clean"] #dashboardSection .project-detail-tabs-card,
+body[data-layout="menu-slim-clean"] #dashboardSection .document-form-card,
+body[data-layout="menu-slim-clean"] #dashboardSection .project-export-panel,
+body[data-layout="menu-slim-clean"] #dashboardSection .modelo-card,
+body[data-layout="menu-slim-clean"] #dashboardSection .chart-card,
+body[data-layout="menu-slim-clean"] #dashboardSection .export-option-card,
+body[data-layout="menu-slim-clean"] #dashboardSection .ux-card,
+body[data-layout="menu-slim-clean"] #dashboardSection .ux-kpi-card,
+body[data-layout="menu-slim-clean"] #dashboardSection .ux-page-header,
+body[data-layout="menu-slim-clean"] #dashboardSection .ux-toolbar {
+    padding: 12px !important;
+    border-radius: 12px !important;
+}
+
+/* Cabeçalho do quadro */
+body[data-layout="menu-slim-clean"] #dashboardSection .board-area > .admin-card:first-child,
+body[data-layout="menu-slim-clean"] #dashboardSection .ux-page-header {
+    padding: 10px 14px !important;
+    margin-bottom: 8px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .board-area h2,
+body[data-layout="menu-slim-clean"] #dashboardSection .ux-page-header h2 {
+    font-size: 17px !important;
+    line-height: 1.12 !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .board-area p,
+body[data-layout="menu-slim-clean"] #dashboardSection .ux-page-header p {
+    font-size: 11px !important;
+    line-height: 1.22 !important;
+}
+
+/* Filtros estilo zoom 85% */
+body[data-layout="menu-slim-clean"] #dashboardSection .board-toolbar,
+body[data-layout="menu-slim-clean"] #dashboardSection .ux-toolbar {
+    padding: 6px !important;
+    gap: 6px !important;
+    margin-bottom: 8px !important;
+    border-radius: 10px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .board-toolbar input,
+body[data-layout="menu-slim-clean"] #dashboardSection .board-toolbar select,
+body[data-layout="menu-slim-clean"] #dashboardSection .ux-toolbar input,
+body[data-layout="menu-slim-clean"] #dashboardSection .ux-toolbar select,
+body[data-layout="menu-slim-clean"] #dashboardSection input,
+body[data-layout="menu-slim-clean"] #dashboardSection select {
+    min-height: 31px !important;
+    height: 31px !important;
+    font-size: 11.5px !important;
+    border-radius: 8px !important;
+    padding: 0 9px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection textarea {
+    font-size: 11.5px !important;
+    border-radius: 8px !important;
+    padding: 9px !important;
+}
+
+/* Barra de chips/atalhos */
+body[data-layout="menu-slim-clean"] #dashboardSection .board-toolbar + .admin-card,
+body[data-layout="menu-slim-clean"] #dashboardSection .board-toolbar + div {
+    margin-top: 6px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .pill,
+body[data-layout="menu-slim-clean"] #dashboardSection .modal-status,
+body[data-layout="menu-slim-clean"] #dashboardSection .owner-pill,
+body[data-layout="menu-slim-clean"] #dashboardSection .project-pill {
+    font-size: 9.5px !important;
+    padding: 3px 6px !important;
+    line-height: 1.15 !important;
+}
+
+/* Kanban mais próximo de zoom 85% */
+body[data-layout="menu-slim-clean"] #dashboardSection .kanban {
+    gap: 9px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .kanban-column {
+    padding: 9px !important;
+    border-radius: 12px !important;
+    min-height: calc(100vh - 170px) !important;
+}
+
+body[data-layout="menu-slim-clean"][data-current-page="BOARD"] #dashboardSection .kanban-column,
+body[data-layout="menu-slim-clean"][data-current-page="MINHAS"] #dashboardSection .kanban-column {
+    min-height: calc(100vh - 155px) !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .column-header {
+    padding: 4px 5px 7px !important;
+    margin-bottom: 6px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .column-header h3 {
+    font-size: 11.5px !important;
+    letter-spacing: .04em !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .column-header span {
+    min-width: 22px !important;
+    height: 22px !important;
+    font-size: 10.5px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .column-body,
+body[data-layout="menu-slim-clean"] #dashboardSection .tasks-container {
+    gap: 7px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .task-card {
+    padding: 9px !important;
+    border-radius: 10px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .task-title {
+    font-size: 12.5px !important;
+    line-height: 1.22 !important;
+    margin-bottom: 5px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .task-desc {
+    font-size: 10.8px !important;
+    line-height: 1.28 !important;
+    margin-bottom: 6px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .task-actions {
+    gap: 5px !important;
+    margin-top: 7px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .task-actions button {
+    min-height: 29px !important;
+    height: 29px !important;
+    padding: 0 8px !important;
+    font-size: 10.5px !important;
+    border-radius: 7px !important;
+}
+
+/* Barras de progresso e metadados */
+body[data-layout="menu-slim-clean"] #dashboardSection .progress,
+body[data-layout="menu-slim-clean"] #dashboardSection .progress-bar,
+body[data-layout="menu-slim-clean"] #dashboardSection .task-progress {
+    height: 5px !important;
+}
+
+/* Tooltip acompanha o novo menu menor */
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar .menu-item[data-page]::after,
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar .menu-item[onclick]::after,
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar .btn-logout::after {
+    left: calc(100% + 10px) !important;
+    min-height: 30px !important;
+    padding: 7px 9px !important;
+    font-size: 11px !important;
+    border-radius: 9px !important;
+}
+
+/* Drawer de nova tarefa em escala menor */
+body[data-layout="menu-slim-clean"] #dashboardSection #novaTarefaPanel.create-panel:not(.create-panel-collapsed) {
+    width: min(378px, calc(100vw - 88px)) !important;
+    padding: 13px !important;
+    border-radius: 14px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection #novaTarefaPanel .nova-tarefa-header h2,
+body[data-layout="menu-slim-clean"] #dashboardSection #novaTarefaPanel h2 {
+    font-size: 16.5px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection #novaTarefaPanel label {
+    font-size: 11px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection #novaTarefaPanel input,
+body[data-layout="menu-slim-clean"] #dashboardSection #novaTarefaPanel select {
+    min-height: 32px !important;
+    height: 32px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection #novaTarefaPanel textarea {
+    min-height: 74px !important;
+}
+
+/* Dashboard também fica proporcional, mas sem ficar minúsculo */
+body[data-layout="menu-slim-clean"] #dashboardSection .metrics {
+    gap: 10px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .metric-card h3,
+body[data-layout="menu-slim-clean"] #dashboardSection .metric-card .metric-label {
+    font-size: 10.5px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .metric-card strong,
+body[data-layout="menu-slim-clean"] #dashboardSection .metric-card .metric-value {
+    font-size: 24px !important;
+}
+
+@media (max-width: 768px) {
+    body[data-layout="menu-slim-clean"] #dashboardSection.app {
+        grid-template-columns: 52px minmax(0, 1fr) !important;
+    }
+
+    body[data-layout="menu-slim-clean"] #dashboardSection .sidebar {
+        width: 52px !important;
+        min-width: 52px !important;
+        max-width: 52px !important;
+    }
+
+    body[data-layout="menu-slim-clean"] #dashboardSection .main {
+        padding: 10px !important;
+    }
+
+    body[data-layout="menu-slim-clean"] #dashboardSection .topbar h1,
+    body[data-layout="menu-slim-clean"] #dashboardSection #topbarTitulo {
+        font-size: 18px !important;
+    }
+
+    body[data-layout="menu-slim-clean"] #dashboardSection .menu-item,
+    body[data-layout="menu-slim-clean"] #dashboardSection .btn-logout {
+        width: 36px !important;
+        min-width: 36px !important;
+        height: 36px !important;
+        min-height: 36px !important;
+    }
+}

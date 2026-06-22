@@ -29,6 +29,7 @@
     <link rel="stylesheet" href="css/relatorios-graficos.css" />
     <link rel="stylesheet" href="css/projeto-tabs-exportacoes.css" />
     <link rel="stylesheet" href="css/modelos-cards.css" />
+    <link rel="stylesheet" href="css/documentos.css" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
 
@@ -45,9 +46,19 @@
     <link rel="stylesheet" href="css/ux-features-v8.css">
     <link rel="stylesheet" href="css/ux-features-v22.css">
     <link rel="stylesheet" href="css/ux-features-v23.css">
+    <link rel="stylesheet" href="css/sidebar-expanded-premium.css">
+    <link rel="stylesheet" href="css/sidebar-accordion.css">
+    <link rel="stylesheet" href="css/menu-slim-clean.css">
+    <link rel="stylesheet" href="css/design-balanced-v7.css">
+    <link rel="stylesheet" href="css/menu-tooltips-v8.css">
+    <link rel="stylesheet" href="css/compact-refine-v10.css">
+    <link rel="stylesheet" href="css/compact-85-v11.css">
+    <link rel="stylesheet" href="css/background-polish-v12.css">
+    <link rel="stylesheet" href="css/menu-flyout-v13.css">
+    <link rel="stylesheet" href="css/menu-only-v15.css">
 </head>
 
-<body>
+<body data-layout="menu-slim-clean">
 
     <div id="toast" class="toast hidden"></div>
 
@@ -128,7 +139,7 @@
 
                 <span class="brand-badge small">VC</span>
 
-                <div>
+                <div class="sidebar-brand-text">
 
                     <strong>CRM</strong>
 
@@ -136,64 +147,59 @@
 
                 </div>
 
+
             </div>
 
-            <nav class="menu">
+            <nav class="menu" aria-label="Menu principal">
 
                 <button class="menu-item active" data-page="DASHBOARD" onclick="mostrarPagina('DASHBOARD')">
-                    <span>📊</span>
-                    Dashboard
+                    <span class="menu-icon" aria-hidden="true">📊</span>
+                    <span class="menu-text">Dashboard</span>
                 </button>
 
                 <button class="menu-item" data-page="BOARD" onclick="mostrarPagina('BOARD')">
-                    <span>▦</span>
-                    Board
+                    <span class="menu-icon" aria-hidden="true">▦</span>
+                    <span class="menu-text">Kanban</span>
                 </button>
 
                 <button class="menu-item admin-only hidden" data-page="PROJETOS" onclick="mostrarPagina('PROJETOS')">
-                    <span>📁</span>
-                    Projetos
+                    <span class="menu-icon" aria-hidden="true">📁</span>
+                    <span class="menu-text">Projetos</span>
                 </button>
 
                 <button class="menu-item admin-only hidden" data-page="MODELOS_CARDS" onclick="abrirModelosCards()">
-                    <span>📋</span>
-                    Modelos de Cards
+                    <span class="menu-icon" aria-hidden="true">📋</span>
+                    <span class="menu-text">Modelos de Cards</span>
                 </button>
-
-                <button class="menu-item" data-page="MINHAS" onclick="abrirMinhasTarefas()">
-                    <span>✓</span>
-                    Minhas tarefas
+<button class="menu-item" data-page="MINHAS" onclick="abrirMinhasTarefas()">
+                    <span class="menu-icon" aria-hidden="true">✓</span>
+                    <span class="menu-text">Minhas tarefas</span>
                 </button>
 
                 <button class="menu-item admin-only hidden" data-page="ADMIN" onclick="mostrarPagina('ADMIN')">
-                    <span>👥</span>
-                    Administração
+                    <span class="menu-icon" aria-hidden="true">👥</span>
+                    <span class="menu-text">Administração</span>
                 </button>
 
                 <button class="menu-item super-admin-only hidden" data-page="SUPER_ADMIN" onclick="mostrarPagina('SUPER_ADMIN')">
-                    <span>🛡️</span>
-                    Super Admin
+                    <span class="menu-icon" aria-hidden="true">🛡️</span>
+                    <span class="menu-text">Super Admin</span>
                 </button>
 
                 <button class="menu-item" onclick="alternarTemaSistema()">
-                    <span id="iconeTemaSistema">🌙</span>
-                    Tema
+                    <span id="iconeTemaSistema" class="menu-icon" aria-hidden="true">🌙</span>
+                    <span class="menu-text">Tema</span>
                 </button>
-
-                <button class="menu-item" onclick="alternarPainelNotificacoes()">
-                    <span>🔔</span>
-                    Notificações <strong id="badgeNotificacoes" class="notif-badge hidden">0</strong>
+<button class="menu-item" onclick="abrirModalSenha()">
+                    <span class="menu-icon" aria-hidden="true">🔐</span>
+                    <span class="menu-text">Alterar senha</span>
                 </button>
-
-                <button class="menu-item" onclick="abrirModalSenha()">
-                    <span>🔐</span>
-                    Alterar senha
-                </button>
-</nav>
+            </nav>
 
             <div class="sidebar-footer">
 
                 <button class="btn-logout" onclick="logout()">
+                    <span aria-hidden="true">⏻</span>
                     Sair
                 </button>
 
@@ -210,9 +216,9 @@
 
                     <span class="eyebrow">Workspace</span>
 
-                    <h1>Gestão de Projetos e Tarefas</h1>
+                    <h1 id="topbarTitulo">Gestão de Projetos e Tarefas</h1>
 
-                    <p>
+                    <p id="topbarDescricao">
                         Controle operacional em formato Kanban por projeto, usuário e prioridade.
                     </p>
 
@@ -220,15 +226,20 @@
 
                 <div class="top-actions">
 
+                    <button class="notification-top-button" id="btnTopNotificacoes" type="button" onclick="alternarPainelNotificacoes()" aria-label="Abrir notificações">
+                        <span aria-hidden="true">🔔</span>
+                        <strong id="badgeNotificacoes" class="notif-badge hidden">0</strong>
+                    </button>
+
                     <button class="btn-secondary" onclick="alternarModoCartao()" id="btnModoCartao">
                         Modo detalhado
                     </button>
 
-                    <button class="btn-secondary" onclick="recarregarTudo()">
+                    <button class="btn-secondary" id="btnTopAtualizar" onclick="recarregarTudo()">
                         Atualizar
                     </button>
 
-                    <button class="btn-primary" onclick="focarNovaTarefa()">
+                    <button class="btn-primary" id="btnTopNovaTarefa" onclick="focarNovaTarefa()">
                         + Nova tarefa
                     </button>
 
@@ -781,8 +792,7 @@
                 </div>
 
             </section>
-
-            <!-- DETALHE DO PROJETO -->
+<!-- DETALHE DO PROJETO -->
             <section id="projetoDetalhePanel" class="admin-panel admin-only hidden">
 
                 <div class="admin-card project-detail-card">
@@ -873,12 +883,95 @@
                         <button id="tabProjetoUsuarios" class="project-tab" onclick="alternarAbaDetalheProjeto('USUARIOS')">Usuários</button>
                         <button id="tabProjetoCustos" class="project-tab" onclick="alternarAbaDetalheProjeto('CUSTOS')">Custos</button>
                         <button id="tabProjetoTimeline" class="project-tab" onclick="alternarAbaDetalheProjeto('TIMELINE')">Linha do tempo</button>
+                        <button id="tabProjetoDocumentos" class="project-tab" onclick="alternarAbaDetalheProjeto('DOCUMENTOS')">Documentos</button>
                         <button id="tabProjetoExportacoes" class="project-tab" onclick="alternarAbaDetalheProjeto('EXPORTACOES')">Exportações</button>
                     </div>
 
                     <div class="project-detail-search">
                         <span>🔎</span>
                         <input type="text" id="buscaInternaProjeto" placeholder="Buscar tarefa, responsável, subitem ou comentário..." oninput="filtrarDetalheProjetoLocal()" />
+                    </div>
+                </div>
+
+
+                <div id="abaProjetoDocumentos" class="admin-card project-documents-panel project-detail-tab-panel app-page-hidden">
+                    <div class="admin-card-header">
+                        <div>
+                            <h2>Documentos e versões do projeto</h2>
+                            <p>Anexe desenhos técnicos, PDFs, evidências e mantenha histórico de versões. A última versão fica em destaque sem apagar as anteriores.</p>
+                        </div>
+                        <button class="btn-primary" onclick="abrirFormularioNovoDocumentoProjeto()">+ Novo documento</button>
+                    </div>
+
+                    <div id="documentosProjetoResumo" class="documents-summary-grid"></div>
+
+                    <div id="formDocumentoProjeto" class="document-form-card hidden">
+                        <div class="form-grid two">
+                            <div class="form-group">
+                                <label>Documento</label>
+                                <select id="documentoProjetoExistente" onchange="prepararFormularioDocumentoPorModo()">
+                                    <option value="NOVO">Novo documento</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Nome do documento</label>
+                                <input id="documentoProjetoNome" type="text" placeholder="Ex.: Desenho técnico da peça X" />
+                            </div>
+
+                            <div class="form-group">
+                                <label>Código</label>
+                                <input id="documentoProjetoCodigo" type="text" placeholder="Ex.: DT-001" />
+                            </div>
+
+                            <div class="form-group">
+                                <label>Tipo</label>
+                                <select id="documentoProjetoTipo">
+                                    <option value="DESENHO_TECNICO">Desenho técnico</option>
+                                    <option value="MEMORIAL">Memorial descritivo</option>
+                                    <option value="RELATORIO">Relatório</option>
+                                    <option value="EVIDENCIA">Evidência</option>
+                                    <option value="CERTIFICADO">Certificado</option>
+                                    <option value="OUTRO">Outro</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Status da versão</label>
+                                <select id="documentoProjetoStatusVersao">
+                                    <option value="EM_ANALISE">Em análise</option>
+                                    <option value="APROVADO">Aprovado</option>
+                                    <option value="REPROVADO">Reprovado</option>
+                                    <option value="OBSOLETO">Obsoleto</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Arquivo</label>
+                                <input id="documentoProjetoArquivo" type="file" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Observação da versão</label>
+                            <textarea id="documentoProjetoObservacao" rows="3" placeholder="Descreva o que mudou nesta versão..."></textarea>
+                        </div>
+
+                        <div class="modal-actions left">
+                            <button class="btn-primary" onclick="salvarDocumentoProjeto()">Salvar documento/versão</button>
+                            <button class="btn-secondary" onclick="fecharFormularioDocumentoProjeto()">Cancelar</button>
+                        </div>
+                    </div>
+
+                    <div class="documents-toolbar">
+                        <div class="project-detail-search compact">
+                            <span>🔎</span>
+                            <input type="text" id="buscaDocumentosProjeto" placeholder="Buscar documento, código, tipo ou versão..." oninput="renderizarDocumentosProjeto()" />
+                        </div>
+                    </div>
+
+                    <div id="documentosProjetoContainer" class="documents-list">
+                        <div class="admin-empty">Nenhum documento carregado.</div>
                     </div>
                 </div>
 
@@ -1009,39 +1102,6 @@
                     </div>
                 </div>
 
-                <div class="admin-card timeline-horizontal-card">
-                    <div class="admin-card-header">
-                        <div>
-                            <h2>Linha do tempo horizontal</h2>
-                            <p>Eventos consolidados do projeto, tarefas, subitens, comentários e histórico.</p>
-                        </div>
-                        <div class="timeline-controls">
-                            <select id="timelineFiltroTipoProjeto" onchange="renderizarTimelineHorizontalProjeto(false)">
-                                <option value="TODOS">Todos os eventos</option>
-                                <option value="TAREFAS">Tarefas</option>
-                                <option value="SUBITENS">Subitens</option>
-                                <option value="COMENTARIOS">Comentários</option>
-                                <option value="STATUS">Status/Conclusões</option>
-                            </select>
-
-                            <select id="timelineLimiteProjeto" onchange="renderizarTimelineHorizontalProjeto(false)">
-                                <option value="10">Últimos 10</option>
-                                <option value="30" selected>Últimos 30</option>
-                                <option value="100">Últimos 100</option>
-                                <option value="TODOS">Ver todos</option>
-                            </select>
-
-                            <button class="btn-secondary" onclick="renderizarTimelineHorizontalProjeto(true)">
-                                Atualizar linha do tempo
-                            </button>
-                        </div>
-                    </div>
-
-                    <div id="timelineHorizontalProjeto" class="timeline-horizontal">
-                        <div class="admin-empty">Abra um projeto para carregar a linha do tempo.</div>
-                    </div>
-                </div>
-
                 <div class="admin-card">
                     <div class="admin-card-header">
                         <div>
@@ -1063,17 +1123,25 @@
             <section class="workspace">
 
                 <!-- CREATE TASK -->
-                <aside class="create-panel" id="novaTarefaPanel">
+                <aside class="create-panel create-panel-collapsed" id="novaTarefaPanel">
 
-                    <div class="panel-header">
+                    <div class="panel-header nova-tarefa-header">
 
-                        <h2>Nova tarefa</h2>
+                        <div>
+                            <h2>Nova tarefa</h2>
 
-                        <p>
-                            Registre uma atividade para acompanhamento.
-                        </p>
+                            <p>
+                                Registre uma atividade para acompanhamento.
+                            </p>
+                        </div>
+
+                        <button type="button" class="btn-secondary btn-toggle-nova-tarefa" onclick="toggleNovaTarefaPanel()" aria-expanded="false">
+                            Abrir formulário
+                        </button>
 
                     </div>
+
+                    <div class="nova-tarefa-body">
 
                     <div class="form-group">
 
@@ -1162,12 +1230,25 @@
                         Criar tarefa
                     </button>
 
+                    </div>
+
                 </aside>
 
                 <!-- BOARD -->
                 <section class="board-area">
 
-                    <div class="board-toolbar">
+                    <div class="board-heading">
+                        <div>
+                            <span class="eyebrow">Kanban</span>
+                            <h2>Quadro de tarefas</h2>
+                            <p>Visualize, filtre e mova tarefas conforme o contexto selecionado.</p>
+                        </div>
+                        <div class="board-heading-actions">
+                            <button class="btn-secondary" type="button" onclick="limparFiltrosBoard()">Limpar filtros</button>
+                        </div>
+                    </div>
+
+                    <div class="board-toolbar board-toolbar-compact">
 
                         <select id="visaoTarefas" class="admin-only hidden" onchange="buscarTarefas()">
 
@@ -1237,10 +1318,6 @@
                             <option value="PRAZO">Menor prazo</option>
                             <option value="VENCIDAS">Vencidas primeiro</option>
                         </select>
-
-                        <button class="btn-secondary filter-clear" onclick="limparFiltrosBoard()">
-                            Limpar filtros
-                        </button>
 
                     </div>
 
@@ -1338,6 +1415,7 @@
             <div class="modal-tabs">
                 <button id="tabModalDetalhes" class="modal-tab active" onclick="alternarAbaModal('DETALHES')">Detalhes</button>
                 <button id="tabModalSubitens" class="modal-tab" onclick="alternarAbaModal('SUBITENS')">Subitens <span id="tabSubitensCount">0</span></button>
+                <button id="tabModalDocumentos" class="modal-tab" onclick="alternarAbaModal('DOCUMENTOS')">Documentos <span id="tabDocumentosTarefaCount">0</span></button>
                 <button id="tabModalComentarios" class="modal-tab" onclick="alternarAbaModal('COMENTARIOS')">Comentários <span id="tabComentariosCount">0</span></button>
                 <button id="tabModalHistorico" class="modal-tab" onclick="alternarAbaModal('HISTORICO')">Linha do tempo</button>
             </div>
@@ -1479,6 +1557,71 @@
 
                     </div>
 
+                </div>
+
+
+                <div class="modal-section task-documents-section" data-modal-tab="DOCUMENTOS">
+                    <div class="subitems-header">
+                        <div>
+                            <h3>Documentos / Anexos da tarefa</h3>
+                            <p class="subitems-subtitle">Inclua desenhos técnicos, evidências, laudos e arquivos. O usuário visualiza sempre a versão atual; o administrador pode consultar o histórico.</p>
+                        </div>
+                    </div>
+
+                    <div class="task-documents-form">
+                        <input type="hidden" id="docTarefaDocumentoId" />
+
+                        <div class="form-group wide">
+                            <label id="documentosTarefaFormTitulo">Adicionar documento/desenho</label>
+                            <input type="text" id="docTarefaNome" placeholder="Ex.: Desenho técnico da peça X" />
+                        </div>
+
+                        <div class="form-group">
+                            <label>Código</label>
+                            <input type="text" id="docTarefaCodigo" placeholder="Ex.: DT-001" />
+                        </div>
+
+                        <div class="form-group">
+                            <label>Tipo</label>
+                            <select id="docTarefaTipo">
+                                <option>Desenho técnico</option>
+                                <option>Documento</option>
+                                <option>Laudo</option>
+                                <option>Evidência</option>
+                                <option>Certificado</option>
+                                <option>Planilha</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Status</label>
+                            <select id="docTarefaStatus">
+                                <option value="EM_ANALISE">Em análise</option>
+                                <option value="APROVADO">Aprovado</option>
+                                <option value="REPROVADO">Reprovado</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group wide">
+                            <label>Arquivo</label>
+                            <input type="file" id="docTarefaArquivo" />
+                            <small class="field-hint">O arquivo será enviado ao backend e salvo no Supabase Storage. A versão enviada vira a versão atual.</small>
+                        </div>
+
+                        <div class="form-group full">
+                            <label>Observação da versão</label>
+                            <textarea id="docTarefaObservacao" rows="3" placeholder="Ex.: Ajuste nas medidas finais do desenho."></textarea>
+                        </div>
+
+                        <div class="task-documents-form-actions">
+                            <button class="btn-cancel-edit" onclick="limparFormularioDocumentoTarefa()">Limpar</button>
+                            <button id="btnSalvarDocumentoTarefa" class="btn-save" onclick="salvarDocumentoTarefa()">Salvar documento</button>
+                        </div>
+                    </div>
+
+                    <div id="documentosTarefaContainer" class="task-documents-list">
+                        <div class="admin-empty">Nenhum documento carregado.</div>
+                    </div>
                 </div>
 
                 <div class="modal-section comments-section" data-modal-tab="COMENTARIOS">
@@ -1946,16 +2089,17 @@
     <script src="js/projetos.js"></script>
     <script src="js/subitens.js"></script>
     <script src="js/checklist.js"></script>
+    <script src="js/documentos-tarefa.js"></script>
     <script src="js/interacoes.js"></script>
     <script src="js/dashboard-ui.js"></script>
     <script src="js/senha.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/exportacoes.js"></script>
-    <script src="js/timeline-horizontal.js"></script>
     <script src="js/graficos.js"></script>
     <script src="js/chat-gantt-rev17.js"></script>
     <script src="js/projeto-tabs.js"></script>
     <script src="js/modelos-cards.js"></script>
+    <script src="js/documentos-projeto.js"></script>
     <script src="js/tema.js"></script>
     <script src="js/notificacoes.js"></script>
     <script src="js/permissoes-visuais.js"></script>
@@ -1966,6 +2110,8 @@
     <script src="js/ux-features-v8.js"></script>
     <script src="js/ux-features-v22.js"></script>
     <script src="js/ux-features-v23.js"></script>
+    <script src="js/sidebar-accordion.js"></script>
+    <script src="js/menu-flyout-v13.js"></script>
 
 
     <!-- MODAL MODO APRESENTAÇÃO DO PROJETO -->

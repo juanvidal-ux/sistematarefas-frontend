@@ -746,3 +746,577 @@ body.dark textarea {
         right: 14px !important;
     }
 }
+
+
+/* Rev16.15 - Formulário de nova tarefa recolhível */
+.nova-tarefa-header {
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: space-between !important;
+    gap: 14px !important;
+    margin-bottom: 16px !important;
+}
+
+.nova-tarefa-header h2 {
+    margin-bottom: 6px !important;
+}
+
+.btn-toggle-nova-tarefa {
+    white-space: nowrap !important;
+    padding: 9px 12px !important;
+    border-radius: 14px !important;
+    font-weight: 800 !important;
+}
+
+.create-panel.create-panel-collapsed {
+    padding-bottom: 18px !important;
+}
+
+.create-panel.create-panel-collapsed .nova-tarefa-body {
+    display: none !important;
+}
+
+.create-panel.create-panel-collapsed .nova-tarefa-header {
+    margin-bottom: 0 !important;
+}
+
+.create-panel:not(.create-panel-collapsed) .nova-tarefa-body {
+    display: block !important;
+}
+
+.create-panel.create-panel-collapsed::after {
+    content: "Clique em Abrir formulário para cadastrar uma nova atividade.";
+    display: block;
+    margin-top: 14px;
+    padding: 12px 14px;
+    border-radius: 16px;
+    background: rgba(37, 99, 235, 0.08);
+    color: #335072;
+    font-size: 13px;
+    line-height: 1.4;
+    font-weight: 700;
+}
+
+@media (max-width: 980px) {
+    .nova-tarefa-header {
+        flex-direction: column !important;
+        align-items: stretch !important;
+    }
+
+    .btn-toggle-nova-tarefa {
+        width: 100% !important;
+    }
+}
+
+/* Rev16.16 - Nova tarefa mais compacta e com rolagem interna */
+.create-panel.create-panel-collapsed {
+    padding: 18px 18px !important;
+    min-height: auto !important;
+}
+
+.create-panel.create-panel-collapsed .nova-tarefa-header {
+    align-items: center !important;
+    margin-bottom: 0 !important;
+}
+
+.create-panel.create-panel-collapsed .nova-tarefa-header p {
+    display: none !important;
+}
+
+.create-panel.create-panel-collapsed .nova-tarefa-header h2 {
+    margin-bottom: 0 !important;
+    font-size: 20px !important;
+}
+
+.create-panel.create-panel-collapsed::after {
+    display: none !important;
+    content: none !important;
+}
+
+.create-panel:not(.create-panel-collapsed) {
+    max-height: calc(100vh - 155px) !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain !important;
+    scrollbar-width: thin !important;
+}
+
+.create-panel:not(.create-panel-collapsed) .nova-tarefa-header {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 4 !important;
+    padding-bottom: 12px !important;
+    background: inherit !important;
+    backdrop-filter: blur(10px) !important;
+}
+
+.create-panel:not(.create-panel-collapsed) .nova-tarefa-body {
+    padding-bottom: 12px !important;
+}
+
+.create-panel:not(.create-panel-collapsed) .btn-primary.full {
+    position: sticky !important;
+    bottom: 0 !important;
+    z-index: 3 !important;
+    box-shadow: 0 -10px 20px rgba(15, 23, 42, 0.06) !important;
+}
+
+@media (max-width: 980px) {
+    .create-panel:not(.create-panel-collapsed) {
+        max-height: none !important;
+        overflow-y: visible !important;
+    }
+
+    .create-panel:not(.create-panel-collapsed) .nova-tarefa-header,
+    .create-panel:not(.create-panel-collapsed) .btn-primary.full {
+        position: static !important;
+        box-shadow: none !important;
+    }
+}
+
+/* Rev16.17 - Sidebar fixa: botão Sair não acompanha a altura do Kanban */
+@media (min-width: 901px) {
+    .app:not(.hidden) {
+        align-items: start !important;
+    }
+
+    .sidebar {
+        position: sticky !important;
+        top: 0 !important;
+        height: 100vh !important;
+        min-height: 100vh !important;
+        max-height: 100vh !important;
+        align-self: start !important;
+        overflow: hidden !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    .sidebar .menu {
+        flex: 1 1 auto !important;
+        min-height: 0 !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        padding-bottom: 10px !important;
+        scrollbar-width: thin;
+    }
+
+    .sidebar .menu::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .sidebar .menu::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.28);
+        border-radius: 999px;
+    }
+
+    .sidebar-footer {
+        flex: 0 0 auto !important;
+        margin-top: 0 !important;
+        position: sticky !important;
+        bottom: 0 !important;
+        padding: 12px !important;
+        background: linear-gradient(180deg, rgba(15, 23, 42, 0), rgba(15, 23, 42, 0.34) 18%, rgba(15, 23, 42, 0.58)) !important;
+        backdrop-filter: blur(10px) !important;
+    }
+
+    .btn-logout {
+        width: 100% !important;
+    }
+}
+
+/* Rev16.18 - Sidebar fixa sem barra de rolagem aparente
+   Mantém o botão Sair no rodapé e permite rolagem do menu pelo mouse,
+   mas remove a barra cinza que poluía o visual. */
+@media (min-width: 901px) {
+    .sidebar {
+        overflow: hidden !important;
+    }
+
+    .sidebar .menu {
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        scrollbar-width: none !important; /* Firefox */
+        -ms-overflow-style: none !important; /* Edge antigo */
+        padding-right: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    .sidebar .menu::-webkit-scrollbar {
+        width: 0 !important;
+        height: 0 !important;
+        display: none !important;
+    }
+
+    .sidebar .menu::-webkit-scrollbar-thumb,
+    .sidebar .menu::-webkit-scrollbar-track {
+        background: transparent !important;
+    }
+
+    .sidebar-footer {
+        border-top: 1px solid rgba(255, 255, 255, 0.10) !important;
+    }
+}
+
+/* Rev16.19 - Organização visual geral sem alterar regras do sistema */
+.sidebar-logo {
+    gap: 10px !important;
+}
+
+.sidebar-brand-text {
+    min-width: 0;
+}
+
+.sidebar-collapse-btn {
+    margin-left: auto;
+    width: 34px;
+    height: 34px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    cursor: pointer;
+    font-weight: 800;
+}
+
+.sidebar-collapse-btn:hover {
+    background: rgba(255, 255, 255, 0.16);
+}
+
+.menu-section-label {
+    margin: 16px 16px 7px;
+    font-size: 10px;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: rgba(255, 255, 255, 0.48);
+    font-weight: 900;
+}
+
+.menu-item {
+    gap: 11px !important;
+}
+
+.menu-item .menu-text {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#dashboardSection.sidebar-compacta {
+    grid-template-columns: 76px minmax(0, 1fr) !important;
+}
+
+#dashboardSection.sidebar-compacta .sidebar {
+    width: 76px !important;
+}
+
+#dashboardSection.sidebar-compacta .sidebar-brand-text,
+#dashboardSection.sidebar-compacta .menu-text,
+#dashboardSection.sidebar-compacta .menu-section-label,
+#dashboardSection.sidebar-compacta .sidebar-footer .btn-logout,
+#dashboardSection.sidebar-compacta .notif-badge {
+    display: none !important;
+}
+
+#dashboardSection.sidebar-compacta .sidebar-logo {
+    justify-content: center !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}
+
+#dashboardSection.sidebar-compacta .sidebar-collapse-btn {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    width: 26px;
+    height: 26px;
+    font-size: 11px;
+}
+
+#dashboardSection.sidebar-compacta .menu-item {
+    justify-content: center !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: 10px !important;
+    margin-right: 10px !important;
+}
+
+#dashboardSection.sidebar-compacta .menu-item span:first-child {
+    margin: 0 !important;
+}
+
+#dashboardSection.sidebar-compacta .sidebar-footer {
+    padding: 10px !important;
+}
+
+#dashboardSection.sidebar-compacta .sidebar-footer::after {
+    content: "⏻";
+    display: grid;
+    place-items: center;
+    height: 42px;
+    border-radius: 14px;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.10);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.board-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 12px;
+    padding: 16px 18px;
+    border: 1px solid rgba(148, 163, 184, 0.24);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.78);
+    box-shadow: 0 14px 34px rgba(15, 23, 42, 0.06);
+}
+
+.board-heading h2 {
+    margin: 2px 0 4px;
+    font-size: 22px;
+    color: #0f172a;
+}
+
+.board-heading p {
+    margin: 0;
+    color: #64748b;
+    font-size: 13px;
+}
+
+.board-heading-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.board-toolbar-compact {
+    display: grid !important;
+    grid-template-columns: minmax(180px, 1.1fr) minmax(220px, 1.4fr) repeat(4, minmax(145px, 0.9fr)) auto !important;
+    gap: 10px !important;
+    align-items: center !important;
+}
+
+.board-toolbar-compact select,
+.board-toolbar-compact input,
+.board-toolbar-compact .search-box {
+    min-height: 42px;
+}
+
+.board-toolbar-compact .filter-clear-inline {
+    white-space: nowrap;
+}
+
+.create-panel .nova-tarefa-body {
+    scrollbar-width: none;
+}
+
+.create-panel .nova-tarefa-body::-webkit-scrollbar {
+    display: none;
+}
+
+.create-panel:not(.create-panel-collapsed) .nova-tarefa-body > .btn-primary.full {
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+    box-shadow: 0 -14px 30px rgba(255, 255, 255, 0.88);
+}
+
+.notifications-panel .notifications-header {
+    border-bottom: 1px solid rgba(148, 163, 184, 0.22);
+}
+
+.notifications-panel .notifications-list {
+    gap: 8px;
+}
+
+.ux-toolbar-calendar {
+    display: grid !important;
+    grid-template-columns: minmax(220px, 1.2fr) repeat(6, minmax(145px, 0.8fr)) auto !important;
+    gap: 10px !important;
+}
+
+@media (max-width: 1200px) {
+    .board-toolbar-compact,
+    .ux-toolbar-calendar {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+@media (max-width: 900px) {
+    #dashboardSection.sidebar-compacta {
+        grid-template-columns: 1fr !important;
+    }
+
+    .board-heading {
+        flex-direction: column;
+    }
+
+    .board-toolbar-compact,
+    .ux-toolbar-calendar {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* Rev16.20 - Correção do menu recolhido: somente ícones, sem texto espremido */
+#dashboardSection.sidebar-compacta .sidebar {
+    width: 72px !important;
+    min-width: 72px !important;
+    max-width: 72px !important;
+    overflow: hidden !important;
+}
+
+#dashboardSection.sidebar-compacta .sidebar-logo {
+    height: 64px !important;
+    padding: 12px 8px !important;
+    justify-content: center !important;
+    position: relative !important;
+}
+
+#dashboardSection.sidebar-compacta .brand-badge.small {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    margin: 0 auto !important;
+}
+
+#dashboardSection.sidebar-compacta .sidebar-collapse-btn {
+    position: absolute !important;
+    right: 4px !important;
+    top: 10px !important;
+    width: 22px !important;
+    height: 22px !important;
+    padding: 0 !important;
+    border-radius: 999px !important;
+    font-size: 0 !important;
+    line-height: 1 !important;
+}
+
+#dashboardSection.sidebar-compacta .sidebar-collapse-btn::before {
+    content: "›";
+    font-size: 14px;
+    font-weight: 900;
+}
+
+#dashboardSection.sidebar-compacta .menu {
+    padding: 8px 6px 12px !important;
+    overflow-x: hidden !important;
+}
+
+#dashboardSection.sidebar-compacta .menu-item {
+    width: 48px !important;
+    height: 46px !important;
+    min-height: 46px !important;
+    margin: 4px auto !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0 !important;
+    border-radius: 16px !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+    font-size: 0 !important;
+    text-indent: 0 !important;
+}
+
+#dashboardSection.sidebar-compacta .menu-item > span:first-child,
+#dashboardSection.sidebar-compacta .menu-item > span:not(.menu-text):first-of-type {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    font-size: 17px !important;
+    line-height: 1 !important;
+    text-indent: 0 !important;
+}
+
+#dashboardSection.sidebar-compacta .menu-text,
+#dashboardSection.sidebar-compacta .menu-section-label,
+#dashboardSection.sidebar-compacta .sidebar-brand-text,
+#dashboardSection.sidebar-compacta .notif-badge,
+#dashboardSection.sidebar-compacta .btn-logout,
+#dashboardSection.sidebar-compacta .menu-item strong {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    max-width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+#dashboardSection.sidebar-compacta .sidebar-footer {
+    padding: 8px 6px !important;
+    display: flex !important;
+    justify-content: center !important;
+}
+
+#dashboardSection.sidebar-compacta .sidebar-footer::after {
+    width: 48px !important;
+    height: 44px !important;
+    margin: 0 auto !important;
+    border-radius: 16px !important;
+}
+
+/* Rev16.21 - Menu recolhido robusto: ícones via pseudo-elemento, sem textos quebrados */
+#dashboardSection.sidebar-compacta .menu-item::before {
+    display: none !important;
+    content: none !important;
+}
+
+#dashboardSection.sidebar-compacta .menu-item {
+    position: relative !important;
+    color: transparent !important;
+    text-shadow: none !important;
+    transform: none !important;
+    overflow: hidden !important;
+}
+
+#dashboardSection.sidebar-compacta .menu-item:hover,
+#dashboardSection.sidebar-compacta .menu-item.active {
+    transform: none !important;
+}
+
+#dashboardSection.sidebar-compacta .menu-item > span,
+#dashboardSection.sidebar-compacta .menu-item > strong {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+    max-width: 0 !important;
+    max-height: 0 !important;
+    overflow: hidden !important;
+}
+
+#dashboardSection.sidebar-compacta .menu-item::after {
+    display: grid !important;
+    place-items: center !important;
+    width: 100% !important;
+    height: 100% !important;
+    color: #ffffff !important;
+    font-size: 18px !important;
+    line-height: 1 !important;
+    text-indent: 0 !important;
+    text-shadow: none !important;
+}
+
+#dashboardSection.sidebar-compacta .menu-item[data-page="DASHBOARD"]::after { content: "📊"; }
+#dashboardSection.sidebar-compacta .menu-item[data-page="BOARD"]::after { content: "▦"; }
+#dashboardSection.sidebar-compacta .menu-item[data-page="MINHAS"]::after { content: "✓"; }
+#dashboardSection.sidebar-compacta .menu-item[data-page="PROJETOS"]::after { content: "📁"; }
+#dashboardSection.sidebar-compacta .menu-item[data-page="MODELOS_CARDS"]::after { content: "📋"; }
+#dashboardSection.sidebar-compacta .menu-item[data-page="ADMIN"]::after { content: "👥"; }
+#dashboardSection.sidebar-compacta .menu-item[data-page="SUPER_ADMIN"]::after { content: "🛡"; }
+#dashboardSection.sidebar-compacta .menu-item[onclick*="alternarTemaSistema"]::after { content: "🌙"; }
+#dashboardSection.sidebar-compacta .menu-item[onclick*="abrirModalSenha"]::after { content: "🔐"; }
+
+#dashboardSection.sidebar-compacta .menu-item.active {
+    outline: 1px solid rgba(255,255,255,0.18) !important;
+    box-shadow: 0 10px 26px rgba(14, 165, 233, 0.24) !important;
+}

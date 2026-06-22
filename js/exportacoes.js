@@ -2,7 +2,7 @@
 // EXPORTAÇÕES DO PROJETO
 // PDF, EXCEL E RESUMO EXECUTIVO
 // ==========================
-
+// Cache simples para evitar múltiplas requisições ao exportar várias vezes
 const pacoteProjetoCache = new Map();
 
 function obterProjetoDetalheObrigatorio() {
@@ -13,7 +13,7 @@ function obterProjetoDetalheObrigatorio() {
 
     return projetoDetalheSelecionado;
 }
-
+// Gera uma chave de cache única para cada projeto
 function chaveCacheProjeto(projetoId) {
     return String(projetoId);
 }
@@ -162,7 +162,7 @@ function baixarBlob(conteudo, nomeArquivo, tipo) {
         link.remove();
     }, 100);
 }
-
+// Função para escapar caracteres especiais em XML
 function xmlEscape(valor) {
     return String(valor ?? "")
         .replaceAll("&", "&amp;")
@@ -374,6 +374,67 @@ async function exportarExcelProjeto() {
     }
 }
 
+// Função para escapar caracteres especiais em HTML
+function escapeHtml(valor) {
+    return String(valor ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+// Monta uma linha do tempo consolidada para o relatório em PDF
+function montarEventosProjetoTimeline(pacote) {
+    const eventos = [];
+
+    (pacote.detalhesTarefas || []).forEach(({ tarefa, comentarios, historico }) => {
+        if (tarefa?.dataCriacao) {
+            eventos.push({
+                data: tarefa.dataCriacao,
+                tipo: "Tarefa",
+                titulo: tarefa.titulo || "Tarefa criada",
+                descricao: "Tarefa criada no projeto."
+            });
+        }
+
+        if (tarefa?.dataConclusao) {
+            eventos.push({
+                data: tarefa.dataConclusao,
+                tipo: "Conclusão",
+                titulo: tarefa.titulo || "Tarefa concluída",
+                descricao: "Tarefa marcada como concluída."
+            });
+        }
+
+        (comentarios || []).forEach(comentario => {
+            eventos.push({
+                data: comentario.dataCriacao,
+                tipo: "Comentário",
+                titulo: comentario.autorNome || comentario.usuarioNome || "Comentário",
+                descricao: comentario.mensagem || ""
+            });
+        });
+
+        (historico || []).forEach(evento => {
+            eventos.push({
+                data: evento.dataCriacao,
+                tipo: evento.tipo || "Histórico",
+                titulo: evento.descricao || evento.mensagem || "Alteração registrada",
+                descricao: [
+                    evento.valorAnterior ? `Anterior: ${evento.valorAnterior}` : "",
+                    evento.valorNovo ? `Novo: ${evento.valorNovo}` : ""
+                ].filter(Boolean).join(" | ")
+            });
+        });
+    });
+
+    return eventos
+        .filter(evento => evento.data)
+        .sort((a, b) => new Date(b.data) - new Date(a.data));
+}
+
+// Função para montar o HTML do relatório executivo do projeto
 function montarHtmlRelatorioProjeto(pacote) {
     const projeto = pacote.projeto || {};
     const resumo = calcularResumoProjetoExportacao(pacote);
@@ -415,8 +476,7 @@ function montarHtmlRelatorioProjeto(pacote) {
         </tr>
     `).join("");
 
-    return `
-<!DOCTYPE html>
+    return `<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -500,15 +560,10 @@ function montarHtmlRelatorioProjeto(pacote) {
         Relatório gerado pelo TaskFlow / VidalSystem. Dados extraídos do projeto no momento da emissão.
     </div>
 
-    <script>
-        window.onload = function () {
-            setTimeout(function () { window.print(); }, 400);
-        };
-    </script>
 </body>
 </html>`;
 }
-
+// Função para gerar o PDF do projeto usando o relatório executivo
 async function gerarPdfProjeto() {
     try {
         const pacote = await carregarPacoteProjetoRelatorio(true);
@@ -529,14 +584,33 @@ async function gerarPdfProjeto() {
         janela.document.write(htmlRelatorio);
         janela.document.close();
 
-        mostrarToast("Relatório aberto. Use Salvar como PDF na impressão.");
+        // Aguarda a nova janela renderizar antes de chamar a impressão.
+        const imprimirRelatorio = () => {
+            setTimeout(() => {
+                try {
+                    janela.focus();
+                    janela.print();
+                } catch (erroImpressao) {
+                    console.error("Erro ao abrir impressão do PDF:", erroImpressao);
+                    mostrarToast("Relatório aberto. Use Ctrl+P para salvar como PDF.", "aviso");
+                }
+            }, 800);
+        };
+
+        if (janela.document.readyState === "complete") {
+            imprimirRelatorio();
+        } else {
+            janela.onload = imprimirRelatorio;
+        }
+
+        mostrarToast("Relatório aberto para salvar como PDF.");
 
     } catch (error) {
-        console.error(error);
+        console.error("Erro ao gerar PDF:", error);
         mostrarToast("Erro ao gerar PDF do projeto.", "erro");
     }
 }
-
+// Função para copiar um resumo executivo do projeto para a área de transferência
 async function copiarResumoExecutivoProjeto() {
     try {
         const pacote = await carregarPacoteProjetoRelatorio(false);
@@ -806,4 +880,3 @@ function montarLinhasChecklistProjeto(pacote) {
         )
     );
 }
-

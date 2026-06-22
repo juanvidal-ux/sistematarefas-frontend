@@ -28,3 +28,9 @@ let resolverConfirmacao = null;
 let modelosCardsAdmin = [];
 let modeloCardEdicaoId = null;
 let modeloCardChecklistTemporario = [];
+
+
+// ==========================
+// CONFIGURAÇÕES / DOCUMENTOS
+// ==========================
+let documentosProjetoAdmin = [];

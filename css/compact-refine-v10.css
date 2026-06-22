@@ -1,0 +1,248 @@
+/* =========================================================
+   V10 — Compact Refine
+   Ajuste de experiência: reduz cabeçalhos/filtros sem perder leitura.
+   ========================================================= */
+
+body[data-layout="menu-slim-clean"] {
+    --c-gap-xs: 6px;
+    --c-gap-sm: 8px;
+    --c-gap-md: 12px;
+    --c-gap-lg: 16px;
+    --c-gap-xl: 24px;
+    font-size: 14px !important;
+}
+
+/* Área geral: menos respiro vertical, ainda confortável */
+body[data-layout="menu-slim-clean"] #dashboardSection .main {
+    padding: 16px 20px 20px !important;
+}
+
+/* Topbar mais baixa e proporcional */
+body[data-layout="menu-slim-clean"] #dashboardSection .topbar {
+    min-height: 78px !important;
+    padding: 14px 24px !important;
+    margin-bottom: 16px !important;
+    border-radius: 14px !important;
+    align-items: center !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .topbar h1,
+body[data-layout="menu-slim-clean"] #dashboardSection #topbarTitulo {
+    font-size: clamp(24px, 1.6vw, 28px) !important;
+    line-height: 1.06 !important;
+    margin: 0 !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .topbar p {
+    font-size: 13px !important;
+    line-height: 1.35 !important;
+    margin-top: 4px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .eyebrow {
+    font-size: 11px !important;
+    line-height: 1.2 !important;
+    margin-bottom: 2px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .top-actions {
+    gap: 8px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .top-actions button,
+body[data-layout="menu-slim-clean"] #dashboardSection .btn-primary,
+body[data-layout="menu-slim-clean"] #dashboardSection .btn-secondary {
+    min-height: 38px !important;
+    padding: 0 14px !important;
+    font-size: 13px !important;
+    border-radius: 10px !important;
+}
+
+/* No Kanban/Minhas tarefas a barra deve ser ainda menor */
+body[data-layout="menu-slim-clean"][data-current-page="BOARD"] #dashboardSection .topbar,
+body[data-layout="menu-slim-clean"][data-current-page="MINHAS"] #dashboardSection .topbar {
+    min-height: 62px !important;
+    padding: 10px 18px !important;
+    margin-bottom: 12px !important;
+}
+
+body[data-layout="menu-slim-clean"][data-current-page="BOARD"] #dashboardSection .topbar h1,
+body[data-layout="menu-slim-clean"][data-current-page="MINHAS"] #dashboardSection .topbar h1 {
+    font-size: 22px !important;
+}
+
+body[data-layout="menu-slim-clean"][data-current-page="BOARD"] #dashboardSection .topbar p,
+body[data-layout="menu-slim-clean"][data-current-page="MINHAS"] #dashboardSection .topbar p {
+    display: block !important;
+    font-size: 12px !important;
+    margin-top: 2px !important;
+}
+
+/* Cards principais menores */
+body[data-layout="menu-slim-clean"] #dashboardSection .metric-card,
+body[data-layout="menu-slim-clean"] #dashboardSection .admin-card,
+body[data-layout="menu-slim-clean"] #dashboardSection .create-panel,
+body[data-layout="menu-slim-clean"] #dashboardSection .board-toolbar,
+body[data-layout="menu-slim-clean"] #dashboardSection .modal-content,
+body[data-layout="menu-slim-clean"] #dashboardSection .notifications-panel,
+body[data-layout="menu-slim-clean"] #dashboardSection .project-detail-card,
+body[data-layout="menu-slim-clean"] #dashboardSection .project-detail-tabs-card,
+body[data-layout="menu-slim-clean"] #dashboardSection .document-form-card,
+body[data-layout="menu-slim-clean"] #dashboardSection .project-export-panel,
+body[data-layout="menu-slim-clean"] #dashboardSection .modelo-card,
+body[data-layout="menu-slim-clean"] #dashboardSection .chart-card,
+body[data-layout="menu-slim-clean"] #dashboardSection .export-option-card,
+body[data-layout="menu-slim-clean"] #dashboardSection .ux-card,
+body[data-layout="menu-slim-clean"] #dashboardSection .ux-kpi-card,
+body[data-layout="menu-slim-clean"] #dashboardSection .ux-page-header,
+body[data-layout="menu-slim-clean"] #dashboardSection .ux-toolbar {
+    padding: 16px !important;
+    border-radius: 14px !important;
+}
+
+/* Cabeçalho do quadro menos alto */
+body[data-layout="menu-slim-clean"] #dashboardSection .board-area > .admin-card:first-child,
+body[data-layout="menu-slim-clean"] #dashboardSection .ux-page-header {
+    padding: 14px 16px !important;
+    margin-bottom: 12px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .board-area h2,
+body[data-layout="menu-slim-clean"] #dashboardSection .ux-page-header h2 {
+    font-size: 20px !important;
+    line-height: 1.15 !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .board-area p,
+body[data-layout="menu-slim-clean"] #dashboardSection .ux-page-header p {
+    font-size: 12px !important;
+    line-height: 1.3 !important;
+}
+
+/* Filtros: linha mais baixa e organizada */
+body[data-layout="menu-slim-clean"] #dashboardSection .board-toolbar,
+body[data-layout="menu-slim-clean"] #dashboardSection .ux-toolbar {
+    padding: 8px !important;
+    gap: 8px !important;
+    margin-bottom: 10px !important;
+    border-radius: 12px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .board-toolbar input,
+body[data-layout="menu-slim-clean"] #dashboardSection .board-toolbar select,
+body[data-layout="menu-slim-clean"] #dashboardSection .ux-toolbar input,
+body[data-layout="menu-slim-clean"] #dashboardSection .ux-toolbar select {
+    min-height: 36px !important;
+    height: 36px !important;
+    font-size: 13px !important;
+    border-radius: 9px !important;
+    padding: 0 10px !important;
+}
+
+/* Chips de status abaixo dos filtros */
+body[data-layout="menu-slim-clean"] #dashboardSection .board-toolbar + .admin-card,
+body[data-layout="menu-slim-clean"] #dashboardSection .board-toolbar + div {
+    margin-top: 8px !important;
+}
+
+/* Kanban com colunas mais altas na tela */
+body[data-layout="menu-slim-clean"] #dashboardSection .kanban {
+    gap: 12px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .kanban-column {
+    padding: 12px !important;
+    border-radius: 14px !important;
+    min-height: calc(100vh - 212px) !important;
+}
+
+body[data-layout="menu-slim-clean"][data-current-page="BOARD"] #dashboardSection .kanban-column,
+body[data-layout="menu-slim-clean"][data-current-page="MINHAS"] #dashboardSection .kanban-column {
+    min-height: calc(100vh - 190px) !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .column-header {
+    padding: 6px 6px 10px !important;
+    margin-bottom: 8px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .column-header h3 {
+    font-size: 13px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .column-header span {
+    min-width: 26px !important;
+    height: 26px !important;
+    font-size: 12px !important;
+}
+
+/* Cards do Kanban: legíveis, mas não enormes */
+body[data-layout="menu-slim-clean"] #dashboardSection .task-card {
+    padding: 12px !important;
+    border-radius: 12px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .task-title {
+    font-size: 14px !important;
+    line-height: 1.28 !important;
+    margin-bottom: 6px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .task-desc {
+    font-size: 12px !important;
+    line-height: 1.35 !important;
+    margin-bottom: 8px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .pill {
+    font-size: 10.5px !important;
+    padding: 4px 7px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .task-actions button {
+    min-height: 34px !important;
+    padding: 0 10px !important;
+    font-size: 12px !important;
+}
+
+/* Drawer nova tarefa */
+body[data-layout="menu-slim-clean"] #dashboardSection #novaTarefaPanel.create-panel:not(.create-panel-collapsed) {
+    width: min(420px, calc(100vw - 104px)) !important;
+    padding: 16px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection #novaTarefaPanel .nova-tarefa-header h2 {
+    font-size: 19px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection #novaTarefaPanel input,
+body[data-layout="menu-slim-clean"] #dashboardSection #novaTarefaPanel select {
+    min-height: 38px !important;
+    height: 38px !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection #novaTarefaPanel textarea {
+    min-height: 88px !important;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    body[data-layout="menu-slim-clean"] #dashboardSection .main {
+        padding: 12px !important;
+    }
+
+    body[data-layout="menu-slim-clean"] #dashboardSection .topbar {
+        padding: 12px 14px !important;
+    }
+
+    body[data-layout="menu-slim-clean"] #dashboardSection .topbar h1,
+    body[data-layout="menu-slim-clean"] #dashboardSection #topbarTitulo {
+        font-size: 22px !important;
+    }
+
+    body[data-layout="menu-slim-clean"] #dashboardSection input,
+    body[data-layout="menu-slim-clean"] #dashboardSection select,
+    body[data-layout="menu-slim-clean"] #dashboardSection button {
+        min-height: 40px !important;
+    }
+}

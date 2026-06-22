@@ -1,0 +1,239 @@
+/* =========================================================
+   Menu Slim Clean — versão conservadora
+   Objetivo: só reduzir menu e ampliar Kanban sem redesenhar tudo.
+   Mantém o visual base do sistema.
+   ========================================================= */
+
+body[data-layout="menu-slim-clean"] #dashboardSection.app {
+    grid-template-columns: 64px minmax(0, 1fr) !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar {
+    width: 64px !important;
+    min-width: 64px !important;
+    max-width: 64px !important;
+    padding: 12px 8px !important;
+    align-items: center !important;
+    overflow: visible !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar-logo {
+    width: 48px !important;
+    min-height: 48px !important;
+    justify-content: center !important;
+    margin-bottom: 14px !important;
+    padding: 0 !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar-brand-text,
+body[data-layout="menu-slim-clean"] #dashboardSection .menu-section-toggle,
+body[data-layout="menu-slim-clean"] #dashboardSection .menu-section-label,
+body[data-layout="menu-slim-clean"] #dashboardSection .section-title,
+body[data-layout="menu-slim-clean"] #dashboardSection .section-arrow,
+body[data-layout="menu-slim-clean"] #dashboardSection .menu-text {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    width: 0 !important;
+    max-width: 0 !important;
+    overflow: hidden !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .menu,
+body[data-layout="menu-slim-clean"] #dashboardSection .menu-section,
+body[data-layout="menu-slim-clean"] #dashboardSection .menu-section-items,
+body[data-layout="menu-slim-clean"] #dashboardSection .menu-section.is-collapsed .menu-section-items {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 8px !important;
+    max-height: none !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .menu-item {
+    width: 44px !important;
+    min-width: 44px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    padding: 0 !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 0 !important;
+    font-size: 0 !important;
+    overflow: visible !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .menu-icon,
+body[data-layout="menu-slim-clean"] #dashboardSection .menu-item > span:first-child:not(.menu-text) {
+    width: 22px !important;
+    min-width: 22px !important;
+    height: 22px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 16px !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar-footer {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    padding: 0 !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .btn-logout {
+    width: 44px !important;
+    min-width: 44px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    padding: 0 !important;
+    font-size: 0 !important;
+    justify-content: center !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .btn-logout span {
+    font-size: 18px !important;
+}
+
+/* Tooltip simples usando data-page */
+body[data-layout="menu-slim-clean"] #dashboardSection .menu-item[data-page]::after {
+    content: attr(data-page);
+    position: fixed;
+    left: 72px;
+    z-index: 99999;
+    padding: 8px 10px;
+    border-radius: 10px;
+    background: #111827;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    box-shadow: 0 12px 26px rgba(15,23,42,.25);
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .menu-item[data-page]:hover::after {
+    opacity: 1;
+}
+
+/* Kanban sem métricas: a lógica já foi ajustada para métricas só no Dashboard */
+body[data-layout="menu-slim-clean"] #dashboardSection .main {
+    min-width: 0 !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .workspace {
+    grid-template-columns: minmax(0, 1fr) !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .board-area {
+    min-width: 0 !important;
+    width: 100% !important;
+}
+
+/* Formulário recolhido não ocupa espaço. Ao abrir, vira drawer limpo. */
+body[data-layout="menu-slim-clean"] #dashboardSection #novaTarefaPanel.create-panel.create-panel-collapsed {
+    display: none !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection #novaTarefaPanel.create-panel:not(.create-panel-collapsed) {
+    position: fixed !important;
+    top: 16px !important;
+    right: 16px !important;
+    z-index: 9997 !important;
+    width: min(420px, calc(100vw - 96px)) !important;
+    max-height: calc(100vh - 32px) !important;
+    overflow: auto !important;
+    background: #fff !important;
+    color: #172b4d !important;
+    border: 1px solid #dfe1e6 !important;
+    border-radius: 18px !important;
+    box-shadow: 0 24px 70px rgba(9,30,66,.28) !important;
+}
+
+body[data-theme="dark"][data-layout="menu-slim-clean"] #dashboardSection #novaTarefaPanel.create-panel:not(.create-panel-collapsed) {
+    background: #111827 !important;
+    color: #f8fafc !important;
+    border-color: #334155 !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection #novaTarefaPanel input,
+body[data-layout="menu-slim-clean"] #dashboardSection #novaTarefaPanel textarea,
+body[data-layout="menu-slim-clean"] #dashboardSection #novaTarefaPanel select {
+    background: #fff !important;
+    color: #172b4d !important;
+}
+
+body[data-theme="dark"][data-layout="menu-slim-clean"] #dashboardSection #novaTarefaPanel input,
+body[data-theme="dark"][data-layout="menu-slim-clean"] #dashboardSection #novaTarefaPanel textarea,
+body[data-theme="dark"][data-layout="menu-slim-clean"] #dashboardSection #novaTarefaPanel select {
+    background: #0f172a !important;
+    color: #f8fafc !important;
+}
+
+/* Um pouco mais de altura útil para as colunas */
+body[data-layout="menu-slim-clean"] #dashboardSection .kanban-column {
+    min-height: calc(100vh - 230px) !important;
+}
+
+@media (max-width: 760px) {
+    body[data-layout="menu-slim-clean"] #dashboardSection.app {
+        grid-template-columns: 56px minmax(0, 1fr) !important;
+    }
+
+    body[data-layout="menu-slim-clean"] #dashboardSection .sidebar {
+        width: 56px !important;
+        min-width: 56px !important;
+        max-width: 56px !important;
+        padding: 8px 6px !important;
+    }
+
+    body[data-layout="menu-slim-clean"] #dashboardSection .menu-item,
+    body[data-layout="menu-slim-clean"] #dashboardSection .btn-logout {
+        width: 40px !important;
+        min-width: 40px !important;
+        height: 40px !important;
+        min-height: 40px !important;
+    }
+}
+
+/* =========================================================
+   Correção V5 — Respeitar permissões visuais
+   O menu slim não pode forçar exibição de itens ocultos.
+   ========================================================= */
+body[data-layout="menu-slim-clean"] #dashboardSection .menu-item.hidden,
+body[data-layout="menu-slim-clean"] #dashboardSection .admin-only.hidden,
+body[data-layout="menu-slim-clean"] #dashboardSection .super-admin-only.hidden,
+body[data-layout="menu-slim-clean"] #dashboardSection .menu-section .menu-item.hidden,
+body[data-layout="menu-slim-clean"] #dashboardSection .menu-section .admin-only.hidden,
+body[data-layout="menu-slim-clean"] #dashboardSection .menu-section .super-admin-only.hidden {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    width: 0 !important;
+    min-width: 0 !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .menu-section.is-empty,
+body[data-layout="menu-slim-clean"] #dashboardSection .menu-section.hidden {
+    display: none !important;
+}
+
+/* Garante que o botão Super Admin só aparece quando o JS remover a classe hidden. */
+body[data-layout="menu-slim-clean"] #dashboardSection .menu-item.super-admin-only.hidden[data-page="SUPER_ADMIN"] {
+    display: none !important;
+}

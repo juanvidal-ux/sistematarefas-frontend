@@ -1,0 +1,160 @@
+/* =========================================================
+   V8 — Tooltips amigáveis do menu slim
+   Corrige nomes técnicos como UX_MINHA_AREA e UX_CALENDARIO.
+   ========================================================= */
+
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar .menu-item {
+    position: relative !important;
+    overflow: visible !important;
+}
+
+/* Remove qualquer tooltip técnico antigo baseado diretamente no data-page */
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar .menu-item[data-page]::after,
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar .menu-item[onclick]::after {
+    position: absolute !important;
+    left: 56px !important;
+    top: 50% !important;
+    transform: translateY(-50%) translateX(-4px) !important;
+    z-index: 100000 !important;
+    width: max-content !important;
+    max-width: 220px !important;
+    padding: 8px 10px !important;
+    border-radius: 10px !important;
+    background: #111827 !important;
+    color: #ffffff !important;
+    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+    white-space: nowrap !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    box-shadow: 0 14px 32px rgba(15, 23, 42, .28) !important;
+    transition: opacity .14s ease, transform .14s ease !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar .menu-item[data-page]:hover::after,
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar .menu-item[onclick]:hover::after {
+    opacity: 1 !important;
+    transform: translateY(-50%) translateX(0) !important;
+}
+
+/* Nomes amigáveis das páginas principais */
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar .menu-item[data-page="DASHBOARD"]::after { content: "Dashboard" !important; }
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar .menu-item[data-page="BOARD"]::after { content: "Kanban" !important; }
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar .menu-item[data-page="PROJETOS"]::after { content: "Projetos" !important; }
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar .menu-item[data-page="MODELOS_CARDS"]::after { content: "Modelos de cards" !important; }
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar .menu-item[data-page="MINHAS"]::after { content: "Minhas tarefas" !important; }
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar .menu-item[data-page="ADMIN"]::after { content: "Administração" !important; }
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar .menu-item[data-page="SUPER_ADMIN"]::after { content: "Super Admin" !important; }
+
+/* Nomes amigáveis das páginas UX */
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar .menu-item[data-page="UX_MINHA_AREA"]::after { content: "Minha área" !important; }
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar .menu-item[data-page="UX_CALENDARIO"]::after { content: "Calendário" !important; }
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar .menu-item[data-page="UX_AJUDA"]::after { content: "Ajuda" !important; }
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar .menu-item[data-page="UX_TABELA"]::after { content: "Lista de tarefas" !important; }
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar .menu-item[data-page="UX_APRESENTACAO"]::after { content: "Apresentação" !important; }
+
+/* Botões sem data-page */
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar .menu-item[onclick="alternarTemaSistema()"]::after { content: "Tema" !important; }
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar .menu-item[onclick="abrirModalSenha()"]::after { content: "Alterar senha" !important; }
+
+/* Botão sair */
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar .btn-logout {
+    position: relative !important;
+    overflow: visible !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar .btn-logout::after {
+    content: "Sair" !important;
+    position: absolute !important;
+    left: 56px !important;
+    top: 50% !important;
+    transform: translateY(-50%) translateX(-4px) !important;
+    z-index: 100000 !important;
+    padding: 8px 10px !important;
+    border-radius: 10px !important;
+    background: #111827 !important;
+    color: #fff !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    box-shadow: 0 14px 32px rgba(15, 23, 42, .28) !important;
+    transition: opacity .14s ease, transform .14s ease !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar .btn-logout:hover::after {
+    opacity: 1 !important;
+    transform: translateY(-50%) translateX(0) !important;
+}
+
+/* Estilização mais elegante dos ícones ativos */
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar .menu-item.active {
+    color: #fff !important;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+    box-shadow: 0 10px 22px rgba(37, 99, 235, .26) !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar .menu-item:hover:not(.active) {
+    background: rgba(37, 99, 235, .10) !important;
+    color: #2563eb !important;
+}
+
+
+/* =========================================================
+   V9 — Fix tooltip sobrepondo corretamente
+   Causa: sidebar/main criavam contexto visual e parte do texto ficava coberta.
+   ========================================================= */
+body[data-layout="menu-slim-clean"] #dashboardSection.app,
+body[data-layout="menu-slim-clean"] #dashboardSection .main,
+body[data-layout="menu-slim-clean"] #dashboardSection .workspace,
+body[data-layout="menu-slim-clean"] #dashboardSection .board-area,
+body[data-layout="menu-slim-clean"] #dashboardSection .topbar {
+    overflow: visible !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar {
+    position: relative !important;
+    z-index: 4000 !important;
+    overflow: visible !important;
+    isolation: isolate !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar .menu,
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar .menu-section,
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar .menu-section-items,
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar .sidebar-footer {
+    overflow: visible !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar .menu-item,
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar .btn-logout {
+    position: relative !important;
+    z-index: 4001 !important;
+    overflow: visible !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar .menu-item[data-page]::after,
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar .menu-item[onclick]::after,
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar .btn-logout::after {
+    left: calc(100% + 12px) !important;
+    top: 50% !important;
+    transform: translateY(-50%) translateX(-6px) !important;
+    max-width: 240px !important;
+    min-height: 34px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    font-size: 12px !important;
+    line-height: 1.2 !important;
+}
+
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar .menu-item[data-page]:hover::after,
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar .menu-item[onclick]:hover::after,
+body[data-layout="menu-slim-clean"] #dashboardSection .sidebar .btn-logout:hover::after {
+    transform: translateY(-50%) translateX(0) !important;
+}

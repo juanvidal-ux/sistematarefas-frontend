@@ -246,42 +246,9 @@
         const firstSection = modalVisualizacao.querySelector('[data-modal-tab="DETALHES"]');
         if (firstSection) firstSection.insertAdjacentElement("afterend", resumo);
 
-        const anexos = Array.isArray(tarefa.anexos) ? tarefa.anexos : [];
-        const painel = document.createElement("div");
-        painel.id = "v8AnexosPanel";
-        painel.className = "v8-attachments-panel";
-        painel.setAttribute("data-modal-tab", "DETALHES");
-        painel.innerHTML = `
-            <div class="v8-attachments-head">
-                <div>
-                    <h3>Anexos</h3>
-                    <p class="comments-subtitle">Área visual preparada para documentos, imagens e evidências da tarefa.</p>
-                </div>
-                <span class="v8-badge neutral">${anexos.length} arquivo(s)</span>
-            </div>
-            <div class="v8-attachments-list">
-                ${anexos.length ? anexos.map(a => `
-                    <div class="v8-file-card">
-                        <span class="v8-file-icon">${iconeArquivo(a.nomeArquivo || a.nome || a.url || "arquivo")}</span>
-                        <div>
-                            <strong>${safe(a.nomeArquivo || a.nome || "Arquivo")}</strong><br>
-                            <small>${safe(a.tipoArquivo || a.tipo || "Documento")}</small>
-                        </div>
-                    </div>
-                `).join("") : `
-                    <div class="v8-file-card">
-                        <span class="v8-file-icon">📎</span>
-                        <div>
-                            <strong>Nenhum anexo vinculado</strong><br>
-                            <small>Quando a API de anexos estiver ativa, os arquivos aparecerão aqui.</small>
-                        </div>
-                    </div>
-                `}
-            </div>
-        `;
-
-        const lastDetail = [...modalVisualizacao.querySelectorAll('[data-modal-tab="DETALHES"]')].at(-1) || areaDetalhes;
-        lastDetail?.insertAdjacentElement("afterend", painel);
+        // Rev16.7: removido o painel visual antigo de "Anexos".
+        // O módulo oficial de documentos/anexos agora fica apenas na aba "Documentos",
+        // evitando duplicidade e poluição visual nos detalhes da tarefa.
     }
 
     function iconeArquivo(nome) {
